@@ -1,0 +1,23 @@
+{
+  "name": "counsel",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "bootstrap": "lerna bootstrap"
+  },
+  "author": "",
+  "license": "ISC",
+  "pre-commit": [
+    "validate",
+    "lint",
+    "test"
+  ],
+  "devDependencies": {
+    "lerna": "v2.0.0-beta.26"
+  },
+  "repository":
+    {
+      "type" : "git",
+      "url" : "https://github.com/cdaringe/counsel.git"
+  }
+}
