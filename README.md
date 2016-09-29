@@ -6,6 +6,8 @@
 
 ## usage
 
+docs: [cdaringe.github.io/counsel](https://cdaringe.github.io/counsel/)
+
 before `counsel`, you have a boring-old-package:
 
 ```json
@@ -82,6 +84,10 @@ are you familiar with a reference repo? boilerplate repo?  template repo?  if yo
 counsel is a framework for applying business rules and opinions into packages.
 
 counsel should _rarely_ be installed directly into general projects.  instead, use it to make a shared tool.  place all the rules you want into the tool and release it as a standalone package.
+
+## docs
+
+the official api docs live [here](docs: [cdaringe.github.io/counsel](https://cdaringe.github.io/counsel/).  all other topics covered in the readme are for quickstart only!
 
 ## rules
 

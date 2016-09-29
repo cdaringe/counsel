@@ -10,14 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jsdoc": "^3.4.1",
     "lodash.clonedeep": "^4.5.0",
     "requireg": "^0.1.6",
     "winston": "^2.2.0"
   },
   "devDependencies": {
     "counsel-common": "^0.0.1",
-    "minami": "^1.1.1",
     "perish": "0.0.3",
     "tape": "^4.6.0"
   }

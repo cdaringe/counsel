@@ -19,9 +19,7 @@ const packages = fs.readdirSync(packagesPath)
   return {
     name: p,
     path: pkgRoot,
-    /* eslint-disable global-require */
     packageJSON: require(path.resolve(pkgRoot, 'package.json')),
-    /* eslint-enable global-require */
   }
 })
 
@@ -35,13 +33,13 @@ packages.forEach((pkg) => {
   const conf = path.join(__dirname, '.jsdoc.json')
   const dest = path.join(__dirname, `docs-${pkg.name}`)
   const cmd = { bin: 'jsdoc', args: [pkg.path, '-c', conf, '-R', readmePath, '-d', dest] }
-  console.log(`Generating docs for ${pkg.name}`) // eslint-disable-line no-console
+  console.log(`Generating docs for ${pkg.name}`)
   try {
     rmdir(dest)
     const rslt = cp.spawnSync(cmd.bin, cmd.args)
     if (rslt.stderr.toString()) { throw rslt.error }
   } catch (err) {
-    console.error([ // eslint-disable-line no-console
+    console.error([
       `Failed to generate docs for ${pkg.name}.`,
       `Failing cmd ${cmd.bin} ${cmd.args.join(' ')} `,
     ].join(' '))
@@ -72,11 +70,6 @@ cp.execSync(`cp ${gfmCSSPath} ${docsPath}/`)
 // publish.
 ghpages.publish(docsPath, (err) => {
   rmdir(docsPath)
-  /* eslint-disable no-console */
-  if (err) {
-    console.error(err)
-  } else {
-    console.log('docs successfully published')
-  }
-  /* eslint-enable no-console */
-})
+  if (err) return console.error(err)
+  console.log('docs successfully published to https://cdaringe.github.io/counsel/')
+}
