@@ -72,4 +72,4 @@ ghpages.publish(docsPath, (err) => {
   rmdir(docsPath)
   if (err) return console.error(err)
   console.log('docs successfully published to https://cdaringe.github.io/counsel/')
-}
+})
