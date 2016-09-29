@@ -19,14 +19,13 @@
     "test"
   ],
   "devDependencies": {
-    "async": "^2.0.1",
     "gh-pages": "^0.11.0",
     "github-markdown-css": "^2.4.1",
     "jsdoc": "^3.4.1",
     "lerna": "2.0.0-beta.28",
     "marked": "^0.3.6",
     "minami": "^1.1.1",
-    "shelljs": "^0.7.4",
+    "perish": "0.0.3",
     "standard": "^8.2.0",
     "standard-format": "^2.2.3",
     "swig-templates": "^2.0.1"
