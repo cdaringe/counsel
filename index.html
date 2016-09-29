@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>counsel api documentation</title>
+    <link rel="stylesheet" href="github-markdown.css">
+    <style>
+      body {
+        padding: 1rem;
+      }
+    </style>
+  </head>
+  <body class="markdown-body">
+    <h1 id="counsel-herb-">counsel :herb:</h1>
+<h2 id="install">install</h2>
+<p><code>npm i --save counsel</code></p>
+<h2 id="usage">usage</h2>
+<p>before <code>counsel</code>, you have a boring-old-package:</p>
+<pre><code class="lang-json">// package.json
+{
+  &quot;name&quot;: &quot;boring-old-package&quot;,
+  ...
+}
+</code></pre>
+<p>but, you want to keep up to date with your team&#39;s latest and greatest patterns.  no problem, build &amp; publish a small <code>counsel</code> tool!</p>
+<pre><code class="lang-json">// package.json
+{
+  &quot;name&quot;: &quot;my-counsel-tool&quot;,
+  &quot;scripts&quot;: {
+    &quot;install&quot;: &quot;node my-counsel-tool.js&quot;
+  }
+}
+</code></pre>
+<pre><code class="lang-js">// my-counsel-tool.js
+const counsel = require(&#39;counsel&#39;)
+const ScriptRule = require(&#39;counsel-common&#39;).ScriptRule
+const PreCommitRule = require(&#39;counsel-common&#39;).PreCommitRule
+counsel.apply([
+  new ScriptRule({
+    dependencies: [&#39;standard&#39;]
+    scriptName: &#39;lint&#39;,
+    scriptCommand: &#39;standard&#39;
+  }),
+  new PreCommitRule({
+    preCommitTasks: [&#39;validate&#39;, &#39;lint&#39;, &#39;test&#39;, &#39;check-coverage&#39;]
+    // ^ will install a git pre-commit hook that runs these npm scripts
+  })
+])
+</code></pre>
+<p>install <code>my-counsel-tool</code> into <code>boring-old-package</code>:</p>
+<pre><code class="lang-json">// package.json
+{
+  &quot;name&quot;: &quot;boring-old-package&quot;,
+  &quot;dependencies&quot;: {
+    &quot;standard&quot;: &quot;^4.0.1&quot;,
+    &quot;my-counsel-tool&quot;: &quot;^1.0.0&quot;
+  },
+  &quot;scripts&quot;: {
+    &quot;lint&quot;: &quot;standard&quot;,
+    ...
+  },
+  &quot;pre-commit&quot;: [
+    &quot;validate&quot;,
+    &quot;lint&quot;,
+    &quot;test&quot;,
+    &quot;check-coverage&quot;
+  ]
+}
+</code></pre>
+<p>wow! not so boring after all now, is it.  when <code>my-counsel-tool</code> installs or updates, it can update your package!  it is <em>not</em> limited to your <code>package.json</code>, of course.  make rules to do anything to your repo on <code>install</code>, on some git <code>hook</code> event, or any <code>npm</code> event!</p>
+<h2 id="what">what</h2>
+<p>so what is it?</p>
+<p>it&#39;s the end of boilerplate. automatically bake structure, opinions, and biz rules into projects.</p>
+<p>are you familiar with a reference repo? boilerplate repo?  template repo?  if you are, you know they grow stale.  counsel eliminates the need for these sorts of projects.  instead, counsel allows your team or company to roll personalized tooling that is shared across every package as a development dependency.  it automatically applies your opinions, your formats, your templates, your test scripts, your lint configurations, your &quot;whatevers&quot; per your own desire, with very little effort.</p>
+<p>counsel is a framework for applying business rules and opinions into packages.</p>
+<p>counsel should <em>rarely</em> be installed directly into general projects.  instead, use it to make a shared tool.  place all the rules you want into the tool and release it as a standalone package.</p>
+<h2 id="rules">rules</h2>
+<p><code>counsel</code> is composed of sets of <code>Rule</code>s to apply to your package.  provide it a set of rules, and it will fulfill them.</p>
+<h2 id="configure">configure</h2>
+<p>some rules aren&#39;t so simple.  for rules that offer configuration, you can add your config in package.json:</p>
+<p><code>&quot;counsel&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
+<p>it is <strong>recommended</strong> that in your <code>my-counsel-tool</code> package, to squash <code>counsel.configKey = &#39;my-counsel-tool&#39;</code>, such that now, you can load config like:</p>
+<p><code>&quot;my-counsel-tool&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
+<h2 id="todo">todo</h2>
+<ul>
+<li>formalize api docs!</li>
+<li>add some more Rules!</li>
+<li>break rules out into independet thingies.</li>
+<li>script rule, allow by default for stacked scripts to <code>&amp;&amp;</code> onto each other</li>
+</ul>
+<h2 id="to-implement">to implement</h2>
+<ul>
+<li>readme-plugin (assert readme present)</li>
+<li>template-plugin (apply swig-templates to file(s). e.g. auto-build readme)</li>
+<li>docs (jsdoc plugin. add doc script, add docs on postpublish apply .jsdoc.json)</li>
+<li>filename convention (assert filenames are, say, kebab-cased.js)</li>
+<li><del>lint</del> &lt;== ScriptRule fulfills</li>
+<li><del>pre-commit</del></li>
+<li><del>nsp</del> &lt;== Script + PreCommit fulfills</li>
+</ul>
+
+    <a id="api-docs"></a>
+    <h3>counsel api documentation</h3>
+    <p>
+      counsel is comprised of many libraries to make it great!
+      please use the below links to navigate to package specific api docs.
+    </p>
+
+    <ul>
+      
+        <li>
+          <section>
+            <h3><a href="counsel">counsel</a></h3>
+            <p></p>
+          </section>
+        </li>
+      
+        <li>
+          <section>
+            <h3><a href="counsel-common">counsel-common</a></h3>
+            <p></p>
+          </section>
+        </li>
+      
+    </ul>
+  </body>
+</html>
