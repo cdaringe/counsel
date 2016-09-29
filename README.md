@@ -11,7 +11,7 @@ before `counsel`, you have a boring-old-package:
 ```json
 // package.json
 {
-  name: "boring-old-package",
+  "name": "boring-old-package",
   ...
 }
 ```
@@ -21,8 +21,8 @@ but, you want to keep up to date with your team's latest and greatest patterns. 
 ```json
 // package.json
 {
-  name: "my-counsel-tool",
-  scripts: {
+  "name": "my-counsel-tool",
+  "scripts": {
     "install": "node my-counsel-tool.js"
   }
 }
@@ -51,12 +51,12 @@ install `my-counsel-tool` into `boring-old-package`:
 ```json
 // package.json
 {
-  name: "boring-old-package",
-  dependencies: {
+  "name": "boring-old-package",
+  "dependencies": {
     "standard": "^4.0.1",
     "my-counsel-tool": "^1.0.0"
   },
-  scripts: {
+  "scripts": {
     "lint": "standard",
     ...
   },
@@ -91,11 +91,11 @@ counsel should _rarely_ be installed directly into general projects.  instead, u
 
 some rules aren't so simple.  for rules that offer configuration, you can add your config in package.json:
 
-`"counsel": { counsel-plugin: { ignore: true } }`
+`"counsel": { "counsel-plugin": { "ignore": true } }`
 
 it is **recommended** that in your `my-counsel-tool` package, to squash `counsel.configKey = 'my-counsel-tool'`, such that now, you can load config like:
 
-`"my-counsel-tool": { counsel-plugin: { ignore: true } }`
+`"my-counsel-tool": { "counsel-plugin": { "ignore": true } }`
 
 ## todo
 
