@@ -8,7 +8,12 @@ module.exports = {
   createTestProject () {
     ++this.projectCounter
     const projectId = `dummy-project-test-${this.projectCounter}`
-    cp.execSync(`cp -r dummy-project ${projectId}`, { cwd: __dirname })
+    const destDirname = path.join(__dirname, projectId)
+    const destGitDirname = path.join(destDirname, '.git')
+    cp.execSync([
+      `cp -r dummy-project ${destDirname}`,
+      `mkdir -p ${destGitDirname}`
+    ].join(' && '), { cwd: __dirname })
     return projectId
   },
   teardownTestProject (projectId) {
