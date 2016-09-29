@@ -66,17 +66,17 @@ const internals = {
    * Recursively creates directories until `path` exists
    * @param {string} path
    */
-  mkdir (path) {
+  mkdir (p) {
     var mode = ~process.umask() &amp; parseInt('777', 8)
-    if (exports.isDir(path)) return
+    if (exports.isDir(p)) return
     try {
-      fs.mkdirSync(path, mode)
+      fs.mkdirSync(p, mode)
     } catch (err) {
       if (err.code !== 'ENOENT') {
         throw err
       }
-      internals.mkdir(path.dirname(path))
-      internals.mkdir(path)
+      internals.mkdir(path.dirname(p))
+      internals.mkdir(p)
     }
   },
 
@@ -207,13 +207,21 @@ Object.assign(exports, {
   /**
    * Install the git hook as specified by `hook`.
    * For example, `.installHook('pre-commit')`
-   * @param {string|string[]} hooks
-   * @param {string} [root]
+   * @param {object} opts
+   * @param {string|string[]} opts.hooks
+   * @param {string} [opts.root]
+   * @param {boolean} [opts.search] search for git dir. if false, root must be provided
    * @returns {undefined}
    */
-  installHooks (hooks, root) {
+  installHooks (opts) {
+    let hooks = opts.hooks || opts.hook
+    let root = opts.root
+    let search = !!opts.search
     hooks = Array.isArray(hooks) ? hooks : [hooks]
-    var gitRoot = exports.findGitRoot(root)
+    var gitRoot = search ? exports.findGitRoot(root) : root
+    if (!exports.isDir(path.join(gitRoot, '.git'))) {
+      throw new Error(`.git folder not found in project root ${gitRoot}`)
+    }
     var hookRoot = path.join(gitRoot, '.git', 'hooks')
     var source = path.resolve(__dirname, '..', 'bin', 'validate.sh')
     if (!exports.isDir(hookRoot)) internals.mkdir(hookRoot)

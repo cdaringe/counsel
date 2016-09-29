@@ -41,7 +41,7 @@
             <pre class="prettyprint source linenums"><code>'use strict'
 
 const Rule = require('./rule')
-const xor = require('lodash/xor')
+const xor = require('lodash.xor')
 
 /**
  * Adds `git` pre-commit hooks to the project.  Enables you to specify a set of
@@ -78,7 +78,11 @@ class PreCommitRule extends Rule {
       ].join(' '))
       return
     }
-    counsel.project.installHooks(hook)
+    counsel.project.installHooks({
+      hook: hook,
+      root: counsel.targetProjectRoot,
+      search: false
+    })
     pkg[hook] = tasks
   }
 }
