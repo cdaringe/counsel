@@ -1,7 +1,7 @@
 'use strict'
 
 const Rule = require('./rule')
-const xor = require('lodash/xor')
+const xor = require('lodash.xor')
 
 /**
  * Adds `git` pre-commit hooks to the project.  Enables you to specify a set of
