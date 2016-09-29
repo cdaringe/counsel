@@ -14,5 +14,9 @@ const pkgDirnames = fs.readdirSync(path.resolve(__dirname, '..', 'packages')).fi
 pkgDirnames.map(dir => {
   const cwd = path.resolve(__dirname, '..', 'packages', dir)
   console.log(`running tests in: ${cwd}`)
-  execSync('npm test', { cwd })
+  try {
+    console.log(execSync('npm test', { cwd: cwd }).toString())
+  } catch (err) {
+    console.error(err)
+  }
 })

@@ -7,7 +7,7 @@
     "lint": "standard packages/**/*.js",
     "lintfix": "standard-format -w",
     "validate": "npm ls",
-    "test": "node scripts/test.js",
+    "test": "node test/",
     "docs": "node scripts/docs.js",
     "publish": "lerna publish && node scripts/docs.js"
   },
