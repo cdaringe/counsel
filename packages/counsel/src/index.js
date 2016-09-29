@@ -42,6 +42,7 @@ module.exports = {
     }, Promise.resolve())
     .catch((err) => {
       logger.error(err)
+      logger.error('please resolve the issue and re-run the last command')
       throw err
     })
     .then(this.isTargetPackageDirty.bind(this))
