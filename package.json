@@ -7,7 +7,7 @@
     "lint": "standard packages/**/*.js",
     "lintfix": "standard-format -w",
     "validate": "npm ls",
-    "test": "echo 'pass!'"
+    "test": "node scripts/test.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,9 +17,14 @@
     "test"
   ],
   "devDependencies": {
+    "async": "^2.0.1",
+    "gh-pages": "^0.11.0",
     "lerna": "2.0.0-beta.28",
+    "marked": "^0.3.6",
+    "shelljs": "^0.7.4",
     "standard": "^8.2.0",
-    "standard-format": "^2.2.3"
+    "standard-format": "^2.2.3",
+    "swig-templates": "^2.0.1"
   },
   "repository": {
     "type": "git",
