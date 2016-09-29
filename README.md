@@ -1,4 +1,7 @@
-# counsel :herb:
+# counsel
+
+[ ![Codeship Status for cdaringe/counsel](https://app.codeship.com/projects/38b24cc0-684a-0134-dd3d-5ade36a91ecb/status?branch=master)](https://app.codeship.com/projects/176370)
+![](https://img.shields.io/badge/standardjs-%E2%9C%93-brightgreen.svg)
 
 ## install
 
@@ -6,7 +9,7 @@
 
 ## usage
 
-docs: [cdaringe.github.io/counsel](https://cdaringe.github.io/counsel/)
+docs: [cdaringe.github.io/counsel](https://cdaringe.github.io/counsel/). package level docs links may be found at the _bottom_ of the page.
 
 before `counsel`, you have a boring-old-package:
 

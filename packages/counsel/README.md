@@ -1,10 +1,15 @@
-# counsel :herb:
+# counsel
+
+[ ![Codeship Status for cdaringe/counsel](https://app.codeship.com/projects/38b24cc0-684a-0134-dd3d-5ade36a91ecb/status?branch=master)](https://app.codeship.com/projects/176370)
+![](https://img.shields.io/badge/standardjs-%E2%9C%93-brightgreen.svg)
 
 ## install
 
 `npm i --save counsel`
 
 ## usage
+
+docs: [cdaringe.github.io/counsel](https://cdaringe.github.io/counsel/). package level docs links may be found at the _bottom_ of the page.
 
 before `counsel`, you have a boring-old-package:
 
@@ -82,6 +87,10 @@ are you familiar with a reference repo? boilerplate repo?  template repo?  if yo
 counsel is a framework for applying business rules and opinions into packages.
 
 counsel should _rarely_ be installed directly into general projects.  instead, use it to make a shared tool.  place all the rules you want into the tool and release it as a standalone package.
+
+## docs
+
+the official api docs live [here](docs: [cdaringe.github.io/counsel](https://cdaringe.github.io/counsel/).  all other topics covered in the readme are for quickstart only!
 
 ## rules
 
