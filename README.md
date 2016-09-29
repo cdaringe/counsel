@@ -9,7 +9,7 @@
 
 ## usage
 
-docs: [cdaringe.github.io/counsel](https://cdaringe.github.io/counsel/). package level docs links may be found at the _bottom_ of the page.
+docs: [cdaringe.github.io/counsel](https://cdaringe.github.io/counsel/). package level doc links may be found at the _bottom_ of the linked page.
 
 before `counsel`, you have a boring-old-package:
 
