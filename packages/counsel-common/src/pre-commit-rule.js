@@ -11,16 +11,6 @@ const xor = require('lodash/xor')
  * @extends {Rule}
  */
 class PreCommitRule extends Rule {
-  /**
-   * Creates an instance of PreCommitRule.
-   * 
-   * @param {object} opts
-   * @param {string[]} [opts.preCommitTasks] tasks to run pre-commit
-   * @memberOf ScriptRule
-   */
-  constructor(opts) {
-    super(opts)
-  }
 
   /**
    * Adds the requested script to the package.json
@@ -29,7 +19,7 @@ class PreCommitRule extends Rule {
    * it
    * @memberOf ScriptRule
    */
-  apply(counsel, ruleConfig) {
+  apply (counsel, ruleConfig) {
     Rule.prototype.apply.apply(this, arguments)
     const pkg = counsel.targetProjectPackageJson
     let tasks = ['validate', 'lint', 'test']

@@ -5,6 +5,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "lint": "standard packages/**/*.js",
+    "lintfix": "standard-format -w",
     "validate": "npm ls",
     "test": "echo 'pass!'"
   },
@@ -17,7 +18,8 @@
   ],
   "devDependencies": {
     "lerna": "2.0.0-beta.28",
-    "standard": "^8.2.0"
+    "standard": "^8.2.0",
+    "standard-format": "^2.2.3"
   },
   "repository": {
     "type": "git",

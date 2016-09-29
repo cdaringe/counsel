@@ -13,7 +13,7 @@ const internals = {
    * @param {Module} mod
    * @returns {Module}
    */
-  findParent(mod) {
+  findParent (mod) {
     return mod.parent ? internals.findParent(mod.parent) : mod
   },
 
@@ -21,7 +21,7 @@ const internals = {
    * Recursively creates directories until `path` exists
    * @param {string} path
    */
-  mkdir(path) {
+  mkdir (path) {
     var mode = ~process.umask() & parseInt('777', 8)
     if (exports.isDir(path)) return
     try {
@@ -35,14 +35,14 @@ const internals = {
     }
   },
 
-  /** 
+  /**
    * Determine if source is a directory or a file and call the appropriate method
    * @param {string} source
    * @param {string} target
    * @param {object} [options]
    * @returns {undefined}
    */
-  copy(source, target, options) {
+  copy (source, target, options) {
     if (exports.isDir(source)) {
       internals.copyDirectory(source, target, options)
     } else {
@@ -51,12 +51,12 @@ const internals = {
   },
 
   /**
-   * Recursively copy a directory 
+   * Recursively copy a directory
    * @param {string} source
    * @param {string} target
    * @param {object} [options]
    */
-  copyDirectory(source, target, options) {
+  copyDirectory (source, target, options) {
     internals.mkdir(target)
     var sources = fs.readdirSync(source)
     for (var i = 0, l = sources.length; i < l; ++i) {
@@ -64,18 +64,16 @@ const internals = {
       var targetpath = path.join(target, sources[i])
       internals.copy(sourcepath, targetpath, options)
     }
-  },
+  }
 }
 
 Object.assign(exports, {
   // Expands source and target to absolute paths, then calls internals.copy
-  copy(source, target, options) {
-
+  copy (source, target, options) {
     if (typeof target === 'object') {
       options = target
       target = undefined
     }
-
     options = options || {}
 
     var root = path.dirname(internals.findParent(module).filename)
@@ -92,7 +90,7 @@ Object.assign(exports, {
   },
 
   // Copy a single file
-  copyFile(source, target, options) {
+  copyFile (source, target, options) {
     internals.mkdir(path.dirname(target))
     var mode = ~process.umask() & parseInt('666', 8)
     if (fs.existsSync(target) && !options.overwrite) {
@@ -109,7 +107,7 @@ Object.assign(exports, {
   },
 
   // Given a path, determine if the path is a directory
-  isDir(path) {
+  isDir (path) {
     try {
       var stat = fs.statSync(path)
       return stat.isDirectory()
@@ -125,7 +123,7 @@ Object.assign(exports, {
    * @param {string} start
    * @returns {string|undefined}
    */
-  findGitRoot(start) {
+  findGitRoot (start) {
     var root
     start = start || path.dirname(internals.findParent(module).filename)
     if (exports.isDir(path.join(start, '.git'))) {
@@ -147,7 +145,7 @@ Object.assign(exports, {
    * @param {string} start
    * @returns {string}
    */
-  findProjectRoot(start) {
+  findProjectRoot (start) {
     start = start || path.dirname(internals.findParent(module).filename)
     var position = start.indexOf('node_modules')
     var root = start.slice(0, position === -1 ? undefined : position - path.sep.length)
@@ -168,7 +166,7 @@ Object.assign(exports, {
    * @param {string} [root]
    * @returns {undefined}
    */
-  installHooks(hooks, root) {
+  installHooks (hooks, root) {
     hooks = Array.isArray(hooks) ? hooks : [hooks]
     var gitRoot = exports.findGitRoot(root)
     var hookRoot = path.join(gitRoot, '.git', 'hooks')
@@ -182,6 +180,6 @@ Object.assign(exports, {
       }
       fs.writeFileSync(dest, fs.readFileSync(source), { mode: 511 })
     }
-  },
+  }
 
 })

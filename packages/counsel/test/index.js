@@ -70,7 +70,7 @@ test('rule installs script with pre-existing script, but variant permits existin
   .then(() => counsel.apply([echoScriptRule, echoScriptVariantOkRule]))
   .then(() => JSON.parse(fs.readFileSync(path.resolve(__dirname, `./${testProjectId}/package.json`))))
   .then(dummyPkgJson => t.equals(
-    dummyPkgJson.scripts.echo, 
+    dummyPkgJson.scripts.echo,
     echoScriptRule.declaration.scriptCommand,
     'echo script persisted'
   ))

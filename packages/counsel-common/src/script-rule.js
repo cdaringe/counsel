@@ -4,21 +4,21 @@ const Rule = require('./rule')
 
 /**
  * Adds a script to the target package's package.json
- * 
+ *
  * @class ScriptRule
  * @extends {Rule}
  */
 class ScriptRule extends Rule {
   /**
    * Creates an instance of ScriptRule.
-   * 
+   *
    * @param {object} opts
    * @param {string} opts.scriptName npm script name
    * @param {string} opts.scriptCommand npm script command
    * @param {string[]} [opts.scriptCommandVariants] permitted variants of the script. * for permitting any alternative
    * @memberOf ScriptRule
    */
-  constructor(opts) {
+  constructor (opts) {
     super(opts)
     if (!this.declaration.scriptName) throw new ReferenceError('script rule must contain a scriptName')
     if (!this.declaration.scriptCommand) throw new ReferenceError('script rule must contain a scriptcmd')
@@ -30,7 +30,7 @@ class ScriptRule extends Rule {
    * it
    * @memberOf ScriptRule
    */
-  apply(counsel) {
+  apply (counsel) {
     Rule.prototype.apply.apply(this, arguments)
     const pkg = counsel.targetProjectPackageJson
     const name = this.declaration.scriptName
@@ -49,7 +49,7 @@ class ScriptRule extends Rule {
         `\tpermitted scripts: ${variants.join(' ')}\n`,
         'please remove the offending script or update/relax your counsel rules.'
       ].join(''))
-    } 
+    }
     pkg.scripts[name] = cmd
   }
 }

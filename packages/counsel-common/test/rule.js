@@ -13,7 +13,7 @@ test('rule', t => {
 
   const ruValide = new Rule({
     dependencies: [dep],
-    devDependencies: [dev],
+    devDependencies: [dev]
   })
   t.deepEquals(ruValide.dependencies, [dep], 'deps getter')
   t.deepEquals(ruValide.devDependencies, [dev], 'dev deps getter')

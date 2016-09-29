@@ -5,32 +5,32 @@
  * @class Rule
  */
 class Rule {
-  constructor(declaration) {
+  constructor (declaration) {
     this.declaration = {}
     Object.assign(this.declaration, declaration)
   }
 
-  get dependencies() {
+  get dependencies () {
     return this.declaration.dependencies || []
   }
 
-  set dependencies(deps) {
+  set dependencies (deps) {
     this.declaration.dependencies = deps
   }
 
-  get devDependencies() {
+  get devDependencies () {
     return this.declaration.devDependencies || []
   }
 
-  set devDependencies(deps) {
+  set devDependencies (deps) {
     this.declaration.devDependencies = deps
   }
 
-  get name() {
+  get name () {
     return this.declaration.name
   }
 
-  apply(counsel) {
+  apply (counsel) {
     counsel.logger.verbose(`applying rule: ${this.name || 'UNNAMED-RULE'}`)
   }
 }
