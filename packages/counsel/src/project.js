@@ -73,7 +73,12 @@ const internals = {
 }
 
 Object.assign(exports, {
-  // Expands source and target to absolute paths, then calls internals.copy
+  /**
+   * Expands source and target to absolute paths, then calls internals.copy
+   * @param {string} source
+   * @param {string} target
+   * @param {object} [options] passed directly to internals.copy
+   */
   copy (source, target, options) {
     if (typeof target === 'object') {
       options = target
@@ -94,7 +99,13 @@ Object.assign(exports, {
     return internals.copy(sourcepath, targetpath, options)
   },
 
-  // Copy a single file
+
+  /**
+   * Copies a file.
+   * @param {string} source
+   * @param {string} target
+   * @param {object} [options]
+   */
   copyFile (source, target, options) {
     internals.mkdir(path.dirname(target))
     var mode = ~process.umask() & parseInt('666', 8)
@@ -105,13 +116,17 @@ Object.assign(exports, {
     try {
       sourceContent = fs.readFileSync(source)
     } catch (err) {
-      // @TODO this is very naughty, nlf!
       // pass
+      // @TODO passing is very naughty!
     }
     fs.writeFileSync(target, sourceContent, { flag: 'w', mode: mode })
   },
 
-  // Given a path, determine if the path is a directory
+  /**
+   * determines if path is a dir
+   * @param {string} path
+   * @returns {boolean}
+   */
   isDir (path) {
     try {
       var stat = fs.statSync(path)
