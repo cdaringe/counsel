@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-counsel.html">counsel</a><ul class='methods'><li data-type='method'><a href="module-counsel.html#.apply">apply</a></li><li data-type='method'><a href="module-counsel.html#.installDeps">installDeps</a></li><li data-type='method'><a href="module-counsel.html#.installDevs">installDevs</a></li><li data-type='method'><a href="module-counsel.html#.isTargetPackageDirty">isTargetPackageDirty</a></li><li data-type='method'><a href="module-counsel.html#.npmInstall">npmInstall</a></li><li data-type='method'><a href="module-counsel.html#.writeTargetPackageIfDirty">writeTargetPackageIfDirty</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><h1>counsel :herb:</h1><h2>install</h2><p><code>npm i --save counsel</code></p>
+<h2>usage</h2><p>before <code>counsel</code>, you have a boring-old-package:</p>
+<pre class="prettyprint source lang-json"><code>// package.json
+{
+  &quot;name&quot;: &quot;boring-old-package&quot;,
+  ...
+}</code></pre><p>but, you want to keep up to date with your team's latest and greatest patterns.  no problem, build &amp; publish a small <code>counsel</code> tool!</p>
+<pre class="prettyprint source lang-json"><code>// package.json
+{
+  &quot;name&quot;: &quot;my-counsel-tool&quot;,
+  &quot;scripts&quot;: {
+    &quot;install&quot;: &quot;node my-counsel-tool.js&quot;
+  }
+}</code></pre><pre class="prettyprint source lang-js"><code>// my-counsel-tool.js
+const counsel = require('counsel')
+const ScriptRule = require('counsel-common').ScriptRule
+const PreCommitRule = require('counsel-common').PreCommitRule
+counsel.apply([
+  new ScriptRule({
+    dependencies: ['standard']
+    scriptName: 'lint',
+    scriptCommand: 'standard'
+  }),
+  new PreCommitRule({
+    preCommitTasks: ['validate', 'lint', 'test', 'check-coverage']
+    // ^ will install a git pre-commit hook that runs these npm scripts
+  })
+])</code></pre><p>install <code>my-counsel-tool</code> into <code>boring-old-package</code>:</p>
+<pre class="prettyprint source lang-json"><code>// package.json
+{
+  &quot;name&quot;: &quot;boring-old-package&quot;,
+  &quot;dependencies&quot;: {
+    &quot;standard&quot;: &quot;^4.0.1&quot;,
+    &quot;my-counsel-tool&quot;: &quot;^1.0.0&quot;
+  },
+  &quot;scripts&quot;: {
+    &quot;lint&quot;: &quot;standard&quot;,
+    ...
+  },
+  &quot;pre-commit&quot;: [
+    &quot;validate&quot;,
+    &quot;lint&quot;,
+    &quot;test&quot;,
+    &quot;check-coverage&quot;
+  ]
+}</code></pre><p>wow! not so boring after all now, is it.  when <code>my-counsel-tool</code> installs or updates, it can update your package!  it is <em>not</em> limited to your <code>package.json</code>, of course.  make rules to do anything to your repo on <code>install</code>, on some git <code>hook</code> event, or any <code>npm</code> event!</p>
+<h2>what</h2><p>so what is it?</p>
+<p>it's the end of boilerplate. automatically bake structure, opinions, and biz rules into projects.</p>
+<p>are you familiar with a reference repo? boilerplate repo?  template repo?  if you are, you know they grow stale.  counsel eliminates the need for these sorts of projects.  instead, counsel allows your team or company to roll personalized tooling that is shared across every package as a development dependency.  it automatically applies your opinions, your formats, your templates, your test scripts, your lint configurations, your &quot;whatevers&quot; per your own desire, with very little effort.</p>
+<p>counsel is a framework for applying business rules and opinions into packages.</p>
+<p>counsel should <em>rarely</em> be installed directly into general projects.  instead, use it to make a shared tool.  place all the rules you want into the tool and release it as a standalone package.</p>
+<h2>rules</h2><p><code>counsel</code> is composed of sets of <code>Rule</code>s to apply to your package.  provide it a set of rules, and it will fulfill them.</p>
+<h2>configure</h2><p>some rules aren't so simple.  for rules that offer configuration, you can add your config in package.json:</p>
+<p><code>&quot;counsel&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
+<p>it is <strong>recommended</strong> that in your <code>my-counsel-tool</code> package, to squash <code>counsel.configKey = 'my-counsel-tool'</code>, such that now, you can load config like:</p>
+<p><code>&quot;my-counsel-tool&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
+<h2>todo</h2><ul>
+<li>formalize api docs!</li>
+<li>add some more Rules!</li>
+<li>break rules out into independet thingies.</li>
+<li>script rule, allow by default for stacked scripts to <code>&amp;&amp;</code> onto each other</li>
+</ul>
+<h2>to implement</h2><ul>
+<li>readme-plugin (assert readme present)</li>
+<li>template-plugin (apply swig-templates to file(s). e.g. auto-build readme)</li>
+<li>docs (jsdoc plugin. add doc script, add docs on postpublish apply .jsdoc.json)</li>
+<li>filename convention (assert filenames are, say, kebab-cased.js)</li>
+<li><del>lint</del> &lt;== ScriptRule fulfills</li>
+<li><del>pre-commit</del></li>
+<li><del>nsp</del> &lt;== Script + PreCommit fulfills</li>
+</ul></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.1</a> using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
