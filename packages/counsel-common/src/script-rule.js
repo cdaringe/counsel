@@ -1,6 +1,7 @@
 'use strict'
 
 const Rule = require('./rule')
+const DEFAULT_NPM_SCRIPTS = [/no test/]
 
 /**
  * Adds a script to the target package's package.json
@@ -35,7 +36,7 @@ class ScriptRule extends Rule {
     const pkg = counsel.targetProjectPackageJson
     const name = this.declaration.scriptName
     const cmd = this.declaration.scriptCommand
-    const prexistingCmd = pkg.scripts[name]
+    const prexistingCmd = pkg.scripts ? pkg.scripts[name] : null
     const variants = (this.declaration.scriptCommandVariants || []).concat([cmd])
     const isAnyVariantValid = variants.indexOf('*') > -1
     if (!pkg.scripts) pkg.scripts = {}
@@ -43,12 +44,15 @@ class ScriptRule extends Rule {
       if (prexistingCmd.trim() === cmd.trim()) return
       if (isAnyVariantValid) return
       if (variants.indexOf(prexistingCmd) > -1) return
-      throw new Error([
-        `attempted to install npm script "${name}, however existing script already present.\n`,
-        `\texisting: ${prexistingCmd}\n`,
-        `\tpermitted scripts: ${variants.join(' ')}\n`,
-        'please remove the offending script or update/relax your counsel rules.'
-      ].join(''))
+      if (variants.filter(v => v && v.test).some(rgx => rgx.test(prexistingCmd))) return
+      if (!DEFAULT_NPM_SCRIPTS.filter(v => v && v.test).some(rgx => rgx.test(prexistingCmd))) {
+        throw new Error([
+          `attempted to install npm script "${name}, however existing script already present.\n`,
+          `\texisting: ${prexistingCmd}\n`,
+          `\tpermitted scripts: ${variants.join(' ')}\n`,
+          'please remove the offending script or update/relax your counsel rules.'
+        ].join(''))
+      }
     }
     pkg.scripts[name] = cmd
   }

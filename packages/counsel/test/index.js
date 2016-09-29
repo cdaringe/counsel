@@ -3,6 +3,7 @@
 require('perish')
 const test = require('tape')
 const counsel = require('../')
+counsel.logger.configure({ transports: [] }) // hush hush little winston.
 const path = require('path')
 const util = require('./util')
 const cloneDeep = require('lodash.clonedeep')

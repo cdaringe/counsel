@@ -38,7 +38,11 @@ class PreCommitRule extends Rule {
       ].join(' '))
       return
     }
-    counsel.project.installHooks(hook)
+    counsel.project.installHooks({
+      hook: hook,
+      root: counsel.targetProjectRoot,
+      search: false
+    })
     pkg[hook] = tasks
   }
 }

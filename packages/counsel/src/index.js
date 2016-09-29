@@ -13,15 +13,11 @@ const path = require('path')
 
 const jsonRead = (p) => JSON.parse(fs.readFileSync(p))
 
-const targetProjectRoot = project.findProjectRoot()
-const targetProjectPackageJsonFilename = path.join(targetProjectRoot, 'package.json')
-const targetProjectPackageJson = jsonRead(targetProjectPackageJsonFilename)
-
 module.exports = {
-  targetProjectRoot: targetProjectRoot,
-  targetProjectPackageJson: targetProjectPackageJson,
-  targetProjectPackageJsonFilename: targetProjectPackageJsonFilename,
-  _targetProjectPackageJsonPristine: cloneDeep(targetProjectPackageJson),
+  targetProjectRoot: null,
+  targetProjectPackageJson: null,
+  targetProjectPackageJsonFilename: null,
+  _targetProjectPackageJsonPristine: null,
 
   logger: logger,
   project: project,
@@ -33,6 +29,8 @@ module.exports = {
    * @returns {Promise}
    */
   apply (rules) {
+    this.setTargetPackageMeta()
+
     const config = this.targetProjectPackageJson[this.configKey] || {}
     this.targetProjectPackageJson[this.configKey] = config
 
@@ -106,6 +104,16 @@ module.exports = {
     }
     logger.info(`install results:\n\n\t${rslt.toString().replace(/\n/g, '\n\t')}`)
     return true
+  },
+
+  setTargetPackageMeta () {
+    this.targetProjectRoot = this.targetProjectRoot ? this.targetProjectRoot : project.findProjectRoot(process.cwd())
+    this.targetProjectPackageJsonFilename = this.targetProjectPackageJsonFilename ? this.targetProjectPackageJsonFilename : path.join(this.targetProjectRoot, 'package.json')
+    this.targetProjectPackageJson = this.targetProjectPackageJson ? this.targetProjectPackageJson : jsonRead(this.targetProjectPackageJsonFilename)
+    this._targetProjectPackageJsonPristine = cloneDeep(this.targetProjectPackageJson)
+    this.logger.verbose([
+      `Target package: ${this.targetProjectPackageJson.name} @ ${this.targetProjectPackageJsonFilename}`
+    ].join(''))
   },
 
   /**
