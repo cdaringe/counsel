@@ -14,14 +14,63 @@ const path = require('path')
 const jsonRead = (p) => JSON.parse(fs.readFileSync(p))
 
 module.exports = {
+  /**
+   * dirname of project to apply counsel too
+   * @property targetProjectRoot
+   * @type {string}
+   */
   targetProjectRoot: null,
+
+  /**
+   * parsed package.json of target project
+   * @property targetProjectPackageJson
+   * @type {object}
+   */
   targetProjectPackageJson: null,
+
+  /**
+   * filename of target project's package.json
+   * @property targetProjectPackageJsonFilename
+   * @type {string}
+   */
   targetProjectPackageJsonFilename: null,
+
+  /**
+   * @private
+   */
   _targetProjectPackageJsonPristine: null,
 
+  /**
+   * @property logger
+   * @type {Winston}
+   */
   logger: logger,
+
+  /**
+   * @property project
+   * @type {Module}
+   */
   project: project,
-  configKey: 'counsel',
+
+  /**
+   * @private
+   */
+  _configKey: 'counsel',
+
+  /**
+   * sets the field in package.jon that you can configure your counsel runner with.
+   * also, sets the logger name.
+   * @property configKey
+   * @type {string}
+   */
+  get configKey () {
+    return this._configKey
+  },
+  set configKey (key) {
+    const tport = this.logger.transports.console
+    tport.name = tport.label = key
+    this._configKey = key
+  },
 
   /**
    * main counsel entry point. applies rules.
@@ -107,14 +156,17 @@ module.exports = {
     return true
   },
 
+  /**
+   * scours filesystem to find data about the project we will be counseling.
+   * updates class properties.
+   * @returns {undefined}
+   */
   setTargetPackageMeta () {
     this.targetProjectRoot = this.targetProjectRoot ? this.targetProjectRoot : project.findProjectRoot(process.cwd())
     this.targetProjectPackageJsonFilename = this.targetProjectPackageJsonFilename ? this.targetProjectPackageJsonFilename : path.join(this.targetProjectRoot, 'package.json')
     this.targetProjectPackageJson = this.targetProjectPackageJson ? this.targetProjectPackageJson : jsonRead(this.targetProjectPackageJsonFilename)
     this._targetProjectPackageJsonPristine = cloneDeep(this.targetProjectPackageJson)
-    this.logger.verbose([
-      `Target package: ${this.targetProjectPackageJson.name} @ ${this.targetProjectPackageJsonFilename}`
-    ].join(''))
+    this.logger.verbose(`Target package: ${this.targetProjectPackageJson.name} @ ${this.targetProjectRoot}`)
   },
 
   /**

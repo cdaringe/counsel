@@ -1,3 +1,7 @@
+/**
+ * console only, `Winston` transport logger
+ * @module logger
+ */
 'use strict'
 
 const winston = require('winston')
