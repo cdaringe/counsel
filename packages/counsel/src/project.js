@@ -103,8 +103,8 @@ Object.assign(exports, {
    * @param {string} source
    * @param {string} target
    * @param {object} options passed directly to internals.copy.
-   * @param {string} options.root counsel tooling root
-   * @param {string} options.projectRoot
+   * @param {string} [options.root] counsel tooling root
+   * @param {string} options.targetProjectRoot
    * @param {boolean} [options.overwrite]
    */
   copy (source, target, options) {
@@ -114,13 +114,18 @@ Object.assign(exports, {
     }
     options = options || {}
 
-    var root = options.root || path.dirname(internals.findParent(module).filename)
-    var projectRoot = options.projectRoot || exports.findProjectRoot(root)
+    var root = options.root || exports.findProjectRoot()
+    var targetProjectRoot = options.targetProjectRoot
 
     var sourcepath = path.resolve(root, source)
-    var targetpath = path.resolve(projectRoot, target || source)
+    var targetpath = path.resolve(targetProjectRoot, target)
 
-    if (targetpath.indexOf(projectRoot) !== 0) {
+    // auto apply basename if copying filename => dir (vs filename to filename)
+    if (!exports.isDir(sourcepath) && exports.isDir(targetpath)) {
+      targetpath = path.join(targetpath, path.basename(sourcepath))
+    }
+
+    if (targetpath.indexOf(targetProjectRoot) !== 0) {
       throw new Error('Destination must be within project root')
     }
 

@@ -3,7 +3,7 @@
 require('perish')
 const fs = require('fs')
 const path = require('path')
-const execSync = require('child_process').execSync
+const exec = require('child_process').exec
 
 /**
  * Test.
@@ -14,5 +14,9 @@ const pkgDirnames = fs.readdirSync(path.resolve(__dirname, '..', 'packages')).fi
 pkgDirnames.map((dir, ndx) => {
   const cwd = path.resolve(__dirname, '..', 'packages', dir)
   console.log(`running tests in: ${cwd}`)
-  console.log(execSync('npm test', { cwd: cwd }).toString())
+  const child = exec('npm test', { cwd: cwd }, (err, stdout, stderr) => {
+    if (err) throw err
+    console.log(`${stdout}`)
+    console.log(`${stderr}`)
+  })
 })

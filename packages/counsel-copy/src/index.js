@@ -33,10 +33,14 @@ class CopyRule extends Rule {
    */
   apply (counsel) {
     Rule.prototype.apply.apply(this, arguments)
-    const toCopy = Array.isArray(this.declaration.copySource) ?
-      this.declaration.copySource : [this.declaration.copySource]
+    const toCopy = Array.isArray(this.declaration.copySource)
+      ? this.declaration.copySource : [this.declaration.copySource]
     const dest = this.declaration.copyTarget
-    toCopy.forEach(src => counsel.project.copy(src, dest, { projectRoot: counsel.targetProjectRoot }))
+    toCopy.forEach(src => counsel.project.copy(
+      src,
+      dest,
+      { targetProjectRoot: counsel.targetProjectRoot }
+    ))
   }
 }
 

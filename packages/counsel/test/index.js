@@ -14,6 +14,9 @@ const echoScriptNoVariants = require('./dummy-rules/echo-script-no-variants')
 const preCommitRule = require('./dummy-rules/pre-commit-rule')
 const fs = require('fs')
 
+const setup = () => util.setupTestProject(__dirname)
+const teardown = (id) => util.teardownTestProject(__dirname, id)
+
 test('rule installs package', t => {
   let testProjectId = setup()
   t.plan(2)
