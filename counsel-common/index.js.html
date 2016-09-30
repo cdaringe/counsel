@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>rule.js - Documentation</title>
+    <title>index.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,7 +28,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">rule.js</h1>
+    <h1 class="page-title">index.js</h1>
     
 
     
@@ -38,49 +38,20 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>'use strict'
-
-/**
- * Counsel Rule to run/enforce on project
- * @class Rule
+            <pre class="prettyprint source linenums"><code>/**
+ * @module counsel-common
  */
-class Rule {
-  constructor (declaration) {
-    this.declaration = {}
-    Object.assign(this.declaration, declaration)
-  }
+'use strict'
 
-  get dependencies () {
-    return this.declaration.dependencies || []
-  }
+const Rule = require('./rule')
+const ScriptRule = require('./script-rule')
+const PreCommitRule = require('./pre-commit-rule')
 
-  set dependencies (deps) {
-    this.declaration.dependencies = deps
-  }
-
-  get devDependencies () {
-    return this.declaration.devDependencies || []
-  }
-
-  set devDependencies (deps) {
-    this.declaration.devDependencies = deps
-  }
-
-  get name () {
-    return this.declaration.name
-  }
-
-  /**
-   * applies a single counsel rule
-   * @param {any} counsel
-   * @memberOf Rule
-   */
-  apply (counsel) {
-    counsel.logger.verbose(`applying rule: ${this.name || 'UNNAMED-RULE'}`)
-  }
+module.exports = {
+  Rule: Rule,
+  ScriptRule: ScriptRule,
+  PreCommitRule: PreCommitRule
 }
-
-module.exports = Rule
 </code></pre>
         </article>
     </section>
