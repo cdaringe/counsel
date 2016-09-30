@@ -2,6 +2,7 @@
 
 const Rule = require('./rule')
 const xor = require('lodash.xor')
+const noop = () => {}
 
 /**
  * Adds `git` pre-commit hooks to the project.  Enables you to specify a set of
@@ -13,13 +14,28 @@ const xor = require('lodash.xor')
 class PreCommitRule extends Rule {
 
   /**
+   * Creates an instance of PreCommitRule.
+   *
+   * @param {object} opts
+   * @param {string[]} opts.preCommitTasks list of commands or npm tasks to run on precommit
+   * @memberOf PreCommitRule
+   */
+  constructor (opts) {
+    super(opts)
+    noop() // bypass useless constructor warning. @jsdoc must happen!
+  }
+
+  /**
    * Adds the requested script to the package.json
    * @note Rule's shall not write the package.json file.  counsel shall
    * write the file on our behalf to not trash the disk and many rules may update
    * it
+   * @override
    * @memberOf ScriptRule
+   * @param {Module} counsel
+   * @returns {undefined}
    */
-  apply (counsel, ruleConfig) {
+  apply (counsel) {
     Rule.prototype.apply.apply(this, arguments)
     const pkg = counsel.targetProjectPackageJson
     let tasks = ['validate', 'lint', 'test']

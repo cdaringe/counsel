@@ -108,15 +108,13 @@ it is **recommended** that in your `my-counsel-tool` package, to squash `counsel
 
 ## todo
 
-- add some more Rules!
-- break rules out into independet thingies.
-- script rule, allow by default for stacked scripts to `&&` onto each other
-- ~~formalize api docs!~~
 
 - readme-plugin (assert readme present)
 - template-plugin (apply swig-templates to file(s). e.g. auto-build readme)
 - docs (jsdoc plugin. add doc script, add docs on postpublish apply .jsdoc.json)
 - filename convention (assert filenames are, say, kebab-cased.js)
+- ~~formalize api docs!~~
+- ~~script rule, allow by default for stacked scripts to `&&` onto each other~~
 - ~~lint~~ <== ScriptRule fulfills
 - ~~pre-commit~~
 - ~~nsp~~ <== Script + PreCommit fulfills

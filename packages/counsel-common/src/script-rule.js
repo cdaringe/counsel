@@ -36,6 +36,9 @@ class ScriptRule extends Rule {
    * write the file on our behalf to not trash the disk and many rules may update
    * it
    * @memberOf ScriptRule
+   * @override
+   * @param {Module} counsel
+   * @returns {undefined}
    */
   apply (counsel) {
     Rule.prototype.apply.apply(this, arguments)

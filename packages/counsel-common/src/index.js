@@ -1,3 +1,6 @@
+/**
+ * @module counsel-common
+ */
 'use strict'
 
 const Rule = require('./rule')

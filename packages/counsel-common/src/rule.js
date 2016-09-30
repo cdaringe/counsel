@@ -30,6 +30,11 @@ class Rule {
     return this.declaration.name
   }
 
+  /**
+   * applies a single counsel rule
+   * @param {any} counsel
+   * @memberOf Rule
+   */
   apply (counsel) {
     counsel.logger.verbose(`applying rule: ${this.name || 'UNNAMED-RULE'}`)
   }
