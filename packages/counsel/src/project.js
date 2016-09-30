@@ -13,6 +13,62 @@ const logger = require('./logger')
  * @private
  */
 const internals = {
+
+  /**
+   * Determine if source is a directory or a file and call the appropriate method
+   * @param {string} source
+   * @param {string} target
+   * @param {object} [options]
+   * @param {boolean} overwrite
+   * @returns {undefined}
+   */
+  copy (source, target, options) {
+    if (exports.isDir(source)) {
+      internals.copyDirectory(source, target, options)
+    } else {
+      return internals.copyFile(source, target, options)
+    }
+  },
+
+  /**
+   * Recursively copy a directory
+   * @param {string} source
+   * @param {string} target
+   * @param {object} [options]
+   */
+  copyDirectory (source, target, options) {
+    internals.mkdir(target)
+    var sources = fs.readdirSync(source)
+    for (var i = 0, l = sources.length; i < l; ++i) {
+      var sourcepath = path.join(source, sources[i])
+      var targetpath = path.join(target, sources[i])
+      internals.copy(sourcepath, targetpath, options)
+    }
+  },
+
+  /**
+   * Copies a file.
+   * @param {string} source
+   * @param {string} target
+   * @param {object} [options]
+   * @param {boolean} [options.overwrite] overwrite existing file. defaults true
+   */
+  copyFile (source, target, options) {
+    internals.mkdir(path.dirname(target))
+    var mode = ~process.umask() & parseInt('666', 8)
+    if (fs.existsSync(target) && !options.overwrite) {
+      return new Error(target + ' already exists')
+    }
+    var sourceContent = ''
+    try {
+      sourceContent = fs.readFileSync(source)
+    } catch (err) {
+      // pass
+      // @TODO passing is very naughty!
+    }
+    fs.writeFileSync(target, sourceContent, { flag: 'w', mode: mode })
+  },
+
   /**
    * Find the topmost parent of the given module.
    * @param {Module} mod
@@ -38,37 +94,6 @@ const internals = {
       internals.mkdir(path.dirname(p))
       internals.mkdir(p)
     }
-  },
-
-  /**
-   * Determine if source is a directory or a file and call the appropriate method
-   * @param {string} source
-   * @param {string} target
-   * @param {object} [options]
-   * @returns {undefined}
-   */
-  copy (source, target, options) {
-    if (exports.isDir(source)) {
-      internals.copyDirectory(source, target, options)
-    } else {
-      return exports.copyFile(source, target, options)
-    }
-  },
-
-  /**
-   * Recursively copy a directory
-   * @param {string} source
-   * @param {string} target
-   * @param {object} [options]
-   */
-  copyDirectory (source, target, options) {
-    internals.mkdir(target)
-    var sources = fs.readdirSync(source)
-    for (var i = 0, l = sources.length; i < l; ++i) {
-      var sourcepath = path.join(source, sources[i])
-      var targetpath = path.join(target, sources[i])
-      internals.copy(sourcepath, targetpath, options)
-    }
   }
 }
 
@@ -77,7 +102,10 @@ Object.assign(exports, {
    * Expands source and target to absolute paths, then calls internals.copy
    * @param {string} source
    * @param {string} target
-   * @param {object} [options] passed directly to internals.copy
+   * @param {object} options passed directly to internals.copy.
+   * @param {string} options.root counsel tooling root
+   * @param {string} options.projectRoot
+   * @param {boolean} [options.overwrite]
    */
   copy (source, target, options) {
     if (typeof target === 'object') {
@@ -86,8 +114,8 @@ Object.assign(exports, {
     }
     options = options || {}
 
-    var root = path.dirname(internals.findParent(module).filename)
-    var projectRoot = exports.findProjectRoot(root)
+    var root = options.root || path.dirname(internals.findParent(module).filename)
+    var projectRoot = options.projectRoot || exports.findProjectRoot(root)
 
     var sourcepath = path.resolve(root, source)
     var targetpath = path.resolve(projectRoot, target || source)
@@ -97,28 +125,6 @@ Object.assign(exports, {
     }
 
     return internals.copy(sourcepath, targetpath, options)
-  },
-
-  /**
-   * Copies a file.
-   * @param {string} source
-   * @param {string} target
-   * @param {object} [options]
-   */
-  copyFile (source, target, options) {
-    internals.mkdir(path.dirname(target))
-    var mode = ~process.umask() & parseInt('666', 8)
-    if (fs.existsSync(target) && !options.overwrite) {
-      return new Error(target + ' already exists')
-    }
-    var sourceContent = ''
-    try {
-      sourceContent = fs.readFileSync(source)
-    } catch (err) {
-      // pass
-      // @TODO passing is very naughty!
-    }
-    fs.writeFileSync(target, sourceContent, { flag: 'w', mode: mode })
   },
 
   /**

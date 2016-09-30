@@ -6,7 +6,6 @@ const counsel = require('../')
 counsel.logger.configure({ transports: [] }) // hush hush little winston.
 const path = require('path')
 const util = require('./util')
-const cloneDeep = require('lodash.clonedeep')
 const tapeRule = require('./dummy-rules/tape-rule')
 const echoScriptRule = require('./dummy-rules/echo-script-rule')
 const echoScriptPermitAppendRule = require('./dummy-rules/echo-script-permit-append-rule')
@@ -14,30 +13,6 @@ const echoScriptVariantOkRule = require('./dummy-rules/echo-script-variant-ok-ru
 const echoScriptNoVariants = require('./dummy-rules/echo-script-no-variants')
 const preCommitRule = require('./dummy-rules/pre-commit-rule')
 const fs = require('fs')
-const counselDefaultProjectRoot = counsel.targetProjectRoot
-
-const setup = () => {
-  const testProjectId = util.createTestProject()
-  const dummyTestPkgDir = path.join(__dirname, testProjectId)
-  process.chdir(dummyTestPkgDir)
-
-  // squash counsel target project attrs
-  counsel.targetProjectRoot = dummyTestPkgDir
-  counsel.targetProjectPackageJsonFilename = path.join(dummyTestPkgDir, 'package.json')
-  counsel.targetProjectPackageJson = require(counsel.targetProjectPackageJsonFilename)
-  counsel._targetProjectPackageJsonPristine = cloneDeep(counsel.targetProjectPackageJson)
-
-  return testProjectId
-}
-const teardown = (testProjectId) => {
-  try {
-    counsel.targetProjectRoot = counselDefaultProjectRoot
-    util.teardownTestProject(testProjectId)
-    process.chdir(__dirname)
-  } catch (err) {
-    console.error(err)
-  }
-}
 
 test('rule installs package', t => {
   let testProjectId = setup()

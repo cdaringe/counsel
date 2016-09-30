@@ -62,6 +62,26 @@
       "outDir": null
     },
     {
+      "name": "test - counsel-copy",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/packages/counsel-copy/test/index.js",
+      "stopOnEntry": false,
+      "args": [],
+      "cwd": "${workspaceRoot}/packages/counsel-copy",
+      "preLaunchTask": null,
+      "runtimeExecutable": null,
+      "runtimeArgs": [
+        "--nolazy"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "internalConsole",
+      "sourceMaps": false,
+      "outDir": null
+    },
+    {
       "name": "Attach",
       "type": "node",
       "request": "attach",
