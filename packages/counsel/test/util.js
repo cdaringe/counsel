@@ -27,12 +27,13 @@ module.exports = {
 
   _createTestProject (destRootDirname) {
     ++this.projectCounter
-    const projectId = `dummy-project-test-${this.projectCounter}`
+    const dummyProjectPrefix = 'dummy-project-test-'
+    const projectId = `${dummyProjectPrefix}${this.projectCounter}`
     const destDirname = path.join(destRootDirname, projectId)
     const destGitDirname = path.join(destDirname, '.git')
     const dummyProjectDirname = path.resolve(__dirname, 'dummy-project')
     cp.execSync([
-      `rm -rf ${destDirname}`, // clean!
+      `rm -rf ${dummyProjectPrefix}*`, // clean!
       `cp -r ${dummyProjectDirname} ${destDirname}`,
       `mkdir -p ${destGitDirname}`
     ].join(' && '), { cwd: destRootDirname })

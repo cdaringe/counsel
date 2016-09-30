@@ -1,6 +1,6 @@
 'use strict'
 
-const ScriptRule = require('counsel-common').ScriptRule
+const ScriptRule = require('../')
 
 module.exports = new ScriptRule({
   name: 'install-echo-script',

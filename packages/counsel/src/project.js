@@ -37,7 +37,7 @@ const internals = {
    * @param {object} [options]
    */
   copyDirectory (source, target, options) {
-    internals.mkdir(target)
+    exports.mkdir(target)
     var sources = fs.readdirSync(source)
     for (var i = 0, l = sources.length; i < l; ++i) {
       var sourcepath = path.join(source, sources[i])
@@ -54,7 +54,7 @@ const internals = {
    * @param {boolean} [options.overwrite] overwrite existing file. defaults true
    */
   copyFile (source, target, options) {
-    internals.mkdir(path.dirname(target))
+    exports.mkdir(path.dirname(target))
     var mode = ~process.umask() & parseInt('666', 8)
     if (fs.existsSync(target) && !options.overwrite) {
       return new Error(target + ' already exists')
@@ -76,24 +76,6 @@ const internals = {
    */
   findParent (mod) {
     return mod.parent ? internals.findParent(mod.parent) : mod
-  },
-
-  /**
-   * Recursively creates directories until `path` exists
-   * @param {string} path
-   */
-  mkdir (p) {
-    var mode = ~process.umask() & parseInt('777', 8)
-    if (exports.isDir(p)) return
-    try {
-      fs.mkdirSync(p, mode)
-    } catch (err) {
-      if (err.code !== 'ENOENT') {
-        throw err
-      }
-      internals.mkdir(path.dirname(p))
-      internals.mkdir(p)
-    }
   }
 }
 
@@ -191,7 +173,7 @@ Object.assign(exports, {
 
   /**
    * Install the git hook as specified by `hook`.
-   * For example, `.installHook('pre-commit')`
+   * For example, `.installHooks('pre-commit')`
    * @param {object} opts
    * @param {string|string[]} opts.hooks
    * @param {string} [opts.root]
@@ -209,7 +191,7 @@ Object.assign(exports, {
     }
     var hookRoot = path.join(gitRoot, '.git', 'hooks')
     var source = path.resolve(__dirname, '..', 'bin', 'validate.sh')
-    if (!exports.isDir(hookRoot)) internals.mkdir(hookRoot)
+    if (!exports.isDir(hookRoot)) exports.mkdir(hookRoot)
     for (var i = 0, il = hooks.length; i < il; ++i) {
       var hook = hooks[i]
       var dest = path.join(hookRoot, hook)
@@ -218,6 +200,23 @@ Object.assign(exports, {
       }
       fs.writeFileSync(dest, fs.readFileSync(source), { mode: 511 })
     }
-  }
+  },
 
+  /**
+   * Recursively creates directories until `path` exists
+   * @param {string} path
+   */
+  mkdir (p) {
+    var mode = ~process.umask() & parseInt('777', 8)
+    if (exports.isDir(p)) return
+    try {
+      fs.mkdirSync(p, mode)
+    } catch (err) {
+      if (err.code !== 'ENOENT') {
+        throw err
+      }
+      exports.mkdir(path.dirname(p))
+      exports.mkdir(p)
+    }
+  }
 })

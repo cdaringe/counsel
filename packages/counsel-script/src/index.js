@@ -1,6 +1,6 @@
 'use strict'
 
-const Rule = require('./rule')
+const Rule = require('counsel-rule')
 const DEFAULT_NPM_SCRIPTS = [/no test/]
 
 /**

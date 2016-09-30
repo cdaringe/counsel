@@ -6,9 +6,8 @@ const path = require('path')
 const exec = require('child_process').exec
 
 /**
- * Test.
- *
- * Run all packages' tests in series
+ * Test all the things.
+ * Run all packages' tests in parallel.
  */
 const pkgDirnames = fs.readdirSync(path.resolve(__dirname, '..', 'packages')).filter(p => path.basename(p)[0] !== '.')
 pkgDirnames.map((dir, ndx) => {

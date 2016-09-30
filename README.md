@@ -36,8 +36,8 @@ but, you want to keep up to date with your team's latest and greatest patterns. 
 ```js
 // my-counsel-tool.js
 const counsel = require('counsel')
-const ScriptRule = require('counsel-common').ScriptRule
-const PreCommitRule = require('counsel-common').PreCommitRule
+const ScriptRule = require('counsel-script')
+const PreCommitRule = require('counsel-precommit')
 counsel.apply([
   new ScriptRule({
     dependencies: ['standard']

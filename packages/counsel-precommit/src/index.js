@@ -1,6 +1,6 @@
 'use strict'
 
-const Rule = require('./rule')
+const Rule = require('counsel-rule')
 const xor = require('lodash.xor')
 const noop = () => {}
 
@@ -46,11 +46,11 @@ class PreCommitRule extends Rule {
     }
     const hook = 'pre-commit'
     const prevTasks = pkg[hook]
-    const taskDiff = xor(tasks, prevTasks || [])
-    if (prevTasks && taskDiff.length) {
+    if (prevTasks && xor(tasks, prevTasks).length) {
       counsel.logger.warn([
-        `existing pre-commit tasks found.  leaving untouched.  consider adding`,
-        `the following tasks: ${taskDiff.join(', ')}`
+        `existing pre-commit tasks found.  leaving untouched.\n`,
+        `\tcurrent tasks: ${prevTasks}\n`,
+        `\trequested tasks: ${tasks}\n`
       ].join(' '))
       return
     }

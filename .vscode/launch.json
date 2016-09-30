@@ -82,6 +82,46 @@
       "outDir": null
     },
     {
+      "name": "test - counsel-template",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/packages/counsel-template/test/index.js",
+      "stopOnEntry": false,
+      "args": [],
+      "cwd": "${workspaceRoot}/packages/counsel-template",
+      "preLaunchTask": null,
+      "runtimeExecutable": null,
+      "runtimeArgs": [
+        "--nolazy"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "internalConsole",
+      "sourceMaps": false,
+      "outDir": null
+    },
+    {
+      "name": "test - counsel-precommit",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/packages/counsel-precommit/test/index.js",
+      "stopOnEntry": false,
+      "args": [],
+      "cwd": "${workspaceRoot}/packages/counsel-precommit",
+      "preLaunchTask": null,
+      "runtimeExecutable": null,
+      "runtimeArgs": [
+        "--nolazy"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "internalConsole",
+      "sourceMaps": false,
+      "outDir": null
+    },
+    {
       "name": "Attach",
       "type": "node",
       "request": "attach",

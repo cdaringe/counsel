@@ -1,4 +1,4 @@
-# counsel-common
+# counsel-rule
 
 [ ![Codeship Status for cdaringe/counsel](https://app.codeship.com/projects/38b24cc0-684a-0134-dd3d-5ade36a91ecb/status?branch=master)](https://app.codeship.com/projects/176370)
 ![](https://img.shields.io/badge/standardjs-%E2%9C%93-brightgreen.svg)
@@ -36,8 +36,8 @@ but, you want to keep up to date with your team's latest and greatest patterns. 
 ```js
 // my-counsel-tool.js
 const counsel = require('counsel')
-const ScriptRule = require('counsel-common').ScriptRule
-const PreCommitRule = require('counsel-common').PreCommitRule
+const ScriptRule = require('counsel-script')
+const PreCommitRule = require('counsel-precommit')
 counsel.apply([
   new ScriptRule({
     dependencies: ['standard']

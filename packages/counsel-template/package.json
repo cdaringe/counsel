@@ -1,22 +1,20 @@
 {
-  "name": "counsel-common",
+  "name": "counsel-template",
   "version": "0.0.4",
   "description": "",
   "main": "src/index.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
     "test": "node test/"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jsdoc": "^3.4.1",
-    "tape": "^4.6.0"
+    "counsel": "^0.0.5",
+    "tape": "^4.6.2"
   },
   "dependencies": {
-    "lodash.xor": "^4.5.0",
-    "winston": "^2.2.0"
+    "counsel-rule": "^0.0.4",
+    "pify": "^2.3.0",
+    "swig-templates": "^2.0.1"
   }
 }

@@ -1,6 +1,6 @@
 'use strict'
 
-const Rule = require('counsel-common').Rule
+const Rule = require('counsel-rule')
 
 /**
  * Copies files into a project.
@@ -10,13 +10,13 @@ const Rule = require('counsel-common').Rule
 class CopyRule extends Rule {
 
   /**
-   * Creates an instance of PreCommitRule.
+   * Creates an instance of CopyRule.
    *
    * @param {object} opts
    * @param {string|string[]} opts.copySource read carefully! this is relative to your counsel tooling package, _not_ necessarily the package being copied to!
-   * @param {string|string[]} opts.copyTarget read carefully! this is relative to the root of the target package!
+   * @param {string} opts.copyTarget read carefully! this is relative to the root of the target package!
    * @param {object} opts.copyOptions see counsel.project#copy
-   * @memberOf PreCommitRule
+   * @memberOf CopyRule
    */
   constructor (opts) {
     super(opts)

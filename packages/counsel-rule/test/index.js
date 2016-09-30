@@ -1,8 +1,7 @@
 'use strict'
 
-const common = require('../')
+const Rule = require('../')
 const test = require('tape')
-const Rule = common.Rule
 
 test('rule', t => {
   const dep = 'test-dep'
