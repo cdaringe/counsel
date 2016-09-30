@@ -42,6 +42,26 @@
       "outDir": null
     },
     {
+      "name": "test - counsel",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/packages/counsel/test/index.js",
+      "stopOnEntry": false,
+      "args": [],
+      "cwd": "${workspaceRoot}/packages/counsel",
+      "preLaunchTask": null,
+      "runtimeExecutable": null,
+      "runtimeArgs": [
+        "--nolazy"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "internalConsole",
+      "sourceMaps": false,
+      "outDir": null
+    },
+    {
       "name": "Attach",
       "type": "node",
       "request": "attach",
