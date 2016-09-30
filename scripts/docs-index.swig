@@ -6,7 +6,9 @@
     <link rel="stylesheet" href="github-markdown.css">
     <style>
       body {
-        padding: 3rem;
+        padding: 3vw;
+        max-width: 900px;
+        margin: auto;
       }
     </style>
   </head>
