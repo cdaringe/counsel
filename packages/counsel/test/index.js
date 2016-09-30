@@ -9,6 +9,7 @@ const util = require('./util')
 const cloneDeep = require('lodash.clonedeep')
 const tapeRule = require('./dummy-rules/tape-rule')
 const echoScriptRule = require('./dummy-rules/echo-script-rule')
+const echoScriptPermitAppendRule = require('./dummy-rules/echo-script-permit-append-rule')
 const echoScriptVariantOkRule = require('./dummy-rules/echo-script-variant-ok-rule')
 const echoScriptNoVariants = require('./dummy-rules/echo-script-no-variants')
 const preCommitRule = require('./dummy-rules/pre-commit-rule')
@@ -89,6 +90,23 @@ test('rule installs script with pre-existing script, but no variants permitted',
   .catch(err => t.ok(err.message.match(/relax/, 'errors on script conflict'))) // @TODO weak detection
   .then(() => JSON.parse(fs.readFileSync(path.resolve(__dirname, `./${testProjectId}/package.json`))))
   .then(dummyPkgJson => t.notOk(dummyPkgJson.scripts.echo, 'package.json not updatd on script conflict'))
+  .catch(t.fail)
+  .then(() => teardown(testProjectId))
+  .then(() => t.pass('teardown'))
+  .then(t.end)
+})
+
+test('rule installs same script, permits appending', t => {
+  let testProjectId = setup()
+  t.plan(2)
+  Promise.resolve()
+  .then(() => counsel.apply([echoScriptRule, echoScriptPermitAppendRule]))
+  .then(() => JSON.parse(fs.readFileSync(path.resolve(__dirname, `./${testProjectId}/package.json`))))
+  .then(dummyPkgJson => t.equals(
+    dummyPkgJson.scripts.echo,
+    `${echoScriptRule.declaration.scriptCommand} && ${echoScriptPermitAppendRule.declaration.scriptCommand}`,
+    'package.json not updated on script conflict'
+  ))
   .catch(t.fail)
   .then(() => teardown(testProjectId))
   .then(() => t.pass('teardown'))

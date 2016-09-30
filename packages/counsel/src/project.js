@@ -99,7 +99,6 @@ Object.assign(exports, {
     return internals.copy(sourcepath, targetpath, options)
   },
 
-
   /**
    * Copies a file.
    * @param {string} source

@@ -108,12 +108,10 @@ it is **recommended** that in your `my-counsel-tool` package, to squash `counsel
 
 ## todo
 
-- formalize api docs!
 - add some more Rules!
 - break rules out into independet thingies.
 - script rule, allow by default for stacked scripts to `&&` onto each other
-
-## to implement
+- ~~formalize api docs!~~
 
 - readme-plugin (assert readme present)
 - template-plugin (apply swig-templates to file(s). e.g. auto-build readme)
