@@ -1,6 +1,6 @@
 {
   "name": "counsel-precommit",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "",
   "main": "src/index.js",
   "scripts": {
@@ -9,11 +9,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "counsel": "^0.0.5",
+    "counsel": "^0.0.6",
     "tape": "^4.6.2"
   },
   "dependencies": {
-    "counsel-rule": "^0.0.4",
+    "counsel-rule": "^0.0.6",
     "lodash.xor": "^4.5.0"
   }
 }
