@@ -53,12 +53,12 @@
 <h2>install</h2><p><code>npm i --save counsel</code></p>
 <h2>usage</h2><p>docs: <a href="https://cdaringe.github.io/counsel/">cdaringe.github.io/counsel</a>. package level doc links may be found at the <em>bottom</em> of the linked page.</p>
 <p>before <code>counsel</code>, you have a boring-old-package:</p>
-<pre class="prettyprint source lang-json"><code>// package.json
+<pre class="prettyprint source lang-js"><code>// package.json
 {
   &quot;name&quot;: &quot;boring-old-package&quot;,
   ...
 }</code></pre><p>but, you want to keep up to date with your team's latest and greatest patterns.  no problem, build &amp; publish a small <code>counsel</code> tool!</p>
-<pre class="prettyprint source lang-json"><code>// package.json
+<pre class="prettyprint source lang-js"><code>// package.json
 {
   &quot;name&quot;: &quot;my-counsel-tool&quot;,
   &quot;scripts&quot;: {
@@ -79,7 +79,7 @@ counsel.apply([
     // ^ will install a git pre-commit hook that runs these npm scripts
   })
 ])</code></pre><p>install <code>my-counsel-tool</code> into <code>boring-old-package</code>:</p>
-<pre class="prettyprint source lang-json"><code>// package.json
+<pre class="prettyprint source lang-js"><code>// package.json
 {
   &quot;name&quot;: &quot;boring-old-package&quot;,
   &quot;dependencies&quot;: {
@@ -96,7 +96,7 @@ counsel.apply([
     &quot;test&quot;,
     &quot;check-coverage&quot;
   ]
-}</code></pre><p>wow! not so boring after all now, is it.  when <code>my-counsel-tool</code> installs or updates, it can update your package!  it is <em>not</em> limited to your <code>package.json</code>, of course.  make rules to do anything to your repo on <code>install</code>, on some git <code>hook</code> event, or any <code>npm</code> event!</p>
+}</code></pre><p>wow! not so boring after all now, is it?  when <code>my-counsel-tool</code> installs or updates, it can update your package!  it is <em>not</em> limited to your <code>package.json</code>, of course.  make rules to do anything to your repo on <code>install</code>, on some git <code>hook</code> event, or any <code>npm</code> event!</p>
 <h2>what</h2><p>so what is it?</p>
 <p>it's the end of boilerplate. automatically bake structure, opinions, and biz rules into projects.</p>
 <p>are you familiar with a reference repo? boilerplate repo?  template repo?  if you are, you know they grow stale.  counsel eliminates the need for these sorts of projects.  instead, counsel allows your team or company to roll personalized tooling that is shared across every package as a development dependency.  it automatically applies your opinions, your formats, your templates, your test scripts, your lint configurations, your &quot;whatevers&quot; per your own desire, with very little effort.</p>
@@ -109,16 +109,12 @@ counsel.apply([
 <p>it is <strong>recommended</strong> that in your <code>my-counsel-tool</code> package, to squash <code>counsel.configKey = 'my-counsel-tool'</code>, such that now, you can load config like:</p>
 <p><code>&quot;my-counsel-tool&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
 <h2>todo</h2><ul>
-<li>formalize api docs!</li>
-<li>add some more Rules!</li>
-<li>break rules out into independet thingies.</li>
-<li>script rule, allow by default for stacked scripts to <code>&amp;&amp;</code> onto each other</li>
-</ul>
-<h2>to implement</h2><ul>
 <li>readme-plugin (assert readme present)</li>
-<li>template-plugin (apply swig-templates to file(s). e.g. auto-build readme)</li>
+<li>~template-plugin (apply swig-templates to file(s). e.g. auto-build readme)~</li>
 <li>docs (jsdoc plugin. add doc script, add docs on postpublish apply .jsdoc.json)</li>
 <li>filename convention (assert filenames are, say, kebab-cased.js)</li>
+<li><del>formalize api docs!</del></li>
+<li><del>script rule, allow by default for stacked scripts to <code>&amp;&amp;</code> onto each other</del></li>
 <li><del>lint</del> &lt;== ScriptRule fulfills</li>
 <li><del>pre-commit</del></li>
 <li><del>nsp</del> &lt;== Script + PreCommit fulfills</li>
