@@ -47,7 +47,8 @@
 
 
     <section class="readme">
-        <article><h1>counsel</h1><p><a href="https://app.codeship.com/projects/176370"> <img src="https://app.codeship.com/projects/38b24cc0-684a-0134-dd3d-5ade36a91ecb/status?branch=master" alt="Codeship Status for cdaringe/counsel"></a>
+        <article><h1>counsel</h1><p>the end of boilerplate. automatically bake structure, opinions, and biz rules into projects!</p>
+<p><a href="https://app.codeship.com/projects/176370"> <img src="https://app.codeship.com/projects/38b24cc0-684a-0134-dd3d-5ade36a91ecb/status?branch=master" alt="Codeship Status for cdaringe/counsel"></a>
 <img src="https://img.shields.io/badge/standardjs-%E2%9C%93-brightgreen.svg" alt=""></p>
 <h2>install</h2><p><code>npm i --save counsel</code></p>
 <h2>usage</h2><p>docs: <a href="https://cdaringe.github.io/counsel/">cdaringe.github.io/counsel</a>. package level doc links may be found at the <em>bottom</em> of the linked page.</p>
@@ -65,8 +66,8 @@
   }
 }</code></pre><pre class="prettyprint source lang-js"><code>// my-counsel-tool.js
 const counsel = require('counsel')
-const ScriptRule = require('counsel-common').ScriptRule
-const PreCommitRule = require('counsel-common').PreCommitRule
+const ScriptRule = require('counsel-script')
+const PreCommitRule = require('counsel-precommit')
 counsel.apply([
   new ScriptRule({
     dependencies: ['standard']

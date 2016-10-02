@@ -53,45 +53,20 @@ const logger = require('./logger')
  * @private
  */
 const internals = {
-  /**
-   * Find the topmost parent of the given module.
-   * @param {Module} mod
-   * @returns {Module}
-   */
-  findParent (mod) {
-    return mod.parent ? internals.findParent(mod.parent) : mod
-  },
-
-  /**
-   * Recursively creates directories until `path` exists
-   * @param {string} path
-   */
-  mkdir (p) {
-    var mode = ~process.umask() &amp; parseInt('777', 8)
-    if (exports.isDir(p)) return
-    try {
-      fs.mkdirSync(p, mode)
-    } catch (err) {
-      if (err.code !== 'ENOENT') {
-        throw err
-      }
-      internals.mkdir(path.dirname(p))
-      internals.mkdir(p)
-    }
-  },
 
   /**
    * Determine if source is a directory or a file and call the appropriate method
    * @param {string} source
    * @param {string} target
    * @param {object} [options]
+   * @param {boolean} overwrite
    * @returns {undefined}
    */
   copy (source, target, options) {
     if (exports.isDir(source)) {
       internals.copyDirectory(source, target, options)
     } else {
-      return exports.copyFile(source, target, options)
+      return internals.copyFile(source, target, options)
     }
   },
 
@@ -102,41 +77,13 @@ const internals = {
    * @param {object} [options]
    */
   copyDirectory (source, target, options) {
-    internals.mkdir(target)
+    exports.mkdir(target)
     var sources = fs.readdirSync(source)
     for (var i = 0, l = sources.length; i &lt; l; ++i) {
       var sourcepath = path.join(source, sources[i])
       var targetpath = path.join(target, sources[i])
       internals.copy(sourcepath, targetpath, options)
     }
-  }
-}
-
-Object.assign(exports, {
-  /**
-   * Expands source and target to absolute paths, then calls internals.copy
-   * @param {string} source
-   * @param {string} target
-   * @param {object} [options] passed directly to internals.copy
-   */
-  copy (source, target, options) {
-    if (typeof target === 'object') {
-      options = target
-      target = undefined
-    }
-    options = options || {}
-
-    var root = path.dirname(internals.findParent(module).filename)
-    var projectRoot = exports.findProjectRoot(root)
-
-    var sourcepath = path.resolve(root, source)
-    var targetpath = path.resolve(projectRoot, target || source)
-
-    if (targetpath.indexOf(projectRoot) !== 0) {
-      throw new Error('Destination must be within project root')
-    }
-
-    return internals.copy(sourcepath, targetpath, options)
   },
 
   /**
@@ -144,9 +91,10 @@ Object.assign(exports, {
    * @param {string} source
    * @param {string} target
    * @param {object} [options]
+   * @param {boolean} [options.overwrite] overwrite existing file. defaults true
    */
   copyFile (source, target, options) {
-    internals.mkdir(path.dirname(target))
+    exports.mkdir(path.dirname(target))
     var mode = ~process.umask() &amp; parseInt('666', 8)
     if (fs.existsSync(target) &amp;&amp; !options.overwrite) {
       return new Error(target + ' already exists')
@@ -159,6 +107,51 @@ Object.assign(exports, {
       // @TODO passing is very naughty!
     }
     fs.writeFileSync(target, sourceContent, { flag: 'w', mode: mode })
+  },
+
+  /**
+   * Find the topmost parent of the given module.
+   * @param {Module} mod
+   * @returns {Module}
+   */
+  findParent (mod) {
+    return mod.parent ? internals.findParent(mod.parent) : mod
+  }
+}
+
+Object.assign(exports, {
+  /**
+   * Expands source and target to absolute paths, then calls internals.copy
+   * @param {string} source
+   * @param {string} target
+   * @param {object} options passed directly to internals.copy.
+   * @param {string} [options.root] counsel tooling root
+   * @param {string} options.targetProjectRoot
+   * @param {boolean} [options.overwrite]
+   */
+  copy (source, target, options) {
+    if (typeof target === 'object') {
+      options = target
+      target = undefined
+    }
+    options = options || {}
+
+    var root = options.root || exports.findProjectRoot()
+    var targetProjectRoot = options.targetProjectRoot
+
+    var sourcepath = path.resolve(root, source)
+    var targetpath = path.resolve(targetProjectRoot, target)
+
+    // auto apply basename if copying filename => dir (vs filename to filename)
+    if (!exports.isDir(sourcepath) &amp;&amp; exports.isDir(targetpath)) {
+      targetpath = path.join(targetpath, path.basename(sourcepath))
+    }
+
+    if (targetpath.indexOf(targetProjectRoot) !== 0) {
+      throw new Error('Destination must be within project root')
+    }
+
+    return internals.copy(sourcepath, targetpath, options)
   },
 
   /**
@@ -220,7 +213,7 @@ Object.assign(exports, {
 
   /**
    * Install the git hook as specified by `hook`.
-   * For example, `.installHook('pre-commit')`
+   * For example, `.installHooks('pre-commit')`
    * @param {object} opts
    * @param {string|string[]} opts.hooks
    * @param {string} [opts.root]
@@ -238,7 +231,7 @@ Object.assign(exports, {
     }
     var hookRoot = path.join(gitRoot, '.git', 'hooks')
     var source = path.resolve(__dirname, '..', 'bin', 'validate.sh')
-    if (!exports.isDir(hookRoot)) internals.mkdir(hookRoot)
+    if (!exports.isDir(hookRoot)) exports.mkdir(hookRoot)
     for (var i = 0, il = hooks.length; i &lt; il; ++i) {
       var hook = hooks[i]
       var dest = path.join(hookRoot, hook)
@@ -247,8 +240,25 @@ Object.assign(exports, {
       }
       fs.writeFileSync(dest, fs.readFileSync(source), { mode: 511 })
     }
-  }
+  },
 
+  /**
+   * Recursively creates directories until `path` exists
+   * @param {string} path
+   */
+  mkdir (p) {
+    var mode = ~process.umask() &amp; parseInt('777', 8)
+    if (exports.isDir(p)) return
+    try {
+      fs.mkdirSync(p, mode)
+    } catch (err) {
+      if (err.code !== 'ENOENT') {
+        throw err
+      }
+      exports.mkdir(path.dirname(p))
+      exports.mkdir(p)
+    }
+  }
 })
 </code></pre>
         </article>

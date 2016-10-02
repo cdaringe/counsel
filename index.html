@@ -6,12 +6,15 @@
     <link rel="stylesheet" href="github-markdown.css">
     <style>
       body {
-        padding: 3rem;
+        padding: 3vw;
+        max-width: 900px;
+        margin: auto;
       }
     </style>
   </head>
   <body class="markdown-body">
     <h1 id="counsel">counsel</h1>
+<p>the end of boilerplate. automatically bake structure, opinions, and biz rules into projects!</p>
 <p><a href="https://app.codeship.com/projects/176370"> <img src="https://app.codeship.com/projects/38b24cc0-684a-0134-dd3d-5ade36a91ecb/status?branch=master" alt="Codeship Status for cdaringe/counsel"></a>
 <img src="https://img.shields.io/badge/standardjs-%E2%9C%93-brightgreen.svg" alt=""></p>
 <h2 id="install">install</h2>
@@ -19,14 +22,14 @@
 <h2 id="usage">usage</h2>
 <p>docs: <a href="https://cdaringe.github.io/counsel/">cdaringe.github.io/counsel</a>. package level doc links may be found at the <em>bottom</em> of the linked page.</p>
 <p>before <code>counsel</code>, you have a boring-old-package:</p>
-<pre><code class="lang-json">// package.json
+<pre><code class="lang-js">// package.json
 {
   &quot;name&quot;: &quot;boring-old-package&quot;,
   ...
 }
 </code></pre>
 <p>but, you want to keep up to date with your team&#39;s latest and greatest patterns.  no problem, build &amp; publish a small <code>counsel</code> tool!</p>
-<pre><code class="lang-json">// package.json
+<pre><code class="lang-js">// package.json
 {
   &quot;name&quot;: &quot;my-counsel-tool&quot;,
   &quot;scripts&quot;: {
@@ -36,8 +39,8 @@
 </code></pre>
 <pre><code class="lang-js">// my-counsel-tool.js
 const counsel = require(&#39;counsel&#39;)
-const ScriptRule = require(&#39;counsel-common&#39;).ScriptRule
-const PreCommitRule = require(&#39;counsel-common&#39;).PreCommitRule
+const ScriptRule = require(&#39;counsel-script&#39;)
+const PreCommitRule = require(&#39;counsel-precommit&#39;)
 counsel.apply([
   new ScriptRule({
     dependencies: [&#39;standard&#39;]
@@ -51,7 +54,7 @@ counsel.apply([
 ])
 </code></pre>
 <p>install <code>my-counsel-tool</code> into <code>boring-old-package</code>:</p>
-<pre><code class="lang-json">// package.json
+<pre><code class="lang-js">// package.json
 {
   &quot;name&quot;: &quot;boring-old-package&quot;,
   &quot;dependencies&quot;: {
@@ -70,7 +73,7 @@ counsel.apply([
   ]
 }
 </code></pre>
-<p>wow! not so boring after all now, is it.  when <code>my-counsel-tool</code> installs or updates, it can update your package!  it is <em>not</em> limited to your <code>package.json</code>, of course.  make rules to do anything to your repo on <code>install</code>, on some git <code>hook</code> event, or any <code>npm</code> event!</p>
+<p>wow! not so boring after all now, is it?  when <code>my-counsel-tool</code> installs or updates, it can update your package!  it is <em>not</em> limited to your <code>package.json</code>, of course.  make rules to do anything to your repo on <code>install</code>, on some git <code>hook</code> event, or any <code>npm</code> event!</p>
 <h2 id="what">what</h2>
 <p>so what is it?</p>
 <p>it&#39;s the end of boilerplate. automatically bake structure, opinions, and biz rules into projects.</p>
@@ -111,14 +114,42 @@ counsel.apply([
         <li>
           <section>
             <h3><a href="counsel">counsel</a></h3>
+            <p>the end of boilerplate. automatically bake structure, opinions, and biz rules into projects!</p>
+          </section>
+        </li>
+      
+        <li>
+          <section>
+            <h3><a href="counsel-copy">counsel-copy</a></h3>
+            <p>copy files/folders from a counsel project into a target project.</p>
+          </section>
+        </li>
+      
+        <li>
+          <section>
+            <h3><a href="counsel-precommit">counsel-precommit</a></h3>
+            <p>enables npm tasks to be run on git&#39;s pre-commit event. installs tasks to run on precommit.</p>
+          </section>
+        </li>
+      
+        <li>
+          <section>
+            <h3><a href="counsel-rule">counsel-rule</a></h3>
             <p></p>
           </section>
         </li>
       
         <li>
           <section>
-            <h3><a href="counsel-common">counsel-common</a></h3>
-            <p></p>
+            <h3><a href="counsel-script">counsel-script</a></h3>
+            <p>adds a npm script to package.json</p>
+          </section>
+        </li>
+      
+        <li>
+          <section>
+            <h3><a href="counsel-template">counsel-template</a></h3>
+            <p>runs a template engine against a template file!</p>
           </section>
         </li>
       
