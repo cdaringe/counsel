@@ -92,7 +92,7 @@ counsel should _rarely_ be installed directly into general projects.  instead, u
 
 ## docs
 
-the official api docs live [here](docs: [cdaringe.github.io/counsel](https://cdaringe.github.io/counsel/).  all other topics covered in the readme are for quickstart only!
+the official api docs live [here](https://cdaringe.github.io/counsel/).  all other topics covered in the readme are for quickstart only!
 
 ## rules
 
