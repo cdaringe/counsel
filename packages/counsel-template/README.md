@@ -1,6 +1,8 @@
 # counsel-template
 
-runs a template engine against a template file! your template is passed all of `counsel`, and the the target project's package.json.  the current template engine employed is [swig-templates](http://node-swig.github.io/swig-templates/).
+runs a template engine against a template file!
+
+your template is passed all of `counsel`, and the the target project's package.json.  the current template engine employed is [swig-templates](http://node-swig.github.io/swig-templates/).
 
 ## example
 

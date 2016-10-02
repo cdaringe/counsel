@@ -1,13 +1,13 @@
 {
   "name": "counsel",
   "version": "0.0.6",
-  "description": "",
+  "description": "the end of boilerplate. automatically bake structure, opinions, and biz rules into projects!",
   "main": "src/index.js",
   "scripts": {
     "test": "node test/",
     "docs": "mkdir -p docs && jsdoc -c .jsdoc.json src/ -d docs"
   },
-  "author": "",
+  "author": "cdaringe",
   "license": "ISC",
   "dependencies": {
     "lodash.clonedeep": "^4.5.0",

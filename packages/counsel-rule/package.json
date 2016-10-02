@@ -4,15 +4,15 @@
   "description": "",
   "main": "src/index.js",
   "directories": {
-    "test": "test"
+      "test": "test"
   },
   "scripts": {
-    "test": "node test/"
+      "test": "node test/"
   },
-  "author": "",
+  "author": "cdaringe",
   "license": "ISC",
   "devDependencies": {
-    "tape": "^4.6.2"
+      "tape": "^4.6.2"
   },
   "dependencies": {}
 }

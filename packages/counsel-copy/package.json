@@ -1,18 +1,18 @@
 {
   "name": "counsel-copy",
   "version": "0.0.7",
-  "description": "",
+  "description": "copy files/folders from a counsel project into a target project.",
   "main": "src/index.js",
   "scripts": {
-    "test": "node test/"
+      "test": "node test/"
   },
-  "author": "",
+  "author": "cdaringe",
   "license": "ISC",
   "dependencies": {
-    "counsel-rule": "^0.0.6"
+      "counsel-rule": "^0.0.6"
   },
   "devDependencies": {
-    "counsel": "^0.0.6",
-    "tape": "^4.6.2"
+      "counsel": "^0.0.6",
+      "tape": "^4.6.2"
   }
 }

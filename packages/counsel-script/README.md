@@ -1,6 +1,6 @@
 # counsel-script
 
-adds a script to package.json.
+adds a npm script to package.json.
 
 ## example
 

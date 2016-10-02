@@ -1,6 +1,6 @@
 # counsel-precommit
 
-installs a configuration `git` precommit commit, so you can _do great things_ on every commit.
+enables npm tasks to be run on git's pre-commit event. installs tasks to run on precommit.
 
 ## example
 
