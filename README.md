@@ -15,7 +15,7 @@ docs: [cdaringe.github.io/counsel](https://cdaringe.github.io/counsel/). package
 
 before `counsel`, you have a boring-old-package:
 
-```json
+```js
 // package.json
 {
   "name": "boring-old-package",
@@ -25,7 +25,7 @@ before `counsel`, you have a boring-old-package:
 
 but, you want to keep up to date with your team's latest and greatest patterns.  no problem, build & publish a small `counsel` tool!
 
-```json
+```js
 // package.json
 {
   "name": "my-counsel-tool",
@@ -55,7 +55,7 @@ counsel.apply([
 
 install `my-counsel-tool` into `boring-old-package`:
 
-```json
+```js
 // package.json
 {
   "name": "boring-old-package",
@@ -76,7 +76,7 @@ install `my-counsel-tool` into `boring-old-package`:
 }
 ```
 
-wow! not so boring after all now, is it.  when `my-counsel-tool` installs or updates, it can update your package!  it is _not_ limited to your `package.json`, of course.  make rules to do anything to your repo on `install`, on some git `hook` event, or any `npm` event!
+wow! not so boring after all now, is it?  when `my-counsel-tool` installs or updates, it can update your package!  it is _not_ limited to your `package.json`, of course.  make rules to do anything to your repo on `install`, on some git `hook` event, or any `npm` event!
 
 ## what
 
