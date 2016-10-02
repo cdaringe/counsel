@@ -1,20 +1,20 @@
 {
   "name": "counsel-template",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "runs a template engine against a template file!",
   "main": "src/index.js",
   "scripts": {
-      "test": "node test/"
+    "test": "node test/"
   },
   "author": "cdaringe",
   "license": "ISC",
   "devDependencies": {
-      "counsel": "^0.0.6",
-      "tape": "^4.6.2"
+    "counsel": "^0.0.8",
+    "tape": "^4.6.2"
   },
   "dependencies": {
-      "counsel-rule": "^0.0.6",
-      "pify": "^2.3.0",
-      "swig-templates": "^2.0.1"
+    "counsel-rule": "^0.0.8",
+    "pify": "^2.3.0",
+    "swig-templates": "^2.0.1"
   }
 }
