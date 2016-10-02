@@ -1,6 +1,6 @@
 # counsel-copy
 
-copy files/folders from _some counsel project_ into the target project.
+copy files/folders from a counsel project into a target project.
 
 ## example
 
