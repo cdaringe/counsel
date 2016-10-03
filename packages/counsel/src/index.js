@@ -72,6 +72,10 @@ module.exports = {
     this._configKey = key
   },
 
+  config () {
+    return this._targetProjectPackageJsonPristine[this._configKey]
+  },
+
   /**
    * main counsel entry point. applies rules.
    * @param {Rules[]} rules

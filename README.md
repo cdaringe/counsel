@@ -98,6 +98,8 @@ the official api docs live [here](https://cdaringe.github.io/counsel/).  all oth
 
 `counsel` is composed of sets of `Rule`s to apply to your package.  provide it a set of rules, and it will fulfill them.
 
+**"how do i make my _own_ rules?**.  making rules is very easy!  see [counsel-rule](https://cdaringe.github.io/counsel/counsel-rule/) for more info.
+
 ## configure
 
 some rules aren't so simple.  for rules that offer configuration, you can add your config in package.json:

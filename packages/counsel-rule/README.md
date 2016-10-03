@@ -1,8 +1,14 @@
 # counsel-rule
 
-defines a piece of counselling to apply to a project.
+defines a piece of _counselling_ to apply to a project.  how punny.
 
-this is the base class counsel rule.  counsel rules do _not_ need to extend `Rule`.  counsel rules are any old pojo with an `apply` method!
+this package is the base class counsel rule.
+
+## how do i make my own rule?
+
+  - rules do _not_ need to extend `Rule`, exported by `counsel-rule`.
+  - a rule is any old [POJO](https://en.wikipedia.org/wiki/Plain_Old_Java_Object) with an `apply` method!
+    - the apply method should do something interesting to your project.  apply receives the `counsel` instance, which provides some very useful utilities to expose the target project.  see the example below for more.
 
 ## example
 
@@ -14,9 +20,21 @@ this is the base class counsel rule.  counsel rules do _not_ need to extend `Rul
 const Rule = require('counsel-rule')
 
 module.exports = new Rule({
-  devDependencies: ['some-package'],
+  // dependencies: ['async'], // <== installs any package (at the end of the rule apply chain)
+  // devDependencies: ['tape', 'pify'], // <== installs any package (at the end of the rule apply chain)
   apply: function(counsel) {
     // do something interesting
+
+    // some helpful refs (more at https://cdaringe.github.io/counsel/counsel/)
+
+    // counsel.targetProjectPackageJson
+    // ^modify the target package.json as you see fit! we will detect changes and write it
+
+    // counsel.config()
+    //^ get any declarations made towards counsel in the target package's package.json
+
+    // counsel.project.xzy
+    // ^ a handful of things to copy files, find git projects, install git hooks, and more
   }
 })
 ```

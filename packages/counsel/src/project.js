@@ -1,6 +1,5 @@
 /**
  * @module project
- * @private
  */
 
 'use strict'
