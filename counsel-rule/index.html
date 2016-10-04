@@ -47,8 +47,15 @@
 
 
     <section class="readme">
-        <article><h1>counsel-rule</h1><p>defines a piece of counselling to apply to a project.</p>
-<p>this is the base class counsel rule.  counsel rules do <em>not</em> need to extend <code>Rule</code>.  counsel rules are any old pojo with an <code>apply</code> method!</p>
+        <article><h1>counsel-rule</h1><p>defines a piece of <em>counselling</em> to apply to a project.  how punny.</p>
+<p>this package is the base class counsel rule.</p>
+<h2>how do i make my own rule?</h2><ul>
+<li>rules do <em>not</em> need to extend <code>Rule</code>, exported by <code>counsel-rule</code>.</li>
+<li>a rule is any old <a href="https://en.wikipedia.org/wiki/Plain_Old_Java_Object">POJO</a> with an <code>apply</code> method!<ul>
+<li>the apply method should do something interesting to your project.  apply receives the <code>counsel</code> instance, which provides some very useful utilities to expose the target project.  see the example below for more.</li>
+</ul>
+</li>
+</ul>
 <h2>example</h2><ul>
 <li>create your rule</li>
 </ul>
@@ -57,9 +64,21 @@
 const Rule = require('counsel-rule')
 
 module.exports = new Rule({
-  devDependencies: ['some-package'],
+  // dependencies: ['async'], // &lt;== installs any package (at the end of the rule apply chain)
+  // devDependencies: ['tape', 'pify'], // &lt;== installs any package (at the end of the rule apply chain)
   apply: function(counsel) {
     // do something interesting
+
+    // some helpful refs (more at https://cdaringe.github.io/counsel/counsel/)
+
+    // counsel.targetProjectPackageJson
+    // ^modify the target package.json as you see fit! we will detect changes and write it
+
+    // counsel.config()
+    //^ get any declarations made towards counsel in the target package's package.json
+
+    // counsel.project.xzy
+    // ^ a handful of things to copy files, find git projects, install git hooks, and more
   }
 })</code></pre><ul>
 <li>apply it (per <code>counsel</code> docs)</li>

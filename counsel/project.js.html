@@ -23,7 +23,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-counsel.html">counsel</a><ul class='methods'><li data-type='method'><a href="module-counsel.html#.apply">apply</a></li><li data-type='method'><a href="module-counsel.html#.installDeps">installDeps</a></li><li data-type='method'><a href="module-counsel.html#.installDevs">installDevs</a></li><li data-type='method'><a href="module-counsel.html#.isTargetPackageDirty">isTargetPackageDirty</a></li><li data-type='method'><a href="module-counsel.html#.npmInstall">npmInstall</a></li><li data-type='method'><a href="module-counsel.html#.setTargetPackageMeta">setTargetPackageMeta</a></li><li data-type='method'><a href="module-counsel.html#.writeTargetPackageIfDirty">writeTargetPackageIfDirty</a></li></ul></li><li><a href="module-logger.html">logger</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-counsel.html">counsel</a><ul class='methods'><li data-type='method'><a href="module-counsel.html#.apply">apply</a></li><li data-type='method'><a href="module-counsel.html#.installDeps">installDeps</a></li><li data-type='method'><a href="module-counsel.html#.installDevs">installDevs</a></li><li data-type='method'><a href="module-counsel.html#.isTargetPackageDirty">isTargetPackageDirty</a></li><li data-type='method'><a href="module-counsel.html#.npmInstall">npmInstall</a></li><li data-type='method'><a href="module-counsel.html#.setTargetPackageMeta">setTargetPackageMeta</a></li><li data-type='method'><a href="module-counsel.html#.writeTargetPackageIfDirty">writeTargetPackageIfDirty</a></li></ul></li><li><a href="module-logger.html">logger</a></li><li><a href="module-project.html">project</a><ul class='methods'><li data-type='method'><a href="module-project.html#~copy">copy</a></li><li data-type='method'><a href="module-project.html#~findGitRoot">findGitRoot</a></li><li data-type='method'><a href="module-project.html#~findProjectRoot">findProjectRoot</a></li><li data-type='method'><a href="module-project.html#~installHooks">installHooks</a></li><li data-type='method'><a href="module-project.html#~isDir">isDir</a></li><li data-type='method'><a href="module-project.html#~mkdir">mkdir</a></li></ul></li></ul>
 </nav>
 
 <div id="main">
@@ -40,7 +40,6 @@
         <article>
             <pre class="prettyprint source linenums"><code>/**
  * @module project
- * @private
  */
 
 'use strict'
@@ -141,12 +140,25 @@ Object.assign(exports, {
 
     var sourcepath = path.resolve(root, source)
     var targetpath = path.resolve(targetProjectRoot, target)
+    var sourceExists = fs.existsSync(sourcepath)
+    if (!sourceExists) throw new Error('source file or dir does not exist: ' + sourcepath)
+    var isSrcDir = exports.isDir(sourcepath)
+    var isSrcFile = !isSrcDir
+    var isTrgFile = !!path.extname(targetpath)
+    var isTrgDir = !isTrgFile
 
-    // auto apply basename if copying filename => dir (vs filename to filename)
-    if (!exports.isDir(sourcepath) &amp;&amp; exports.isDir(targetpath)) {
-      targetpath = path.join(targetpath, path.basename(sourcepath))
+    // file => file // noop
+    // file => dir
+    if (isSrcFile &amp;&amp; isTrgDir) targetpath = path.join(targetpath, path.basename(sourcepath))
+    // dir => dir // noop
+    // dir => file
+    if (isSrcDir &amp;&amp; isTrgFile) {
+      logger.warn([
+        'the destination dir has a "." character, resembling an extension.',
+        'this may be normal, but please ensure you did not request to copy a',
+        'directory into a file.'
+      ].join(' '))
     }
-
     if (targetpath.indexOf(targetProjectRoot) !== 0) {
       throw new Error('Destination must be within project root')
     }

@@ -23,7 +23,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-counsel.html">counsel</a><ul class='methods'><li data-type='method'><a href="module-counsel.html#.apply">apply</a></li><li data-type='method'><a href="module-counsel.html#.installDeps">installDeps</a></li><li data-type='method'><a href="module-counsel.html#.installDevs">installDevs</a></li><li data-type='method'><a href="module-counsel.html#.isTargetPackageDirty">isTargetPackageDirty</a></li><li data-type='method'><a href="module-counsel.html#.npmInstall">npmInstall</a></li><li data-type='method'><a href="module-counsel.html#.setTargetPackageMeta">setTargetPackageMeta</a></li><li data-type='method'><a href="module-counsel.html#.writeTargetPackageIfDirty">writeTargetPackageIfDirty</a></li></ul></li><li><a href="module-logger.html">logger</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-counsel.html">counsel</a><ul class='methods'><li data-type='method'><a href="module-counsel.html#.apply">apply</a></li><li data-type='method'><a href="module-counsel.html#.installDeps">installDeps</a></li><li data-type='method'><a href="module-counsel.html#.installDevs">installDevs</a></li><li data-type='method'><a href="module-counsel.html#.isTargetPackageDirty">isTargetPackageDirty</a></li><li data-type='method'><a href="module-counsel.html#.npmInstall">npmInstall</a></li><li data-type='method'><a href="module-counsel.html#.setTargetPackageMeta">setTargetPackageMeta</a></li><li data-type='method'><a href="module-counsel.html#.writeTargetPackageIfDirty">writeTargetPackageIfDirty</a></li></ul></li><li><a href="module-logger.html">logger</a></li><li><a href="module-project.html">project</a><ul class='methods'><li data-type='method'><a href="module-project.html#~copy">copy</a></li><li data-type='method'><a href="module-project.html#~findGitRoot">findGitRoot</a></li><li data-type='method'><a href="module-project.html#~findProjectRoot">findProjectRoot</a></li><li data-type='method'><a href="module-project.html#~installHooks">installHooks</a></li><li data-type='method'><a href="module-project.html#~isDir">isDir</a></li><li data-type='method'><a href="module-project.html#~mkdir">mkdir</a></li></ul></li></ul>
 </nav>
 
 <div id="main">
@@ -112,6 +112,10 @@ module.exports = {
     this._configKey = key
   },
 
+  config () {
+    return this._targetProjectPackageJsonPristine[this._configKey]
+  },
+
   /**
    * main counsel entry point. applies rules.
    * @param {Rules[]} rules
@@ -138,13 +142,40 @@ module.exports = {
     .then(this.writeTargetPackageIfDirty.bind(this))
   },
 
+  check (rules) {
+    return rules.reduce((chain, rule) => {
+      return chain.then(() => Promise.resolve(rule.check ? rule.check(this) : true))
+    }, Promise.resolve())
+  },
+
+  /**
+   * takes a set of packages requested to be installed, returns the set of packages
+   * not yet installed from initial list.
+   * @private
+   * @param {string[]} set deps to be installed
+   * @param {string} depType [dev]dependencies
+   * @returns string[]
+   */
+  _filterPrexistingInstalledPackages (set, depType) {
+    const pkg = this.targetProjectPackageJson
+    const toRemove = pkg[depType] ? Object.keys(pkg[depType]) : []
+    if (!set.length || !toRemove.length) return set
+    toRemove.forEach((remove) => {
+      const ndx = set.indexOf(remove)
+      if (ndx >= 0) delete set[ndx]
+    })
+    set = set.filter(name => name) // drop undefined
+    return set
+  },
+
   /**
    * install deps reequired by rule set
    * @param {Rules[]} rules
    * @returns {undefined}
    */
   installDeps (rules) {
-    const toInstallDeps = rules.reduce((set, rule) => set.concat(rule.dependencies), [])
+    let toInstallDeps = rules.reduce((set, rule) => set.concat(rule.dependencies), [])
+    toInstallDeps = this._filterPrexistingInstalledPackages(toInstallDeps, 'dependencies')
     const didInstall = this.npmInstall(toInstallDeps, '--save')
     if (didInstall) {
       this.targetProjectPackageJson.dependencies =
@@ -158,7 +189,8 @@ module.exports = {
    * @returns {undefined}
    */
   installDevs (rules) {
-    const toInstallDevs = rules.reduce((set, rule) => set.concat(rule.devDependencies), [])
+    let toInstallDevs = rules.reduce((set, rule) => set.concat(rule.devDependencies), [])
+    toInstallDevs = this._filterPrexistingInstalledPackages(toInstallDevs, 'devDependencies')
     const didInstall = this.npmInstall(toInstallDevs, '--save-dev')
     if (didInstall) {
       this.targetProjectPackageJson.devDependencies =
