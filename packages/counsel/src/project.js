@@ -100,12 +100,25 @@ Object.assign(exports, {
 
     var sourcepath = path.resolve(root, source)
     var targetpath = path.resolve(targetProjectRoot, target)
+    var sourceExists = fs.existsSync(sourcepath)
+    if (!sourceExists) throw new Error('source file or dir does not exist: ' + sourcepath)
+    var isSrcDir = exports.isDir(sourcepath)
+    var isSrcFile = !isSrcDir
+    var isTrgFile = !!path.extname(targetpath)
+    var isTrgDir = !isTrgFile
 
-    // auto apply basename if copying filename => dir (vs filename to filename)
-    if (!exports.isDir(sourcepath) && exports.isDir(targetpath)) {
-      targetpath = path.join(targetpath, path.basename(sourcepath))
+    // file => file // noop
+    // file => dir
+    if (isSrcFile && isTrgDir) targetpath = path.join(targetpath, path.basename(sourcepath))
+    // dir => dir // noop
+    // dir => file
+    if (isSrcDir && isTrgFile) {
+      logger.warn([
+        'the destination dir has a "." character, resembling an extension.',
+        'this may be normal, but please ensure you did not request to copy a',
+        'directory into a file.'
+      ].join(' '))
     }
-
     if (targetpath.indexOf(targetProjectRoot) !== 0) {
       throw new Error('Destination must be within project root')
     }

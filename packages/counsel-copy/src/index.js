@@ -20,6 +20,7 @@ class CopyRule extends Rule {
    */
   constructor (opts) {
     super(opts)
+    if (!this.declaration.copyContentRoot) throw new Error('must provide a copy content root')
     if (!this.declaration.copySource) throw new Error('must provide a copy source')
     if (!this.declaration.copyTarget) throw new Error('must provide a copy target')
   }
@@ -39,7 +40,10 @@ class CopyRule extends Rule {
     toCopy.forEach(src => counsel.project.copy(
       src,
       dest,
-      { targetProjectRoot: counsel.targetProjectRoot }
+      {
+        root: this.declaration.copyContentRoot,
+        targetProjectRoot: counsel.targetProjectRoot
+      }
     ))
   }
 }
