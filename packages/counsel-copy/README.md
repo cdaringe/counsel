@@ -12,6 +12,7 @@ copy files/folders from a counsel project into a target project.
 const CopyRule = require('counsel-copy')
 
 module.exports = new CopyRule({
+  copyContentRoot: __dirname,
   copySource: './jsdoc.json', // relative to your counsel project's root (package.json folder)
   copyTarget: './' // puts jsdoc.json into your projects root. relative to the target package's root
 })
