@@ -14,7 +14,10 @@ pkgDirnames.map((dir, ndx) => {
   const cwd = path.resolve(__dirname, '..', 'packages', dir)
   console.log(`running tests in: ${cwd}`)
   const child = exec('npm test', { cwd: cwd }, (err, stdout, stderr) => {
-    if (err) throw err
+    if (err) {
+      console.error(`test failed in ${path.basename(dir)}`)
+      throw err
+    }
     console.log(`${stdout}`)
     console.log(`${stderr}`)
   })

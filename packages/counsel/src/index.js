@@ -102,13 +102,40 @@ module.exports = {
     .then(this.writeTargetPackageIfDirty.bind(this))
   },
 
+  check (rules) {
+    return rules.reduce((chain, rule) => {
+      return chain.then(() => Promise.resolve(rule.check ? rule.check(this) : true))
+    }, Promise.resolve())
+  },
+
+  /**
+   * takes a set of packages requested to be installed, returns the set of packages
+   * not yet installed from initial list.
+   * @private
+   * @param {string[]} set deps to be installed
+   * @param {string} depType [dev]dependencies
+   * @returns string[]
+   */
+  _filterPrexistingInstalledPackages (set, depType) {
+    const pkg = this.targetProjectPackageJson
+    const toRemove = pkg[depType] ? Object.keys(pkg[depType]) : []
+    if (!set.length || !toRemove.length) return set
+    toRemove.forEach((remove) => {
+      const ndx = set.indexOf(remove)
+      if (ndx >= 0) delete set[ndx]
+    })
+    set = set.filter(name => name) // drop undefined
+    return set
+  },
+
   /**
    * install deps reequired by rule set
    * @param {Rules[]} rules
    * @returns {undefined}
    */
   installDeps (rules) {
-    const toInstallDeps = rules.reduce((set, rule) => set.concat(rule.dependencies), [])
+    let toInstallDeps = rules.reduce((set, rule) => set.concat(rule.dependencies), [])
+    toInstallDeps = this._filterPrexistingInstalledPackages(toInstallDeps, 'dependencies')
     const didInstall = this.npmInstall(toInstallDeps, '--save')
     if (didInstall) {
       this.targetProjectPackageJson.dependencies =
@@ -122,7 +149,8 @@ module.exports = {
    * @returns {undefined}
    */
   installDevs (rules) {
-    const toInstallDevs = rules.reduce((set, rule) => set.concat(rule.devDependencies), [])
+    let toInstallDevs = rules.reduce((set, rule) => set.concat(rule.devDependencies), [])
+    toInstallDevs = this._filterPrexistingInstalledPackages(toInstallDevs, 'devDependencies')
     const didInstall = this.npmInstall(toInstallDevs, '--save-dev')
     if (didInstall) {
       this.targetProjectPackageJson.devDependencies =
