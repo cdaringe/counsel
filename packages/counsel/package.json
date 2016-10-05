@@ -1,6 +1,6 @@
 {
   "name": "counsel",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "the end of boilerplate. automatically bake structure, opinions, and biz rules into projects!",
   "main": "src/index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "winston": "^2.2.0"
   },
   "devDependencies": {
-    "counsel-rule": "^0.0.9",
+    "counsel-rule": "^0.0.10",
     "perish": "0.0.3",
     "tape": "^4.6.0"
   },
