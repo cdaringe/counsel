@@ -115,7 +115,6 @@ it is **recommended** that in your `my-counsel-tool` package, to squash `counsel
 
 ## todo
 
-
 - readme-plugin (assert readme present)
 - ~template-plugin (apply swig-templates to file(s). e.g. auto-build readme)~
 - docs (jsdoc plugin. add doc script, add docs on postpublish apply .jsdoc.json)
@@ -125,3 +124,7 @@ it is **recommended** that in your `my-counsel-tool` package, to squash `counsel
 - ~~lint~~ <== ScriptRule fulfills
 - ~~pre-commit~~
 - ~~nsp~~ <== Script + PreCommit fulfills
+
+## logo credit
+
+[margdking](https://github.com/margdking)
