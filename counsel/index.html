@@ -47,7 +47,9 @@
 
 
     <section class="readme">
-        <article><h1>counsel</h1><p>the end of boilerplate. automatically bake structure, opinions, and biz rules into projects!</p>
+        <article><p align="center"><img height="200px" src="https://github.com/cdaringe/counsel/raw/master/img/counsel.png" /></p>
+
+<h1>counsel</h1><p>the end of boilerplate. automatically bake structure, opinions, and biz rules into projects!</p>
 <p><a href="https://app.codeship.com/projects/176370"> <img src="https://app.codeship.com/projects/38b24cc0-684a-0134-dd3d-5ade36a91ecb/status?branch=master" alt="Codeship Status for cdaringe/counsel"></a>
 <img src="https://img.shields.io/badge/standardjs-%E2%9C%93-brightgreen.svg" alt=""></p>
 <h2>install</h2><p><code>npm i --save counsel</code></p>
@@ -102,23 +104,32 @@ counsel.apply([
 <p>are you familiar with a reference repo? boilerplate repo?  template repo?  if you are, you know they grow stale.  counsel eliminates the need for these sorts of projects.  instead, counsel allows your team or company to roll personalized tooling that is shared across every package as a development dependency.  it automatically applies your opinions, your formats, your templates, your test scripts, your lint configurations, your &quot;whatevers&quot; per your own desire, with very little effort.</p>
 <p>counsel is a framework for applying business rules and opinions into packages.</p>
 <p>counsel should <em>rarely</em> be installed directly into general projects.  instead, use it to make a shared tool.  place all the rules you want into the tool and release it as a standalone package.</p>
-<h2>docs</h2><p>the official api docs live <a href="docs: [cdaringe.github.io/counsel](https://cdaringe.github.io/counsel/">here</a>.  all other topics covered in the readme are for quickstart only!</p>
+<h2>docs</h2><p>the official api docs live <a href="https://cdaringe.github.io/counsel/">here</a>.  all other topics covered in the readme are for quickstart only!</p>
 <h2>rules</h2><p><code>counsel</code> is composed of sets of <code>Rule</code>s to apply to your package.  provide it a set of rules, and it will fulfill them.</p>
+<p><strong>&quot;how do i make my <em>own</em> rules?</strong>.  making rules is very easy!  see <a href="https://cdaringe.github.io/counsel/counsel-rule/">counsel-rule</a> for more info.</p>
 <h2>configure</h2><p>some rules aren't so simple.  for rules that offer configuration, you can add your config in package.json:</p>
 <p><code>&quot;counsel&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
 <p>it is <strong>recommended</strong> that in your <code>my-counsel-tool</code> package, to squash <code>counsel.configKey = 'my-counsel-tool'</code>, such that now, you can load config like:</p>
 <p><code>&quot;my-counsel-tool&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
+<h1>changelog</h1><ul>
+<li>0.0.11<ul>
+<li>add <code>check</code> support. rules may add an optional <code>check</code> method to test if rule is enforced.</li>
+<li>no attempts to install dually requested deps</li>
+</ul>
+</li>
+</ul>
 <h2>todo</h2><ul>
-<li>readme-plugin (assert readme present)</li>
-<li>~template-plugin (apply swig-templates to file(s). e.g. auto-build readme)~</li>
-<li>docs (jsdoc plugin. add doc script, add docs on postpublish apply .jsdoc.json)</li>
 <li>filename convention (assert filenames are, say, kebab-cased.js)</li>
+<li><del>readme-plugin (assert readme present)</del> just a file exists rule. <code>{ check() { return fs.existsSync('path/to/file') }}</code></li>
+<li><del>template-plugin (apply swig-templates to file(s). e.g. auto-build readme)</del></li>
+<li><del>docs (jsdoc plugin. add doc script, add docs on postpublish apply .jsdoc.json)</del> see <a href="https://github.com/cdaringe/ripcord/blob/master/src/index.js">ripcord</a> docs rule set.</li>
 <li><del>formalize api docs!</del></li>
 <li><del>script rule, allow by default for stacked scripts to <code>&amp;&amp;</code> onto each other</del></li>
 <li><del>lint</del> &lt;== ScriptRule fulfills</li>
 <li><del>pre-commit</del></li>
 <li><del>nsp</del> &lt;== Script + PreCommit fulfills</li>
-</ul></article>
+</ul>
+<h2>logo credit</h2><p><a href="https://github.com/margdking">margdking</a></p></article>
     </section>
 
 

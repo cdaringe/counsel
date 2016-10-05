@@ -93,12 +93,20 @@ counsel.apply([
 <p><code>&quot;counsel&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
 <p>it is <strong>recommended</strong> that in your <code>my-counsel-tool</code> package, to squash <code>counsel.configKey = &#39;my-counsel-tool&#39;</code>, such that now, you can load config like:</p>
 <p><code>&quot;my-counsel-tool&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
+<h1 id="changelog">changelog</h1>
+<ul>
+<li>0.0.11<ul>
+<li>add <code>check</code> support. rules may add an optional <code>check</code> method to test if rule is enforced.</li>
+<li>no attempts to install dually requested deps</li>
+</ul>
+</li>
+</ul>
 <h2 id="todo">todo</h2>
 <ul>
-<li>readme-plugin (assert readme present)</li>
-<li>~template-plugin (apply swig-templates to file(s). e.g. auto-build readme)~</li>
-<li>docs (jsdoc plugin. add doc script, add docs on postpublish apply .jsdoc.json)</li>
 <li>filename convention (assert filenames are, say, kebab-cased.js)</li>
+<li><del>readme-plugin (assert readme present)</del> just a file exists rule. <code>{ check() { return fs.existsSync(&#39;path/to/file&#39;) }}</code></li>
+<li><del>template-plugin (apply swig-templates to file(s). e.g. auto-build readme)</del></li>
+<li><del>docs (jsdoc plugin. add doc script, add docs on postpublish apply .jsdoc.json)</del> see <a href="https://github.com/cdaringe/ripcord/blob/master/src/index.js">ripcord</a> docs rule set.</li>
 <li><del>formalize api docs!</del></li>
 <li><del>script rule, allow by default for stacked scripts to <code>&amp;&amp;</code> onto each other</del></li>
 <li><del>lint</del> &lt;== ScriptRule fulfills</li>
