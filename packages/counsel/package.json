@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "lodash.clonedeep": "^4.5.0",
+    "lodash.uniq": "^4.5.0",
     "winston": "^2.2.0"
   },
   "devDependencies": {

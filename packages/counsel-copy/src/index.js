@@ -1,6 +1,7 @@
 'use strict'
 
 const Rule = require('counsel-rule')
+const fs = require('fs')
 
 /**
  * Copies files into a project.
@@ -45,6 +46,16 @@ class CopyRule extends Rule {
         targetProjectRoot: counsel.targetProjectRoot
       }
     ))
+  }
+
+  /**
+   * Checks that copy rule content is in place
+   * @TODO for directories, test for file content present, vs just target dir
+   * @param {Counsel} counsel
+   * @memberOf CopyRule
+   */
+  check (counsel) {
+    return !!fs.existsSync(this.declaration.copyTarget)
   }
 }
 

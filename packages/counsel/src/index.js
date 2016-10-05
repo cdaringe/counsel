@@ -8,6 +8,7 @@ const logger = require('./logger')
 const project = require('./project')
 const cp = require('child_process')
 const cloneDeep = require('lodash.clonedeep')
+const uniq = require('lodash.uniq')
 const fs = require('fs')
 const path = require('path')
 
@@ -103,9 +104,18 @@ module.exports = {
   },
 
   check (rules) {
+    let failedRule
+    if (!rules) throw new Error('rules not provided')
     return rules.reduce((chain, rule) => {
-      return chain.then(() => Promise.resolve(rule.check ? rule.check(this) : true))
+      return chain.then(() => {
+        failedRule = rule
+        return Promise.resolve(rule.check ? rule.check(this) : true)
+      })
     }, Promise.resolve())
+    .catch((err) => {
+      this.logger.error(`check failed on rule: ${failedRule.name}`)
+      throw err
+    })
   },
 
   /**
@@ -180,7 +190,7 @@ module.exports = {
     logger.info(`installing ${isDev ? 'development' : ''} dependencies: ${packages.join(', ')}`)
     let rslt
     try {
-      rslt = cp.execSync(`npm install ${flag} ${packages.join(' ')}`, { cwd: this.targetProjectRoot })
+      rslt = cp.execSync(`npm install ${flag} ${uniq(packages).join(' ')}`, { cwd: this.targetProjectRoot })
     } catch (err) {
       if (err) return logger.error(err)
     }

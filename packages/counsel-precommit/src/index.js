@@ -3,6 +3,7 @@
 const Rule = require('counsel-rule')
 const xor = require('lodash.xor')
 const noop = () => {}
+const DEFAULT_PRECOMMIT_TASKS = ['validate', 'lint', 'test']
 
 /**
  * Adds `git` pre-commit hooks to the project.  Enables you to specify a set of
@@ -38,7 +39,7 @@ class PreCommitRule extends Rule {
   apply (counsel) {
     Rule.prototype.apply.apply(this, arguments)
     const pkg = counsel.targetProjectPackageJson
-    let tasks = ['validate', 'lint', 'test']
+    let tasks = DEFAULT_PRECOMMIT_TASKS
     if (!Array.isArray(this.declaration.preCommitTasks)) {
       counsel.logger.info(`no \`preCommitTasks\` tasks specified, installing default pre-commit tasks`)
     } else {
@@ -60,6 +61,24 @@ class PreCommitRule extends Rule {
       search: false
     })
     pkg[hook] = tasks
+  }
+
+  /**
+   * Checks that all precommit tasks are in the target package.json
+   *
+   * @param {Counsel} counsel
+   * @throws {Error} with missing pkg info
+   * @memberOf PreCommitRule
+   */
+  check (counsel) {
+    const pkg = counsel.targetProjectPackageJson
+    const actualTasks = pkg['pre-commit']
+    let requestedTasks = this.declaration.preCommitTasks
+    requestedTasks = Array.isArray(requestedTasks) ? requestedTasks : DEFAULT_PRECOMMIT_TASKS
+    const missing = requestedTasks.filter(rT => actualTasks.indexOf(rT) < 0)
+    if (missing.length) {
+      throw new Error(`missing precommit tasks: ${missing.join(', ')}`)
+    }
   }
 }
 
