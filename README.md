@@ -1,9 +1,12 @@
+<p align="center"><img height="200px" src="https://github.com/cdaringe/counsel/raw/master/img/counsel.png" /></p>
+
 # counsel
 
 the end of boilerplate. automatically bake structure, opinions, and biz rules into projects!
 
 [ ![Codeship Status for cdaringe/counsel](https://app.codeship.com/projects/38b24cc0-684a-0134-dd3d-5ade36a91ecb/status?branch=master)](https://app.codeship.com/projects/176370)
 ![](https://img.shields.io/badge/standardjs-%E2%9C%93-brightgreen.svg)
+
 
 ## install
 
