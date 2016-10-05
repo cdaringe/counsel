@@ -1,9 +1,12 @@
+<p align="center"><img height="200px" src="https://github.com/cdaringe/counsel/raw/master/img/counsel.png" /></p>
+
 # counsel
 
 the end of boilerplate. automatically bake structure, opinions, and biz rules into projects!
 
 [ ![Codeship Status for cdaringe/counsel](https://app.codeship.com/projects/38b24cc0-684a-0134-dd3d-5ade36a91ecb/status?branch=master)](https://app.codeship.com/projects/176370)
 ![](https://img.shields.io/badge/standardjs-%E2%9C%93-brightgreen.svg)
+
 
 ## install
 
@@ -92,11 +95,13 @@ counsel should _rarely_ be installed directly into general projects.  instead, u
 
 ## docs
 
-the official api docs live [here](docs: [cdaringe.github.io/counsel](https://cdaringe.github.io/counsel/).  all other topics covered in the readme are for quickstart only!
+the official api docs live [here](https://cdaringe.github.io/counsel/).  all other topics covered in the readme are for quickstart only!
 
 ## rules
 
 `counsel` is composed of sets of `Rule`s to apply to your package.  provide it a set of rules, and it will fulfill them.
+
+**"how do i make my _own_ rules?**.  making rules is very easy!  see [counsel-rule](https://cdaringe.github.io/counsel/counsel-rule/) for more info.
 
 ## configure
 
@@ -110,7 +115,6 @@ it is **recommended** that in your `my-counsel-tool` package, to squash `counsel
 
 ## todo
 
-
 - readme-plugin (assert readme present)
 - ~template-plugin (apply swig-templates to file(s). e.g. auto-build readme)~
 - docs (jsdoc plugin. add doc script, add docs on postpublish apply .jsdoc.json)
@@ -120,3 +124,7 @@ it is **recommended** that in your `my-counsel-tool` package, to squash `counsel
 - ~~lint~~ <== ScriptRule fulfills
 - ~~pre-commit~~
 - ~~nsp~~ <== Script + PreCommit fulfills
+
+## logo credit
+
+[margdking](https://github.com/margdking)
