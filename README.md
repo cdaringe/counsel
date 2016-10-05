@@ -113,12 +113,18 @@ it is **recommended** that in your `my-counsel-tool` package, to squash `counsel
 
 `"my-counsel-tool": { "counsel-plugin": { "ignore": true } }`
 
+# changelog
+
+- 0.0.11
+  - add `check` support. rules may add an optional `check` method to test if rule is enforced.
+  - no attempts to install dually requested deps
+
 ## todo
 
-- readme-plugin (assert readme present)
-- ~template-plugin (apply swig-templates to file(s). e.g. auto-build readme)~
-- docs (jsdoc plugin. add doc script, add docs on postpublish apply .jsdoc.json)
 - filename convention (assert filenames are, say, kebab-cased.js)
+- ~~readme-plugin (assert readme present)~~ just a file exists rule. `{ check() { return fs.existsSync('path/to/file') }}`
+- ~~template-plugin (apply swig-templates to file(s). e.g. auto-build readme)~~
+- ~~docs (jsdoc plugin. add doc script, add docs on postpublish apply .jsdoc.json)~~ see [ripcord](https://github.com/cdaringe/ripcord/blob/master/src/index.js) docs rule set.
 - ~~formalize api docs!~~
 - ~~script rule, allow by default for stacked scripts to `&&` onto each other~~
 - ~~lint~~ <== ScriptRule fulfills

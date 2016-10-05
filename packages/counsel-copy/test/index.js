@@ -24,7 +24,7 @@ test('copy rule', t => {
       'file copied'
     )
   })
-  .then(() => counsel.check())
+  .then(() => counsel.check([copyMarkdownRule]))
   .catch(t.fail)
   .then(() => teardown(id))
   .then(() => t.pass('teardown'))
