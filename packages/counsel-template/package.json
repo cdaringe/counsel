@@ -16,5 +16,10 @@
     "counsel-rule": "^0.0.9",
     "pify": "^2.3.0",
     "swig-templates": "^2.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdaringe/counsel.git"
+  },
+  "homepage": "https://cdaringe.github.io/counsel/"
 }

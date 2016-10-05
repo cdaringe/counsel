@@ -15,5 +15,10 @@
   "dependencies": {
     "counsel-rule": "^0.0.9",
     "lodash.xor": "^4.5.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdaringe/counsel.git"
+  },
+  "homepage": "https://cdaringe.github.io/counsel/"
 }

@@ -14,5 +14,10 @@
   },
   "dependencies": {
     "counsel-rule": "^0.0.9"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdaringe/counsel.git"
+  },
+  "homepage": "https://cdaringe.github.io/counsel/"
 }

@@ -14,5 +14,9 @@
   "devDependencies": {
     "tape": "^4.6.2"
   },
-  "dependencies": {}
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdaringe/counsel.git"
+  },
+  "homepage": "https://cdaringe.github.io/counsel/"
 }
