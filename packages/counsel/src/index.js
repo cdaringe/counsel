@@ -105,16 +105,17 @@ module.exports = {
 
   check (rules) {
     this.setTargetPackageMeta()
-    let failedRule
+    let currRule
     if (!rules) throw new Error('rules not provided')
     return rules.reduce((chain, rule) => {
       return chain.then(() => {
-        failedRule = rule
-        return Promise.resolve(rule.check ? rule.check(this) : true)
+        if (!rule || !rule.check) return
+        currRule = rule
+        return Promise.resolve(rule.check(this))
       })
     }, Promise.resolve())
     .catch((err) => {
-      this.logger.error(`check failed on rule: ${failedRule.name}`)
+      this.logger.error(`check failed on rule: ${currRule.name}`)
       throw err
     })
   },
