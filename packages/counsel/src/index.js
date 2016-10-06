@@ -104,6 +104,7 @@ module.exports = {
   },
 
   check (rules) {
+    this.setTargetPackageMeta()
     let failedRule
     if (!rules) throw new Error('rules not provided')
     return rules.reduce((chain, rule) => {
