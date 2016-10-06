@@ -193,11 +193,13 @@ module.exports = {
    */
   npmInstall (packages, flag) {
     const isDev = flag === '--save-dev'
-    if (!packages.length) return false
-    logger.info(`installing ${isDev ? 'development' : ''} dependencies: ${packages.join(', ')}`)
+    const toInstall = uniq(packages)
+    if (!toInstall.length) return false
+    toInstall.forEach(p => { if (!p) throw new Error('empty packaged requested to be installed') })
+    logger.info(`installing ${isDev ? 'development' : ''} dependencies: ${toInstall.join(', ')}`)
     let rslt
     try {
-      rslt = cp.execSync(`npm install ${flag} ${uniq(packages).join(' ')}`, { cwd: this.targetProjectRoot })
+      rslt = cp.execSync(`npm install ${flag} ${toInstall.join(' ')}`, { cwd: this.targetProjectRoot })
     } catch (err) {
       if (err) return logger.error(err)
     }
