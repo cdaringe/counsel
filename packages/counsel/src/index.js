@@ -134,8 +134,11 @@ module.exports = {
     const toRemove = pkg[depType] ? Object.keys(pkg[depType]) : []
     if (!set.length || !toRemove.length) return set
     toRemove.forEach((remove) => {
-      const ndx = set.indexOf(remove)
-      if (ndx >= 0) delete set[ndx]
+      let ndx = set.indexOf(remove)
+      while (ndx >= 0) {
+        delete set[ndx]
+        ndx = set.indexOf(remove)
+      }
     })
     set = set.filter(name => name) // drop undefined
     return set
