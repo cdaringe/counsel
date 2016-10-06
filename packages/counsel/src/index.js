@@ -83,6 +83,7 @@ module.exports = {
    * @returns {Promise}
    */
   apply (rules) {
+    if (!rules) throw new Error('rules not provided')
     this.setTargetPackageMeta()
 
     const config = this.targetProjectPackageJson[this.configKey] || {}
