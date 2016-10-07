@@ -93,8 +93,16 @@ counsel.apply([
 <p><code>&quot;counsel&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
 <p>it is <strong>recommended</strong> that in your <code>my-counsel-tool</code> package, to squash <code>counsel.configKey = &#39;my-counsel-tool&#39;</code>, such that now, you can load config like:</p>
 <p><code>&quot;my-counsel-tool&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
+<h1 id="examples">examples</h1>
+<ul>
+<li><a href="https://github.com/cdaringe/ripcord">ripcord</a></li>
+</ul>
 <h1 id="changelog">changelog</h1>
 <ul>
+<li>0.0.15<ul>
+<li>added <code>counsel-filename-format</code></li>
+</ul>
+</li>
 <li>0.0.11<ul>
 <li>add <code>check</code> support. rules may add an optional <code>check</code> method to test if rule is enforced.</li>
 <li>no attempts to install dually requested deps</li>
@@ -136,6 +144,13 @@ counsel.apply([
           <section>
             <h3><a href="counsel-copy">counsel-copy</a></h3>
             <p>copy files/folders from a counsel project into a target project.</p>
+          </section>
+        </li>
+      
+        <li>
+          <section>
+            <h3><a href="counsel-filename-format">counsel-filename-format</a></h3>
+            <p>enforce filename formatting</p>
           </section>
         </li>
       
