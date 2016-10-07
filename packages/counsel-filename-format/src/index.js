@@ -6,7 +6,7 @@ const glob = require('glob')
 const path = require('path')
 const noop = () => {}
 
-const DEFAULT_IGNORE = [/README.*/, 'package.json']
+const DEFAULT_IGNORE = [/README.*/, 'package.json', 'node_modules']
 
 /**
  * @class FilenameFormatRule
@@ -55,7 +55,13 @@ module.exports = class FilenameFormatRule extends Rule {
       .map(f => f.trim ? f.trim() : f)
     const formatFn = this.declaration.fileFormatFunction
 
-    return pify(glob)(extensions.join('|'), { cwd: projectRoot })
+    return pify(glob)(
+      extensions.join('|'),
+      {
+        cwd: projectRoot,
+        ignore: ['node_modules']
+      }
+    )
     .then(filenames => this.removeValid(filenames, formatFn))
     .then(filenames => this.removeExluded(filenames, exclude))
     .then(violating => {

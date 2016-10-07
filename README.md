@@ -119,6 +119,8 @@ it is **recommended** that in your `my-counsel-tool` package, to squash `counsel
 
 # changelog
 
+- 0.0.15
+  - added `counsel-filename-format`
 - 0.0.11
   - add `check` support. rules may add an optional `check` method to test if rule is enforced.
   - no attempts to install dually requested deps
