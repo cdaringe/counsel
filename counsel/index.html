@@ -111,23 +111,23 @@ counsel.apply([
 <p><code>&quot;counsel&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
 <p>it is <strong>recommended</strong> that in your <code>my-counsel-tool</code> package, to squash <code>counsel.configKey = 'my-counsel-tool'</code>, such that now, you can load config like:</p>
 <p><code>&quot;my-counsel-tool&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
+<h1>examples</h1><ul>
+<li><a href="https://github.com/cdaringe/ripcord">ripcord</a></li>
+</ul>
 <h1>changelog</h1><ul>
+<li>0.0.16<ul>
+<li>improve &amp; clarify filename ignore rules</li>
+</ul>
+</li>
+<li>0.0.15<ul>
+<li>added <code>counsel-filename-format</code></li>
+</ul>
+</li>
 <li>0.0.11<ul>
 <li>add <code>check</code> support. rules may add an optional <code>check</code> method to test if rule is enforced.</li>
 <li>no attempts to install dually requested deps</li>
 </ul>
 </li>
-</ul>
-<h2>todo</h2><ul>
-<li>filename convention (assert filenames are, say, kebab-cased.js)</li>
-<li><del>readme-plugin (assert readme present)</del> just a file exists rule. <code>{ check() { return fs.existsSync('path/to/file') }}</code></li>
-<li><del>template-plugin (apply swig-templates to file(s). e.g. auto-build readme)</del></li>
-<li><del>docs (jsdoc plugin. add doc script, add docs on postpublish apply .jsdoc.json)</del> see <a href="https://github.com/cdaringe/ripcord/blob/master/src/index.js">ripcord</a> docs rule set.</li>
-<li><del>formalize api docs!</del></li>
-<li><del>script rule, allow by default for stacked scripts to <code>&amp;&amp;</code> onto each other</del></li>
-<li><del>lint</del> &lt;== ScriptRule fulfills</li>
-<li><del>pre-commit</del></li>
-<li><del>nsp</del> &lt;== Script + PreCommit fulfills</li>
 </ul>
 <h2>logo credit</h2><p><a href="https://github.com/margdking">margdking</a></p></article>
     </section>
