@@ -113,6 +113,10 @@ it is **recommended** that in your `my-counsel-tool` package, to squash `counsel
 
 `"my-counsel-tool": { "counsel-plugin": { "ignore": true } }`
 
+# examples
+
+- [ripcord](https://github.com/cdaringe/ripcord)
+
 # changelog
 
 - 0.0.11
