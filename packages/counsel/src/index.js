@@ -151,7 +151,7 @@ module.exports = {
    * @returns {undefined}
    */
   installDeps (rules) {
-    let toInstallDeps = rules.reduce((set, rule) => set.concat(rule.dependencies), [])
+    let toInstallDeps = rules.reduce((set, rule) => set.concat(rule.dependencies || []), [])
     toInstallDeps = this._filterPrexistingInstalledPackages(toInstallDeps, 'dependencies')
     const didInstall = this.npmInstall(toInstallDeps, '--save')
     if (didInstall) {
@@ -166,7 +166,7 @@ module.exports = {
    * @returns {undefined}
    */
   installDevs (rules) {
-    let toInstallDevs = rules.reduce((set, rule) => set.concat(rule.devDependencies), [])
+    let toInstallDevs = rules.reduce((set, rule) => set.concat(rule.devDependencies || []), [])
     toInstallDevs = this._filterPrexistingInstalledPackages(toInstallDevs, 'devDependencies')
     const didInstall = this.npmInstall(toInstallDevs, '--save-dev')
     if (didInstall) {
@@ -193,9 +193,8 @@ module.exports = {
    */
   npmInstall (packages, flag) {
     const isDev = flag === '--save-dev'
-    const toInstall = uniq(packages)
+    const toInstall = uniq(packages.filter(p => p))
     if (!toInstall.length) return false
-    toInstall.forEach(p => { if (!p) throw new Error('empty packaged requested to be installed') })
     logger.info(`installing ${isDev ? 'development' : ''} dependencies: ${toInstall.join(', ')}`)
     let rslt
     try {
