@@ -1,6 +1,6 @@
 {
   "name": "counsel-filename-format",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "enforce filename formatting",
   "main": "src/index.js",
   "files": [
@@ -12,7 +12,7 @@
   "author": "cdaringe",
   "license": "ISC",
   "devDependencies": {
-    "counsel": "^0.0.16",
+    "counsel": "^0.0.17",
     "lodash.kebabcase": "^4.1.1",
     "tape": "^4.6.2"
   },
