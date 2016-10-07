@@ -5,6 +5,6 @@ const kebab = require('lodash.kebabcase')
 
 module.exports = new FilenameFormatRule({
   fileFormatExtensions: 'js',
-  fileFormatExclude: 'IGNORE',
+  fileFormatExclude: '*IGNORE*',
   fileFormatFunction: kebab
 })

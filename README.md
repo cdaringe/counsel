@@ -119,6 +119,8 @@ it is **recommended** that in your `my-counsel-tool` package, to squash `counsel
 
 # changelog
 
+- 0.0.16
+  - improve & clarify filename ignore rules
 - 0.0.15
   - added `counsel-filename-format`
 - 0.0.11

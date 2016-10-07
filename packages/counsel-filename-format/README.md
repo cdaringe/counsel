@@ -14,7 +14,7 @@ const kebab = require('lodash.kebabcase')
 
 module.exports = new FilenameFormatRule({
   fileFormatExtensions: 'js',
-  fileFormatExclude: ['IGNORE', 'docs'],
+  fileFormatExclude: ['*IGNORE*', '*docs/**/*.blah'], // <== `glob` matchers!
   fileFormatFunction: kebab // <== enforces all files are kebab-cased.  best case :)
 })
 ```

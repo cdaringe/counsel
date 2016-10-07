@@ -6,7 +6,7 @@ const glob = require('glob')
 const path = require('path')
 const noop = () => {}
 
-const DEFAULT_IGNORE = [/README.*/, 'package.json', 'node_modules']
+const DEFAULT_IGNORE = ['README.*', 'package.json', 'node_modules']
 
 /**
  * @class FilenameFormatRule
@@ -24,11 +24,6 @@ module.exports = class FilenameFormatRule extends Rule {
   constructor (opts) {
     super(opts)
     noop()
-  }
-
-  removeExluded (filenames, exclude) {
-    if (!filenames.length) return filenames
-    return filenames.filter(f => !exclude.some(excl => f.match(excl)))
   }
 
   removeValid (filenames, fn) {
@@ -59,11 +54,10 @@ module.exports = class FilenameFormatRule extends Rule {
       extensions.join('|'),
       {
         cwd: projectRoot,
-        ignore: ['node_modules']
+        ignore: exclude
       }
     )
     .then(filenames => this.removeValid(filenames, formatFn))
-    .then(filenames => this.removeExluded(filenames, exclude))
     .then(violating => {
       if (violating.length) {
         throw new Error([
