@@ -1,0 +1,24 @@
+{
+  "name": "counsel-filename-format",
+  "version": "0.0.1",
+  "description": "enforce filename formatting",
+  "main": "src/index.js",
+  "files": [
+    "src/"
+  ],
+  "scripts": {
+    "test": "node test/"
+  },
+  "author": "cdaringe",
+  "license": "ISC",
+  "devDependencies": {
+    "counsel": "^0.0.14",
+    "lodash.kebabcase": "^4.1.1",
+    "tape": "^4.6.2"
+  },
+  "dependencies": {
+    "counsel-rule": "^0.0.12",
+    "glob": "^7.1.0",
+    "pify": "^2.3.0"
+  }
+}

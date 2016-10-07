@@ -122,6 +122,26 @@
       "outDir": null
     },
     {
+      "name": "test - counsel-filename-format",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/packages/counsel-filename-format/test/index.js",
+      "stopOnEntry": false,
+      "args": [],
+      "cwd": "${workspaceRoot}/packages/counsel-filename-format",
+      "preLaunchTask": null,
+      "runtimeExecutable": null,
+      "runtimeArgs": [
+        "--nolazy"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "internalConsole",
+      "sourceMaps": false,
+      "outDir": null
+    },
+    {
       "name": "Attach",
       "type": "node",
       "request": "attach",
