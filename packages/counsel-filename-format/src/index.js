@@ -6,7 +6,7 @@ const glob = require('glob')
 const path = require('path')
 const noop = () => {}
 
-const DEFAULT_IGNORE = ['README.*', 'package.json', 'node_modules']
+const DEFAULT_IGNORE = ['**/README.*', '**/package.json', '**/node_modules*']
 
 /**
  * @class FilenameFormatRule
