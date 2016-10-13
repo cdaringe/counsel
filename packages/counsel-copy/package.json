@@ -1,6 +1,6 @@
 {
   "name": "counsel-copy",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "copy files/folders from a counsel project into a target project.",
   "main": "src/index.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "counsel-rule": "^0.0.15"
   },
   "devDependencies": {
-    "counsel": "^0.0.17",
+    "counsel": "^0.0.18",
     "tape": "^4.6.2"
   },
   "repository": {
