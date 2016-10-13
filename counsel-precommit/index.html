@@ -60,7 +60,10 @@ module.exports = new PreCommitRule({
 })</code></pre><ul>
 <li>apply it (per <code>counsel</code> docs)</li>
 </ul>
-<p>now, on every <code>git commit ...</code>, <code>lint</code> and <code>test</code> must execute successfully (e.g. exit with code 0), for the commit to succeed!</p></article>
+<p>now, on every <code>git commit ...</code>, <code>lint</code> and <code>test</code> must execute successfully (e.g. exit with code 0), for the commit to succeed!</p>
+<h2>hot tips</h2><ul>
+<li>if used in a monorepo style project, make sure to configure <code>gitRoot</code> in your config!</li>
+</ul></article>
     </section>
 
 

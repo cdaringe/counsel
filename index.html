@@ -60,7 +60,7 @@ counsel.apply([
 <pre><code class="lang-js">// package.json
 {
   &quot;name&quot;: &quot;boring-old-package&quot;,
-  &quot;dependencies&quot;: {
+  &quot;devDependencies&quot;: {
     &quot;standard&quot;: &quot;^4.0.1&quot;,
     &quot;my-counsel-tool&quot;: &quot;^1.0.0&quot;
   },
@@ -73,7 +73,8 @@ counsel.apply([
     &quot;lint&quot;,
     &quot;test&quot;,
     &quot;check-coverage&quot;
-  ]
+  ],
+  &quot;my-counsel-tool&quot;: { /* optional configuration */ }
 }
 </code></pre>
 <p>wow! not so boring after all now, is it?  when <code>my-counsel-tool</code> installs or updates, it can update your package!  it is <em>not</em> limited to your <code>package.json</code>, of course.  make rules to do anything to your repo on <code>install</code>, on some git <code>hook</code> event, or any <code>npm</code> event!</p>
@@ -93,6 +94,13 @@ counsel.apply([
 <p><code>&quot;counsel&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
 <p>it is <strong>recommended</strong> that in your <code>my-counsel-tool</code> package, to squash <code>counsel.configKey = &#39;my-counsel-tool&#39;</code>, such that now, you can load config like:</p>
 <p><code>&quot;my-counsel-tool&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
+<h3 id="global-config">global config</h3>
+<p>the following configuration(s) may be applied as annotated.</p>
+<pre><code class="lang-js">// package.json
+&quot;my-counsel-tool&quot;: {
+  &quot;gitRoot&quot;: &quot;../..&quot; // relative path from package.json
+}
+</code></pre>
 <h1 id="examples">examples</h1>
 <ul>
 <li><a href="https://github.com/cdaringe/ripcord">ripcord</a></li>
