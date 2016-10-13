@@ -94,7 +94,7 @@ module.exports = {
 
     return rules.reduce((chain, rule) => {
       if (!rule.apply) return
-      return chain.then(() => Promise.resolve(rule.apply(this)))
+      return chain.then(() => Promise.resolve(rule.apply(this, config)))
     }, Promise.resolve())
     .catch((err) => {
       logger.error(err)

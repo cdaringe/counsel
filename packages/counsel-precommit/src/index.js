@@ -1,5 +1,6 @@
 'use strict'
 
+const path = require('path')
 const Rule = require('counsel-rule')
 const xor = require('lodash.xor')
 const noop = () => {}
@@ -23,7 +24,7 @@ class PreCommitRule extends Rule {
    */
   constructor (opts) {
     super(opts)
-    noop() // bypass useless constructor warning. @jsdoc must happen!
+    noop() // bypass linting, useless constructor warning. @jsdoc must happen!
   }
 
   /**
@@ -34,11 +35,13 @@ class PreCommitRule extends Rule {
    * @override
    * @memberOf ScriptRule
    * @param {Module} counsel
+   * @param {object} config
    * @returns {undefined}
    */
-  apply (counsel) {
+  apply (counsel, config) {
     Rule.prototype.apply.apply(this, arguments)
     const pkg = counsel.targetProjectPackageJson
+    const root = counsel.targetProjectRoot
     let tasks = DEFAULT_PRECOMMIT_TASKS
     if (!Array.isArray(this.declaration.preCommitTasks)) {
       counsel.logger.info(`no \`preCommitTasks\` tasks specified, installing default pre-commit tasks`)
@@ -55,9 +58,10 @@ class PreCommitRule extends Rule {
       ].join(' '))
       return
     }
+    let gitRoot = config.gitRoot ? path.resolve(root, config.gitRoot) : root
     counsel.project.installHooks({
       hook: hook,
-      root: counsel.targetProjectRoot,
+      root: gitRoot,
       search: false
     })
     pkg[hook] = tasks

@@ -19,7 +19,7 @@ const packages = fs.readdirSync(packagesPath)
   return {
     name: p,
     path: pkgRoot,
-    packageJSON: require(path.resolve(pkgRoot, 'package.json')),
+    packageJSON: require(path.resolve(pkgRoot, 'package.json'))
   }
 })
 
@@ -41,7 +41,7 @@ packages.forEach((pkg) => {
   } catch (err) {
     console.error([
       `Failed to generate docs for ${pkg.name}.`,
-      `Failing cmd ${cmd.bin} ${cmd.args.join(' ')} `,
+      `Failing cmd ${cmd.bin} ${cmd.args.join(' ')} `
     ].join(' '))
     rmdir(dest)
     return
@@ -57,7 +57,6 @@ const docsIndexStr = swig.renderFile(
   docsIndexTemplatePath,
   { packages, readme: marked(readmeStr) }
 )
-
 
 // output index file and associated assets
 fs.writeFileSync(path.join(docsPath, 'index.html'), docsIndexStr)

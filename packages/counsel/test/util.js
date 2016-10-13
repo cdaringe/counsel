@@ -11,8 +11,8 @@ module.exports = {
 
   projectCounter: 0,
 
-  setupTestProject (destRootDirname) {
-    const testProjectId = this._createTestProject(destRootDirname)
+  setupTestProject (destRootDirname, opts) {
+    const testProjectId = this._createTestProject(destRootDirname, opts)
     const dummyTestPkgDir = path.join(destRootDirname, testProjectId)
     process.chdir(dummyTestPkgDir)
 
@@ -25,18 +25,20 @@ module.exports = {
     return testProjectId
   },
 
-  _createTestProject (destRootDirname) {
+  _createTestProject (destRootDirname, opts) {
     ++this.projectCounter
+    opts = opts || { git: true }
     const dummyProjectPrefix = 'dummy-project-test-'
     const projectId = `${dummyProjectPrefix}${this.projectCounter}`
     const destDirname = path.join(destRootDirname, projectId)
     const destGitDirname = path.join(destDirname, '.git')
     const dummyProjectDirname = path.resolve(__dirname, 'dummy-project')
-    cp.execSync([
+    const cmd = [
       `rm -rf ${dummyProjectPrefix}*`, // clean!
       `cp -r ${dummyProjectDirname} ${destDirname}`,
-      `mkdir -p ${destGitDirname}`
-    ].join(' && '), { cwd: destRootDirname })
+      opts.git ? `mkdir -p ${destGitDirname}` : `rm -rf ${destGitDirname}`
+    ].join(' && ')
+    cp.execSync(cmd, { cwd: destRootDirname })
     return projectId
   },
 

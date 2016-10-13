@@ -19,3 +19,7 @@ module.exports = new PreCommitRule({
 - apply it (per `counsel` docs)
 
 now, on every `git commit ...`, `lint` and `test` must execute successfully (e.g. exit with code 0), for the commit to succeed!
+
+## hot tips
+
+- if used in a monorepo style project, make sure to configure `gitRoot` in your config!

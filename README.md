@@ -62,7 +62,7 @@ install `my-counsel-tool` into `boring-old-package`:
 // package.json
 {
   "name": "boring-old-package",
-  "dependencies": {
+  "devDependencies": {
     "standard": "^4.0.1",
     "my-counsel-tool": "^1.0.0"
   },
@@ -75,7 +75,8 @@ install `my-counsel-tool` into `boring-old-package`:
     "lint",
     "test",
     "check-coverage"
-  ]
+  ],
+  "my-counsel-tool": { /* optional configuration */ }
 }
 ```
 
@@ -112,6 +113,18 @@ some rules aren't so simple.  for rules that offer configuration, you can add yo
 it is **recommended** that in your `my-counsel-tool` package, to squash `counsel.configKey = 'my-counsel-tool'`, such that now, you can load config like:
 
 `"my-counsel-tool": { "counsel-plugin": { "ignore": true } }`
+
+
+### global config
+
+the following configuration(s) may be applied as annotated.
+
+```js
+// package.json
+"my-counsel-tool": {
+  "gitRoot": "../.." // relative path from package.json
+}
+```
 
 # examples
 
