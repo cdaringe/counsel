@@ -42,13 +42,14 @@ test('pre-commit in mono repo', t => {
   t.ok(fs.existsSync(path.resolve(childProjectDirname, 'package.json')), 'mono repo scaffolded')
   t.notOk(fs.existsSync(path.resolve(rootProjectDirname, '.git')), 'not .git in root project by default')
 
-  t.test('fails without gitRoot config', t => {
-    t.plan(1)
-    Promise.resolve()
-    .then(() => counsel.apply([preCommitRule]))
-    .catch(err => t.ok(err.message.match(/\.git/), 'errors on not found git root'))
-    .then(t.end, t.end)
-  })
+  // @note disabled, perhaps indefinitely
+  // t.test('fails without gitRoot config', t => {
+  //   t.plan(1)
+  //   Promise.resolve()
+  //   .then(() => counsel.apply([preCommitRule]))
+  //   .catch(err => t.ok(err.message.match(/\.git/), 'errors on not found git root'))
+  //   .then(t.end, t.end)
+  // })
 
   t.test('succeeds with gitRoot config', t => {
     t.plan(2)
