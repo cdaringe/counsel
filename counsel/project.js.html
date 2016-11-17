@@ -239,7 +239,12 @@ Object.assign(exports, {
     hooks = Array.isArray(hooks) ? hooks : [hooks]
     var gitRoot = search ? exports.findGitRoot(root) : root
     if (!exports.isDir(path.join(gitRoot, '.git'))) {
-      throw new Error(`.git folder not found in project root ${gitRoot}`)
+      return logger.warn([
+        `.git folder not found in project root ${gitRoot}.`,
+        'counsel install will proceed, however, pre-commit hooks will be',
+        'omitted.  please re-apply counsel rules, re-install counsel,',
+        'or re-run your counsel tool\'s install script to restore these hooks.'
+      ].join(' '))
     }
     var hookRoot = path.join(gitRoot, '.git', 'hooks')
     var source = path.resolve(__dirname, '..', 'bin', 'validate.sh')

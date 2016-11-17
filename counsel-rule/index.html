@@ -56,9 +56,7 @@
 </ul>
 </li>
 </ul>
-<h2>example</h2><ul>
-<li>create your rule</li>
-</ul>
+<h2>create a rule</h2><p>here's a fully flushed example:</p>
 <pre class="prettyprint source lang-js"><code>'use strict'
 
 const Rule = require('counsel-rule')
@@ -82,7 +80,22 @@ module.exports = new Rule({
   }
 })</code></pre><ul>
 <li>apply it (per <code>counsel</code> docs)</li>
-</ul></article>
+</ul>
+<h2>how to override a rule?</h2><h3>dependency overrides</h3><pre class="prettyprint source lang-js"><code>// package.json
+{
+  &quot;counsel&quot;: { // or your dev-tool's config key
+    &quot;overrides&quot;: {
+      &quot;your-rule-name&quot;: { // make sure to add a rule name to your rules!
+        &quot;dependencies&quot;: { // add or remove deps from a rule's defaults
+          &quot;add&quot;: [&quot;x&quot;, &quot;y&quot;, &quot;z&quot;], // or &quot;plus&quot;
+          &quot;substract&quot;: &quot;e&quot; // or &quot;minus&quot;. accepts string|string[]
+        },
+        &quot;devDependencies&quot;: [&quot;m&quot;, &quot;n&quot;] // squashes default devDependencies
+      },
+      &quot;skip-this-rule&quot;: null // `null` skips rules altogether
+    }
+  }
+}</code></pre></article>
     </section>
 
 

@@ -23,24 +23,33 @@
 <h2 id="install">install</h2>
 <p><code>npm i --save counsel</code></p>
 <h2 id="usage">usage</h2>
-<p>docs: <a href="https://cdaringe.github.io/counsel/">cdaringe.github.io/counsel</a>. package level doc links may be found at the <em>bottom</em> of the linked page.</p>
-<p>before <code>counsel</code>, you have a boring-old-package:</p>
+<p><code>counsel</code> is generally for <strong>teams</strong> or for <strong>package authors</strong> who want consistency between their projects. to best understand the value counsel provides, let&#39;s consider an example.  before <code>counsel</code>, you have a boring-old-package:</p>
 <pre><code class="lang-js">// package.json
 {
   &quot;name&quot;: &quot;boring-old-package&quot;,
+  &quot;devDendencies&quot;: {
+    &quot;standard&quot;: &quot;1.2.3&quot;
+  },
+  &quot;scripts&quot;: {
+    &quot;something-great&quot;: &quot;node greatness.js&quot;,
+    &quot;lint&quot;: &quot;standard src/&quot;,
+    &quot;validate&quot;: &quot;npm ls&quot;,
+    &quot;secure&quot;: &quot;nsp check&quot;
+  }
   ...
 }
 </code></pre>
-<p>but, you want to keep up to date with your team&#39;s latest and greatest patterns.  no problem, build &amp; publish a small <code>counsel</code> tool!</p>
-<pre><code class="lang-js">// package.json
+<p>turns out, those scripts and dependencies are common to <em>all</em> of your teams&#39; projects. of course you want to keep up to date with your teams&#39; latest and greatest patterns.  <code>counsel</code> can help keep all of your projects aligned.</p>
+<p>let&#39;s build &amp; publish a tool, which will use <code>counsel</code> to keep our team sync&#39;ed up!  let&#39;s call it <code>project-unifier</code>.</p>
+<pre><code class="lang-js">// project-unifier/package.json
 {
-  &quot;name&quot;: &quot;my-counsel-tool&quot;,
+  &quot;name&quot;: &quot;project-unifier&quot;,
   &quot;scripts&quot;: {
-    &quot;install&quot;: &quot;node my-counsel-tool.js&quot;
+    &quot;install&quot;: &quot;node project-unifier.js&quot;
   }
 }
 </code></pre>
-<pre><code class="lang-js">// my-counsel-tool.js
+<pre><code class="lang-js">// project-unifier/project-unifier.js
 const counsel = require(&#39;counsel&#39;)
 const ScriptRule = require(&#39;counsel-script&#39;)
 const PreCommitRule = require(&#39;counsel-precommit&#39;)
@@ -48,56 +57,86 @@ counsel.apply([
   new ScriptRule({
     dependencies: [&#39;standard&#39;]
     scriptName: &#39;lint&#39;,
-    scriptCommand: &#39;standard&#39;
+    scriptCommand: &#39;standard src/&#39;
+  }),
+  new ScriptRule({
+    dependencies: [&#39;nsp&#39;]
+    scriptName: &#39;secure&#39;,
+    scriptCommand: &#39;nsp check&#39;
   }),
   new PreCommitRule({
-    preCommitTasks: [&#39;validate&#39;, &#39;lint&#39;, &#39;test&#39;, &#39;check-coverage&#39;]
-    // ^ will install a git pre-commit hook that runs these npm scripts
+    preCommitTasks: [&#39;lint&#39;, &#39;test&#39;, &#39;secure&#39;]
   })
+  // ... and so on
 ])
 </code></pre>
-<p>install <code>my-counsel-tool</code> into <code>boring-old-package</code>:</p>
-<pre><code class="lang-js">// package.json
+<p>suppose we have an <code>existing-project</code>. install <code>project-unifier</code> into some <code>existing-project</code>:</p>
+<pre><code class="lang-js">// existing-project/package.json
 {
-  &quot;name&quot;: &quot;boring-old-package&quot;,
+  &quot;name&quot;: &quot;existing-project&quot;,
   &quot;devDependencies&quot;: {
     &quot;standard&quot;: &quot;^4.0.1&quot;,
-    &quot;my-counsel-tool&quot;: &quot;^1.0.0&quot;
+    &quot;project-unifier&quot;: &quot;^1.0.0&quot;
   },
   &quot;scripts&quot;: {
     &quot;lint&quot;: &quot;standard&quot;,
+    &quot;secure&quot;: &quot;nsp check&quot;,
+    &quot;test&quot;: &quot;node test/&quot;
     ...
   },
-  &quot;pre-commit&quot;: [
-    &quot;validate&quot;,
-    &quot;lint&quot;,
-    &quot;test&quot;,
-    &quot;check-coverage&quot;
-  ],
-  &quot;my-counsel-tool&quot;: { /* optional configuration */ }
+  &quot;pre-commit&quot;: [&quot;lint&quot;, &quot;test&quot;, &quot;secure&quot;],
+  &quot;project-unifier&quot;: { /* optional configuration */ }
 }
 </code></pre>
-<p>wow! not so boring after all now, is it?  when <code>my-counsel-tool</code> installs or updates, it can update your package!  it is <em>not</em> limited to your <code>package.json</code>, of course.  make rules to do anything to your repo on <code>install</code>, on some git <code>hook</code> event, or any <code>npm</code> event!</p>
+<p>rad!  <strong>when <code>project-unifier</code> installs or updates, it can update your package</strong>!</p>
+<p>rules are <em>not</em> limited to your <code>package.json</code>, of course.  make rules to do anything to your project!  examples:</p>
+<ul>
+<li>make some rules to <strong>run tests</strong> on git-precommit</li>
+<li>make some rules to <strong>lint</strong> on git-precommit</li>
+<li>make a rule to <strong>enforce a file naming convention</strong></li>
+<li>make a rule to check coverage after testing (e.g. <code>posttest</code>)</li>
+<li>make a rule to spell check your README</li>
+<li>make a rule to copy or render templates to/from your project</li>
+<li>make a rule to validate that your installed dependencies match your package.json&#39;s declaration!</li>
+<li>... or so many more</li>
+</ul>
+<p>make rules to tap into on git <code>hook</code>s or <code>npm</code> events!  package them up in a small tool, and integrate it into all of your projects! <strong><a href="https://github.com/cdaringe/counsel/tree/master/packages">counsel provides some helpful rules</a></strong> to get you started.</p>
+<p><strong>not sure where to start?</strong>  take a look at <a href="https://github.com/cdaringe/ripcord">ripcord</a>. or, <a href="https://github.com/cdaringe/counsel/issues/new">ask us for help</a>!</p>
 <h2 id="what">what</h2>
-<p>so what is it?</p>
+<p>so what is it, really?</p>
 <p>it&#39;s the end of boilerplate. automatically bake structure, opinions, and biz rules into projects.</p>
 <p>are you familiar with a reference repo? boilerplate repo?  template repo?  if you are, you know they grow stale.  counsel eliminates the need for these sorts of projects.  instead, counsel allows your team or company to roll personalized tooling that is shared across every package as a development dependency.  it automatically applies your opinions, your formats, your templates, your test scripts, your lint configurations, your &quot;whatevers&quot; per your own desire, with very little effort.</p>
 <p>counsel is a framework for applying business rules and opinions into packages.</p>
 <p>counsel should <em>rarely</em> be installed directly into general projects.  instead, use it to make a shared tool.  place all the rules you want into the tool and release it as a standalone package.</p>
 <h2 id="docs">docs</h2>
-<p>the official api docs live <a href="https://cdaringe.github.io/counsel/">here</a>.  all other topics covered in the readme are for quickstart only!</p>
+<p>the official api docs live <a href="https://cdaringe.github.io/counsel/">here</a>.  package level doc links may be found at the <em>bottom</em> of the linked page.  all other topics covered in the readme are for quickstart only!</p>
 <h2 id="rules">rules</h2>
-<p><code>counsel</code> is composed of sets of <code>Rule</code>s to apply to your package.  provide it a set of rules, and it will fulfill them.</p>
-<p><strong>&quot;how do i make my <em>own</em> rules?</strong>.  making rules is very easy!  see <a href="https://cdaringe.github.io/counsel/counsel-rule/">counsel-rule</a> for more info.</p>
+<p><code>counsel</code> applies sets of <code>Rule</code>s to your package.  it can also check that your package follows those rules, if asked to do so.</p>
+<p>provide counsel a set of rules, and it will fulfill them.</p>
+<h3 id="keys-included">keys included</h3>
+<p><code>counsel</code> includes some rules for free! check out <a href="https://cdaringe.github.io/counsel/packages">the source</a> to see what you can import and run with.</p>
+<h3 id="make-your-own-rules">make your own rules</h3>
+<p>making rules is very easy!  see <a href="https://cdaringe.github.io/counsel/counsel-rule/">counsel-rule</a> for more info.</p>
+<h3 id="overriding-or-skipping-rules">overriding or skipping rules</h3>
+<p>see <a href="https://cdaringe.github.io/counsel/counsel-rule/">counsel-rule</a> for instructions on how to handle these cases.</p>
 <h2 id="configure">configure</h2>
-<p>some rules aren&#39;t so simple.  for rules that offer configuration, you can add your config in package.json:</p>
-<p><code>&quot;counsel&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
-<p>it is <strong>recommended</strong> that in your <code>my-counsel-tool</code> package, to squash <code>counsel.configKey = &#39;my-counsel-tool&#39;</code>, such that now, you can load config like:</p>
-<p><code>&quot;my-counsel-tool&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
+<p>some rules aren&#39;t so simple.  for rules that offer configuration, you can <strong>add your config in package.json</strong>:</p>
+<pre><code class="lang-js">&quot;counsel&quot;: {
+  &quot;overrides&quot;: {
+    &quot;counsel-plugin-a&quot;: null, // ignore this rule
+    &quot;counsel-plugin-b: {
+      &quot;devDependencies&quot;: {
+        &quot;subtract&quot;: &quot;instanbul&quot; // maybe you already use blanket/jest/etc, who knows!
+      }
+    }
+}
+</code></pre>
+<p>it is <strong>recommended</strong> that in your <code>project-unifier</code> package, you squash <code>counsel.configKey = &#39;project-unifier&#39;</code>, such that now, you can load config like:</p>
+<p><code>&quot;project-unifier&quot;: { ... }</code>, vs. <code>&quot;counsel: { ... }</code></p>
 <h3 id="global-config">global config</h3>
 <p>the following configuration(s) may be applied as annotated.</p>
 <pre><code class="lang-js">// package.json
-&quot;my-counsel-tool&quot;: {
+&quot;project-unifier&quot;: {
   &quot;gitRoot&quot;: &quot;../..&quot; // relative path from package.json
 }
 </code></pre>
