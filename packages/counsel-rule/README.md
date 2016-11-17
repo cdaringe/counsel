@@ -57,7 +57,8 @@ module.exports = new Rule({
           "substract": "e" // or "minus". accepts string|string[]
         },
         "devDependencies": ["m", "n"] // squashes default devDependencies
-      }
+      },
+      "skip-this-rule": null // `null` skips rules altogether
     }
   }
 }

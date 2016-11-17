@@ -3,6 +3,6 @@
 const Rule = require('counsel-rule')
 
 module.exports = new Rule({
-  name: 'install-tape-dependency',
+  name: 'install-tape-rule',
   dependencies: ['tape']
 })

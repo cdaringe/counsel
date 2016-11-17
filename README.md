@@ -106,7 +106,7 @@ the official api docs live [here](https://cdaringe.github.io/counsel/).  all oth
 
 - making rules is very easy!  see [counsel-rule](https://cdaringe.github.io/counsel/counsel-rule/) for more info.
 
-### override rule behavior
+### overriding or skipping rules
 
 again, see [counsel-rule](https://cdaringe.github.io/counsel/counsel-rule/) for more.
 

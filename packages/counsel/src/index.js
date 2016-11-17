@@ -7,6 +7,7 @@
 const logger = require('./logger')
 const project = require('./project')
 const cp = require('child_process')
+const Rule = require('counsel-rule')
 const cloneDeep = require('lodash.clonedeep')
 const uniq = require('lodash.uniq')
 const fs = require('fs')
@@ -85,16 +86,14 @@ module.exports = {
   apply (rules) {
     if (!rules) throw new Error('rules not provided')
     this.setTargetPackageMeta()
+    const toExecute = this._applyOverrides(rules)
 
-    const config = this.targetProjectPackageJson[this.configKey] || {}
-    this.targetProjectPackageJson[this.configKey] = config
+    this.installDeps(toExecute)
+    this.installDevs(toExecute)
 
-    this.installDeps(rules)
-    this.installDevs(rules)
-
-    return rules.reduce((chain, rule) => {
+    return toExecute.reduce((chain, rule) => {
       if (!rule.apply) return
-      return chain.then(() => Promise.resolve(rule.apply(this, config)))
+      return chain.then(() => Promise.resolve(rule.apply(this, this.config())))
     }, Promise.resolve())
     .catch((err) => {
       logger.error(err)
@@ -143,6 +142,19 @@ module.exports = {
     })
     set = set.filter(name => name) // drop undefined
     return set
+  },
+
+  _applyOverrides (rules) {
+    const config = this.config()
+    let overrides = config.overrides
+    if (!overrides) return rules
+    return rules.filter(rule => {
+      let pkgOverrides = overrides[rule.name]
+      if (pkgOverrides === null) return false // null drops rule
+      if (pkgOverrides.dependencies) Rule.prototype._applyDependencyOverrides.apply(rule, [{ dev: false, override: pkgOverrides.dependencies }])
+      if (pkgOverrides.devDependencies) Rule.prototype._applyDependencyOverrides.apply(rule, [{ dev: true, override: pkgOverrides.devDependencies }])
+      return true
+    })
   },
 
   /**

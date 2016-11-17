@@ -39,19 +39,10 @@ class Rule {
    */
   apply (counsel) {
     counsel.logger.verbose(`applying rule: ${this.name || 'UNNAMED-RULE'}`)
-    const name = this.name
-    if (!name) return
-    const config = counsel.config()
-    let overrides = config.overrides ? config.overrides[name] : null
-    if (overrides) this.applyOverrides({ overrides, counsel })
   }
 
-  applyOverrides ({ counsel, overrides }) {
-    if (overrides.dependencies) this._applyDepencenyOverrides({ dev: false, override: overrides.dependencies })
-    if (overrides.devDependencies) this._applyDepencenyOverrides({ dev: true, override: overrides.devDependencies })
-  }
-
-  _applyDepencenyOverrides ({ override, dev }) {
+  _applyDependencyOverrides ({ override, dev }) {
+    if (!override) throw new Error('missing override')
     const depKey = dev ? 'devDependencies' : 'dependencies'
     let toSubtract = override.minus || override.subtract
     let toAdd = override.plus || override.add
