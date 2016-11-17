@@ -151,6 +151,7 @@ module.exports = {
     return rules.filter(rule => {
       let pkgOverrides = overrides[rule.name]
       if (pkgOverrides === null) return false // null drops rule
+      if (pkgOverrides === undefined) return true // undefined => no change! keep it :)
       if (pkgOverrides.dependencies) Rule.prototype._applyDependencyOverrides.apply(rule, [{ dev: false, override: pkgOverrides.dependencies }])
       if (pkgOverrides.devDependencies) Rule.prototype._applyDependencyOverrides.apply(rule, [{ dev: true, override: pkgOverrides.devDependencies }])
       return true
