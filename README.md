@@ -158,7 +158,7 @@ some rules aren't so simple.  for rules that offer configuration, you can **add 
 }
 ```
 
-it is **recommended** that in your `project-unifier` package, to squash `counsel.configKey = 'project-unifier'`, such that now, you can load config like:
+it is **recommended** that in your `project-unifier` package, you squash `counsel.configKey = 'project-unifier'`, such that now, you can load config like:
 
 `"project-unifier": { ... }`, vs. `"counsel: { ... }`
 
