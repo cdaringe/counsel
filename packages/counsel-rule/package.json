@@ -12,6 +12,8 @@
   "author": "cdaringe",
   "license": "ISC",
   "devDependencies": {
+    "counsel": "^0.0.19",
+    "sinon": "^1.17.6",
     "tape": "^4.6.2"
   },
   "repository": {

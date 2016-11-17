@@ -10,9 +10,9 @@ this package is the base class counsel rule.
   - a rule is any old [POJO](https://en.wikipedia.org/wiki/Plain_Old_Java_Object) with an `apply` method!
     - the apply method should do something interesting to your project.  apply receives the `counsel` instance, which provides some very useful utilities to expose the target project.  see the example below for more.
 
-## example
+## create a rule
 
-- create your rule
+here's a fully flushed example:
 
 ```js
 'use strict'
@@ -40,3 +40,25 @@ module.exports = new Rule({
 ```
 
 - apply it (per `counsel` docs)
+
+
+## how to override a rule?
+
+### dependency overrides
+
+```js
+// package.json
+{
+  "counsel": { // or your dev-tool's config key
+    "overrides": {
+      "your-rule-name": { // make sure to add a rule name to your rules!
+        "dependencies": { // add or remove deps from a rule's defaults
+          "add": ["x", "y", "z"], // or "plus"
+          "substract": "e" // or "minus". accepts string|string[]
+        },
+        "devDependencies": ["m", "n"] // squashes default devDependencies
+      }
+    }
+  }
+}
+```

@@ -74,7 +74,7 @@ module.exports = {
   },
 
   config () {
-    return this._targetProjectPackageJsonPristine[this._configKey]
+    return this._targetProjectPackageJsonPristine[this._configKey] || {}
   },
 
   /**
