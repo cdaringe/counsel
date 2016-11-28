@@ -35,6 +35,9 @@ module.exports = new Rule({
 
     // counsel.project.xzy
     // ^ a handful of things to copy files, find git projects, install git hooks, and more
+  },
+  check: function(counsel) {
+    // add assertions that your rule is applied adequately.  optional, but encouraged
   }
 })
 ```
