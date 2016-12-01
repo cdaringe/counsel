@@ -106,9 +106,10 @@ module.exports = {
 
   check (rules) {
     this.setTargetPackageMeta()
-    let currRule
     if (!rules) throw new Error('rules not provided')
-    return rules.reduce((chain, rule) => {
+    const toExecute = this._applyOverrides(rules)
+    let currRule
+    return toExecute.reduce((chain, rule) => {
       return chain.then(() => {
         if (!rule.check) return
         currRule = rule
