@@ -56,7 +56,8 @@
 const PreCommitRule = require('counsel-precommit')
 
 module.exports = new PreCommitRule({
-  preCommitTasks: ['lint', 'test']
+  preCommitTasks: ['lint', 'test'],
+  strict: false // allow users to modify the precommit tasks. default false
 })</code></pre><ul>
 <li>apply it (per <code>counsel</code> docs)</li>
 </ul>

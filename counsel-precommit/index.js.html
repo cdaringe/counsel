@@ -121,7 +121,9 @@ class PreCommitRule extends Rule {
     requestedTasks = Array.isArray(requestedTasks) ? requestedTasks : DEFAULT_PRECOMMIT_TASKS
     const missing = requestedTasks.filter(rT => actualTasks.indexOf(rT) &lt; 0)
     if (missing.length) {
-      throw new Error(`missing precommit tasks: ${missing.join(', ')}`)
+      const msg = `missing precommit tasks: ${missing.join(', ')}`
+      if (this.declaration.strict) throw new Error(`strict rule: ${msg}`)
+      counsel.logger.warn(msg)
     }
   }
 }
