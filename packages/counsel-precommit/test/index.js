@@ -12,6 +12,7 @@ const setup = () => util.setupTestProject(__dirname)
 const teardown = (id) => util.teardownTestProject(__dirname, id)
 
 const preCommitRule = require('./pre-commit-rule')
+const preCommitRuleStrict = require('./strict-rule')
 
 test('rule installs pre-commit hook tasks', t => {
   let testProjectId = setup()
@@ -26,7 +27,20 @@ test('rule installs pre-commit hook tasks', t => {
   .catch(t.fail)
   .then(() => { counsel.targetProjectPackageJson['pre-commit'] = [] })
   .then(() => counsel.check([preCommitRule]))
-  .catch(() => t.pass('fails check when tasks missing'))
+  .then(() => t.pass('does not fail check when tasks missing, non-strict mode'))
+  .then(() => teardown(testProjectId))
+  .then(() => t.pass('teardown'))
+  .then(t.end)
+})
+
+test('strict mode', t => {
+  const testProjectId = setup()
+  t.plan(2)
+  Promise.resolve()
+  .then(() => counsel.apply([preCommitRuleStrict]))
+  .then(() => { counsel.targetProjectPackageJson['pre-commit'] = [] })
+  .then(() => counsel.check([preCommitRuleStrict]))
+  .catch(err => t.ok(err.message.match(/strict/)))
   .then(() => teardown(testProjectId))
   .then(() => t.pass('teardown'))
   .then(t.end)

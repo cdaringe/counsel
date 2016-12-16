@@ -12,7 +12,8 @@ enables npm tasks to be run on git's pre-commit event. installs tasks to run on 
 const PreCommitRule = require('counsel-precommit')
 
 module.exports = new PreCommitRule({
-  preCommitTasks: ['lint', 'test']
+  preCommitTasks: ['lint', 'test'],
+  strict: false // allow users to modify the precommit tasks. default false
 })
 ```
 
