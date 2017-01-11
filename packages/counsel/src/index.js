@@ -86,14 +86,15 @@ module.exports = {
   apply (rules) {
     if (!rules) throw new Error('rules not provided')
     this.setTargetPackageMeta()
-    const toExecute = this._applyOverrides(rules)
+    const config = this.config()
+    const toExecute = this._applyCustomConfig(rules)
 
     this.installDeps(toExecute)
     this.installDevs(toExecute)
 
     return toExecute.reduce((chain, rule) => {
       if (!rule.apply) return
-      return chain.then(() => Promise.resolve(rule.apply(this, this.config())))
+      return chain.then(() => Promise.resolve(rule.apply(this, config)))
     }, Promise.resolve())
     .catch((err) => {
       logger.error(err)
@@ -107,7 +108,7 @@ module.exports = {
   check (rules) {
     this.setTargetPackageMeta()
     if (!rules) throw new Error('rules not provided')
-    const toExecute = this._applyOverrides(rules)
+    const toExecute = this._applyCustomConfig(rules)
     let currRule
     return toExecute.reduce((chain, rule) => {
       return chain.then(() => {
@@ -145,11 +146,14 @@ module.exports = {
     return set
   },
 
-  _applyOverrides (rules) {
+  _applyCustomConfig (rules) {
     const config = this.config()
-    let overrides = config.overrides
-    if (!overrides) return rules
-    return rules.filter(rule => {
+    const overrides = config.overrides
+    const filtered = config.rules
+      ? rules.filter(rule => config.rules.indexOf(rule.name) > -1)
+      : rules
+    if (!overrides) return filtered
+    return filtered.filter(rule => {
       let pkgOverrides = overrides[rule.name]
       if (pkgOverrides === null) return false // null drops rule
       if (pkgOverrides === undefined) return true // undefined => no change! keep it :)

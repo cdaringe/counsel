@@ -44,14 +44,15 @@ const counsel = require('counsel')
 const ScriptRule = require('counsel-script')
 const PreCommitRule = require('counsel-precommit')
 counsel.apply([
+  // install a dev dep & add a npm script
   new ScriptRule({
-    dependencies: ['standard']
+    devDependencies: ['standard']
     scriptName: 'lint',
     scriptCommand: 'standard'
   }),
+  // install a git pre-commit hook that runs these npm scripts
   new PreCommitRule({
     preCommitTasks: ['validate', 'lint', 'test', 'check-coverage']
-    // ^ will install a git pre-commit hook that runs these npm scripts
   })
 ])
 ```
@@ -62,13 +63,12 @@ install `my-counsel-tool` into `boring-old-package`:
 // package.json
 {
   "name": "boring-old-package",
-  "dependencies": {
+  "devDependencies": {
     "standard": "^4.0.1",
     "my-counsel-tool": "^1.0.0"
   },
   "scripts": {
-    "lint": "standard",
-    ...
+    "lint": "standard"
   },
   "pre-commit": [
     "validate",
@@ -85,11 +85,11 @@ wow! not so boring after all now, is it?  when `my-counsel-tool` installs or upd
 
 so what is it?
 
-it's the end of boilerplate. automatically bake structure, opinions, and biz rules into projects.
+it's the end of boilerplate. automatically bake structure, opinions, and business rules into projects.
 
-are you familiar with a reference repo? boilerplate repo?  template repo?  if you are, you know they grow stale.  counsel eliminates the need for these sorts of projects.  instead, counsel allows your team or company to roll personalized tooling that is shared across every package as a development dependency.  it automatically applies your opinions, your formats, your templates, your test scripts, your lint configurations, your "whatevers" per your own desire, with very little effort.
+are you familiar with a reference repo? a boilerplate repo? a template repo?  if you are, you know they grow stale.  counsel eliminates the need for these sorts of projects.  instead, counsel allows your team or company to roll personalized tooling that is shared across every package as a development dependency.  it automatically applies your opinions, your formats, your templates, your test scripts, your lint configurations, your "whatevers" per your own desire, with very little effort.
 
-counsel is a framework for applying business rules and opinions into packages.
+**counsel is a tiny framework for applying rules, standards, and opinions into packages.**
 
 counsel should _rarely_ be installed directly into general projects.  instead, use it to make a shared tool.  place all the rules you want into the tool and release it as a standalone package.
 
@@ -103,15 +103,29 @@ the official api docs live [here](https://cdaringe.github.io/counsel/).  all oth
 
 **"how do i make my _own_ rules?**.  making rules is very easy!  see [counsel-rule](https://cdaringe.github.io/counsel/counsel-rule/) for more info.
 
-## configure
+## configuration
 
-some rules aren't so simple.  for rules that offer configuration, you can add your config in package.json:
+you don't _need_ to configure counsel.  however, if you so desire to, read on!
 
-`"counsel": { "counsel-plugin": { "ignore": true } }`
+### configuration key
 
-it is **recommended** that in your `my-counsel-tool` package, to squash `counsel.configKey = 'my-counsel-tool'`, such that now, you can load config like:
+it is **recommended** that in your `my-counsel-tool` package, to squash `counsel.configKey = 'my-counsel-tool'`. now you can apply configuration directly to consuming projects' `package.json`s as so:
 
-`"my-counsel-tool": { "counsel-plugin": { "ignore": true } }`
+`"my-counsel-tool": { ...some config here }`
+
+### configure rules
+
+some rules aren't so simple.  for rules that offer configuration, you can add your config in `overrides`:
+
+`"my-counsel-tool": { "overrides": { "counsel-plugin": ...configuration } }`.  see more in the [counsel-rule](https://cdaringe.github.io/counsel/counsel-rule/) docs.
+
+to opt in only for an explicit subset of rules that your tool provides, provide a set of rule names to the config:
+
+```json
+"my-counsel-tool": {
+  "rules": ["readme-rule", "test-rule", "some-other-rule"]
+}
+```
 
 # examples
 

@@ -56,3 +56,33 @@ test('allows disabling rules via override', t => {
   .then(() => t.pass('teardown'))
   .then(t.end)
 })
+
+test('explicit rule opt in', t => {
+  let testProjectId = setup()
+  const r1 = new Rule({
+    name: 'dummy-rule-1',
+    dependencies: ['a']
+  })
+  const r2 = new Rule({
+    name: 'dummy-rule-2',
+    dependencies: ['b']
+  })
+  t.plan(3)
+  const stub = sinon.stub(counsel, 'config', () => {
+    return {
+      rules: [r2.name] // omit r1
+    }
+  })
+  Promise.resolve()
+  .then(() => counsel.apply([ r1, r2 ]))
+  .then(() => JSON.parse(fs.readFileSync(path.resolve(__dirname, `./${testProjectId}/package.json`))))
+  .then(dummyPkgJson => {
+    t.notOk(dummyPkgJson.dependencies.a, 'missing opt-in rule dropped')
+    t.ok(dummyPkgJson.dependencies.b, 'present opt-in rule present')
+  })
+  .catch(t.fail)
+  .then(() => teardown(testProjectId))
+  .then(() => stub.restore())
+  .then(() => t.pass('teardown'))
+  .then(t.end)
+})
