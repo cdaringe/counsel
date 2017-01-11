@@ -71,26 +71,26 @@ const counsel = require('counsel')
 const ScriptRule = require('counsel-script')
 const PreCommitRule = require('counsel-precommit')
 counsel.apply([
+  // install a dev dep & add a npm script
   new ScriptRule({
-    dependencies: ['standard']
+    devDependencies: ['standard']
     scriptName: 'lint',
     scriptCommand: 'standard'
   }),
+  // install a git pre-commit hook that runs these npm scripts
   new PreCommitRule({
     preCommitTasks: ['validate', 'lint', 'test', 'check-coverage']
-    // ^ will install a git pre-commit hook that runs these npm scripts
   })
 ])</code></pre><p>install <code>my-counsel-tool</code> into <code>boring-old-package</code>:</p>
 <pre class="prettyprint source lang-js"><code>// package.json
 {
   &quot;name&quot;: &quot;boring-old-package&quot;,
-  &quot;dependencies&quot;: {
+  &quot;devDependencies&quot;: {
     &quot;standard&quot;: &quot;^4.0.1&quot;,
     &quot;my-counsel-tool&quot;: &quot;^1.0.0&quot;
   },
   &quot;scripts&quot;: {
-    &quot;lint&quot;: &quot;standard&quot;,
-    ...
+    &quot;lint&quot;: &quot;standard&quot;
   },
   &quot;pre-commit&quot;: [
     &quot;validate&quot;,
@@ -100,18 +100,22 @@ counsel.apply([
   ]
 }</code></pre><p>wow! not so boring after all now, is it?  when <code>my-counsel-tool</code> installs or updates, it can update your package!  it is <em>not</em> limited to your <code>package.json</code>, of course.  make rules to do anything to your repo on <code>install</code>, on some git <code>hook</code> event, or any <code>npm</code> event!</p>
 <h2>what</h2><p>so what is it?</p>
-<p>it's the end of boilerplate. automatically bake structure, opinions, and biz rules into projects.</p>
-<p>are you familiar with a reference repo? boilerplate repo?  template repo?  if you are, you know they grow stale.  counsel eliminates the need for these sorts of projects.  instead, counsel allows your team or company to roll personalized tooling that is shared across every package as a development dependency.  it automatically applies your opinions, your formats, your templates, your test scripts, your lint configurations, your &quot;whatevers&quot; per your own desire, with very little effort.</p>
-<p>counsel is a framework for applying business rules and opinions into packages.</p>
+<p>it's the end of boilerplate. automatically bake structure, opinions, and business rules into projects.</p>
+<p>are you familiar with a reference repo? a boilerplate repo? a template repo?  if you are, you know they grow stale.  counsel eliminates the need for these sorts of projects.  instead, counsel allows your team or company to roll personalized tooling that is shared across every package as a development dependency.  it automatically applies your opinions, your formats, your templates, your test scripts, your lint configurations, your &quot;whatevers&quot; per your own desire, with very little effort.</p>
+<p><strong>counsel is a tiny framework for applying rules, standards, and opinions into packages.</strong></p>
 <p>counsel should <em>rarely</em> be installed directly into general projects.  instead, use it to make a shared tool.  place all the rules you want into the tool and release it as a standalone package.</p>
 <h2>docs</h2><p>the official api docs live <a href="https://cdaringe.github.io/counsel/">here</a>.  all other topics covered in the readme are for quickstart only!</p>
 <h2>rules</h2><p><code>counsel</code> is composed of sets of <code>Rule</code>s to apply to your package.  provide it a set of rules, and it will fulfill them.</p>
 <p><strong>&quot;how do i make my <em>own</em> rules?</strong>.  making rules is very easy!  see <a href="https://cdaringe.github.io/counsel/counsel-rule/">counsel-rule</a> for more info.</p>
-<h2>configure</h2><p>some rules aren't so simple.  for rules that offer configuration, you can add your config in package.json:</p>
-<p><code>&quot;counsel&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
-<p>it is <strong>recommended</strong> that in your <code>my-counsel-tool</code> package, to squash <code>counsel.configKey = 'my-counsel-tool'</code>, such that now, you can load config like:</p>
-<p><code>&quot;my-counsel-tool&quot;: { &quot;counsel-plugin&quot;: { &quot;ignore&quot;: true } }</code></p>
-<h1>examples</h1><ul>
+<h2>configuration</h2><p>you don't <em>need</em> to configure counsel.  however, if you so desire to, read on!</p>
+<h3>configuration key</h3><p>it is <strong>recommended</strong> that in your <code>my-counsel-tool</code> package, to squash <code>counsel.configKey = 'my-counsel-tool'</code>. now you can apply configuration directly to consuming projects' <code>package.json</code>s as so:</p>
+<p><code>&quot;my-counsel-tool&quot;: { ...some config here }</code></p>
+<h3>configure rules</h3><p>some rules aren't so simple.  for rules that offer configuration, you can add your config in <code>overrides</code>:</p>
+<p><code>&quot;my-counsel-tool&quot;: { &quot;overrides&quot;: { &quot;counsel-plugin&quot;: ...configuration } }</code>.  see more in the <a href="https://cdaringe.github.io/counsel/counsel-rule/">counsel-rule</a> docs.</p>
+<p>to opt in only for an explicit subset of rules that your tool provides, provide a set of rule names to the config:</p>
+<pre class="prettyprint source lang-json"><code>&quot;my-counsel-tool&quot;: {
+  &quot;rules&quot;: [&quot;readme-rule&quot;, &quot;test-rule&quot;, &quot;some-other-rule&quot;]
+}</code></pre><h1>examples</h1><ul>
 <li><a href="https://github.com/cdaringe/ripcord">ripcord</a></li>
 </ul>
 <h1>changelog</h1><ul>
