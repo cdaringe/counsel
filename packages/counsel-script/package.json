@@ -1,6 +1,6 @@
 {
   "name": "counsel-script",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "description": "adds a npm script to package.json",
   "main": "src/index.js",
   "scripts": {
@@ -9,11 +9,11 @@
   "author": "cdaringe",
   "license": "ISC",
   "devDependencies": {
-    "counsel": "^0.0.26",
+    "counsel": "^0.0.27",
     "tape": "^4.6.2"
   },
   "dependencies": {
-    "counsel-rule": "^0.0.26"
+    "counsel-rule": "^0.0.27"
   },
   "repository": {
     "type": "git",
