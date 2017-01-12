@@ -94,7 +94,9 @@ module.exports = {
 
     return toExecute.reduce((chain, rule) => {
       if (!rule.apply) return
-      return chain.then(() => Promise.resolve(rule.apply(this, config)))
+      return chain.then(() => {
+        return Promise.resolve(rule.apply(this, config))
+      })
     }, Promise.resolve())
     .catch((err) => {
       logger.error(err)
@@ -234,7 +236,7 @@ module.exports = {
     this.targetProjectPackageJsonFilename = this.targetProjectPackageJsonFilename ? this.targetProjectPackageJsonFilename : path.join(this.targetProjectRoot, 'package.json')
     this.targetProjectPackageJson = this.targetProjectPackageJson ? this.targetProjectPackageJson : jsonRead(this.targetProjectPackageJsonFilename)
     this._targetProjectPackageJsonPristine = cloneDeep(this.targetProjectPackageJson)
-    this.logger.verbose(`Target package: ${this.targetProjectPackageJson.name} @ ${this.targetProjectRoot}`)
+    this.logger.verbose(`Target package: ${this.targetProjectPackageJson.name || 'UNNAMED PACKAGE'} @ ${this.targetProjectRoot}`)
   },
 
   /**
