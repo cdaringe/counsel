@@ -1,5 +1,5 @@
 /**
- * @module project
+ * @module project utilities for inspecting and modifying a npm project
  */
 
 'use strict'
