@@ -13,8 +13,7 @@
     "tape": "^4.6.2"
   },
   "dependencies": {
-    "counsel-rule": "^0.0.28",
-    "lodash.xor": "^4.5.0"
+    "counsel-rule": "^0.0.28"
   },
   "repository": {
     "type": "git",

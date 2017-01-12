@@ -2,9 +2,9 @@
 
 const path = require('path')
 const Rule = require('counsel-rule')
-const xor = require('lodash.xor')
 const noop = () => {}
 const DEFAULT_PRECOMMIT_TASKS = ['validate', 'lint', 'test']
+const HOOK = 'pre-commit'
 
 /**
  * Adds `git` pre-commit hooks to the project.  Enables you to specify a set of
@@ -43,28 +43,23 @@ class PreCommitRule extends Rule {
     const pkg = counsel.targetProjectPackageJson
     const root = counsel.targetProjectRoot
     let tasks = DEFAULT_PRECOMMIT_TASKS
+    let gitRoot = config.gitRoot ? path.resolve(root, config.gitRoot) : root
+    counsel.project.installHooks({
+      hook: HOOK,
+      root: gitRoot,
+      search: false
+    })
     if (!Array.isArray(this.declaration.preCommitTasks)) {
       counsel.logger.info(`no \`preCommitTasks\` tasks specified, installing default pre-commit tasks`)
     } else {
       tasks = this.declaration.preCommitTasks
     }
-    const hook = 'pre-commit'
-    const prevTasks = pkg[hook]
-    if (prevTasks && xor(tasks, prevTasks).length) {
-      counsel.logger.warn([
-        `existing pre-commit tasks found.  leaving untouched.\n`,
-        `\tcurrent tasks: ${prevTasks}\n`,
-        `\trequested tasks: ${tasks}\n`
-      ].join(' '))
+    const prevTasks = pkg[HOOK]
+    if (prevTasks) {
+      counsel.logger.info('existing pre-commit tasks found.  leaving untouched.')
       return
     }
-    let gitRoot = config.gitRoot ? path.resolve(root, config.gitRoot) : root
-    counsel.project.installHooks({
-      hook: hook,
-      root: gitRoot,
-      search: false
-    })
-    pkg[hook] = tasks
+    pkg[HOOK] = tasks
   }
 
   /**
