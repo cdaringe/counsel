@@ -1,6 +1,6 @@
 {
   "name": "counsel-rule",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "",
   "main": "src/index.js",
   "directories": {
@@ -12,7 +12,7 @@
   "author": "cdaringe",
   "license": "ISC",
   "devDependencies": {
-    "counsel": "^0.0.27",
+    "counsel": "^0.0.28",
     "tape": "^4.6.2"
   },
   "repository": {
