@@ -174,7 +174,9 @@ Object.assign(exports, {
     var position = start.indexOf('node_modules')
     var root = start.slice(0, position === -1 ? undefined : position - path.sep.length)
     if (root === path.resolve(root, '..')) {
-      throw new Error('Unable to find a package.json for this project')
+      var err = new Error('Unable to find a package.json for this project')
+      err.code = 'ENOPKG'
+      throw err
     }
     while (!fs.existsSync(path.join(root, 'package.json'))) {
       root = exports.findProjectRoot(path.dirname(root))
