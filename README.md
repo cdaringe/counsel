@@ -2,6 +2,8 @@
 
 # counsel
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/cdaringe/counsel.svg)](https://greenkeeper.io/)
+
 the end of boilerplate. automatically bake structure, opinions, and biz rules into projects!
 
 [ ![Codeship Status for cdaringe/counsel](https://app.codeship.com/projects/38b24cc0-684a-0134-dd3d-5ade36a91ecb/status?branch=master)](https://app.codeship.com/projects/176370)
