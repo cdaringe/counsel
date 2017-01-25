@@ -19,14 +19,14 @@
     "test"
   ],
   "devDependencies": {
-    "gh-pages": "^0.11.0",
+    "gh-pages": "^0.12.0",
     "github-markdown-css": "^2.4.1",
     "jsdoc": "^3.4.1",
-    "lerna": "2.0.0-beta.30",
+    "lerna": "2.0.0-beta.32",
     "lerna-npm-readme-hack": "^1.0.6",
     "marked": "^0.3.6",
     "minami": "^1.1.1",
-    "perish": "0.0.3",
+    "perish": "1.0.1",
     "standard": "^8.2.0",
     "standard-format": "^2.2.3",
     "swig-templates": "^2.0.2"
