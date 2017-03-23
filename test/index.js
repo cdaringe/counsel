@@ -21,4 +21,5 @@ pkgDirnames.map((dir, ndx) => {
     console.log(`${stdout}`)
     console.log(`${stderr}`)
   })
+  return child
 })

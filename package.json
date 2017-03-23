@@ -9,7 +9,7 @@
     "validate": "npm ls",
     "test": "node test/",
     "docs": "node scripts/docs.js",
-    "publish": "lerna publish && node scripts/docs.js && lerna-npm-readme-hack"
+    "publish": "lerna publish && node scripts/docs.js"
   },
   "author": "",
   "license": "ISC",
@@ -23,7 +23,6 @@
     "github-markdown-css": "^2.4.1",
     "jsdoc": "^3.4.1",
     "lerna": "2.0.0-beta.30",
-    "lerna-npm-readme-hack": "^1.0.6",
     "marked": "^0.3.6",
     "minami": "^1.1.1",
     "perish": "0.0.3",

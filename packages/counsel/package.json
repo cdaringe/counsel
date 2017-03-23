@@ -8,7 +8,7 @@
     "docs": "mkdir -p docs && jsdoc -c .jsdoc.json src/ -d docs"
   },
   "author": "cdaringe",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "counsel-rule": "^0.1.0",
     "lodash.clonedeep": "^4.5.0",
