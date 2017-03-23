@@ -213,9 +213,7 @@ Object.assign(exports, {
     for (var i = 0, il = hooks.length; i < il; ++i) {
       var hook = hooks[i]
       var dest = path.join(hookRoot, hook)
-      if (fs.existsSync(dest)) {
-        fs.renameSync(dest, dest + '.backup')
-      }
+      if (fs.existsSync(dest)) fs.unlinkSync(dest)
       fs.writeFileSync(dest, fs.readFileSync(source), { mode: 511 })
     }
   },
