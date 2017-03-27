@@ -1,6 +1,6 @@
 {
   "name": "counsel-precommit",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "enables npm tasks to be run on git's pre-commit event. installs tasks to run on precommit.",
   "main": "src/index.js",
   "scripts": {
@@ -9,11 +9,11 @@
   "author": "cdaringe",
   "license": "ISC",
   "devDependencies": {
-    "counsel": "^0.1.2",
+    "counsel": "^0.1.3",
     "tape": "^4.6.2"
   },
   "dependencies": {
-    "counsel-rule": "^0.1.2"
+    "counsel-rule": "^0.1.3"
   },
   "repository": {
     "type": "git",
