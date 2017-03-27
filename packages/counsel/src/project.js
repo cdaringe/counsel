@@ -147,7 +147,7 @@ Object.assign(exports, {
    * @param {string} start
    * @returns {string|null}
    */
-  findGitRoot (start, opts) {
+  findGitRoot (start) {
     var root = null
     start = start || path.dirname(internals.findParent(module).filename)
     if (exports.isDir(path.join(start, '.git'))) {
@@ -195,8 +195,8 @@ Object.assign(exports, {
     let root = opts.root
     let search = !!opts.search
     hooks = Array.isArray(hooks) ? hooks : [hooks]
-    var gitRoot = search ? exports.findGitRoot(root, opts) : root
-    if (!exports.isDir(path.join(gitRoot, '.git'))) {
+    var gitRoot = search ? exports.findGitRoot(root) : root
+    if (!gitRoot || !exports.isDir(path.join(gitRoot, '.git'))) {
       return logger.warn([
         `.git folder not found in project root ${gitRoot}.`,
         'counsel install will proceed, however, pre-commit hooks will be',
