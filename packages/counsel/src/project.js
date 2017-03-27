@@ -135,7 +135,7 @@ Object.assign(exports, {
     try {
       var stat = fs.statSync(path)
       return stat.isDirectory()
-    } catch (e) {
+    } catch (err) {
       return false
     }
   },
@@ -145,18 +145,15 @@ Object.assign(exports, {
    * In this case, the root is defined as the first directory that contains
    * a directory named ".git"
    * @param {string} start
-   * @returns {string|undefined}
+   * @returns {string|null}
    */
-  findGitRoot (start) {
-    var root
+  findGitRoot (start, opts) {
+    var root = null
     start = start || path.dirname(internals.findParent(module).filename)
     if (exports.isDir(path.join(start, '.git'))) {
       root = start
     } else if (path.dirname(start) !== start) {
       root = exports.findGitRoot(path.dirname(start))
-    } else {
-      logger.error('Unable to find a .git directory for this project')
-      process.exit(1)
     }
     return root
   },
@@ -198,7 +195,7 @@ Object.assign(exports, {
     let root = opts.root
     let search = !!opts.search
     hooks = Array.isArray(hooks) ? hooks : [hooks]
-    var gitRoot = search ? exports.findGitRoot(root) : root
+    var gitRoot = search ? exports.findGitRoot(root, opts) : root
     if (!exports.isDir(path.join(gitRoot, '.git'))) {
       return logger.warn([
         `.git folder not found in project root ${gitRoot}.`,
