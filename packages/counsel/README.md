@@ -141,6 +141,6 @@ to opt in only for an explicit subset of rules that your tool provides, provide 
   - add `check` support. rules may add an optional `check` method to test if rule is enforced.
   - no attempts to install dually requested deps
 
-## logo credit
+# logo credit
 
 [margdking](https://github.com/margdking)
