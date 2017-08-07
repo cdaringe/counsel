@@ -3,8 +3,8 @@
 // Definitions by: cdaringe <cdaringe.com>
 
 
-export function apply (rules: any[]): PromiseLike<any>;
-export function check (rules: any[]): PromiseLike<any>;
+export function apply (rules: any[]): Promise<any>;
+export function check (rules: any[]): Promise<any>;
 
 /** filename of target project */
 export const targetProjectRoot: string;
