@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "counsel-rule": "^0.2.0",
+    "mock-package-install": "^1.0.0",
     "perish": "0.0.3",
     "sinon": "^1.17.6",
     "tape": "^4.6.0"

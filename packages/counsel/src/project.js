@@ -182,40 +182,6 @@ Object.assign(exports, {
   },
 
   /**
-   * Install the git hook as specified by `hook`.
-   * For example, `.installHooks('pre-commit')`
-   * @param {object} opts
-   * @param {string|string[]} opts.hooks
-   * @param {string} [opts.root]
-   * @param {boolean} [opts.search] search for git dir. if false, root must be provided
-   * @returns {undefined}
-   */
-  installHooks (opts) {
-    let hooks = opts.hooks || opts.hook
-    let root = opts.root
-    let search = !!opts.search
-    hooks = Array.isArray(hooks) ? hooks : [hooks]
-    var gitRoot = search ? exports.findGitRoot(root) : root
-    if (!gitRoot || !exports.isDir(path.join(gitRoot, '.git'))) {
-      return logger.warn([
-        `.git folder not found in project root ${gitRoot}.`,
-        'counsel install will proceed, however, pre-commit hooks will be',
-        'omitted.  please re-apply counsel rules, re-install counsel,',
-        'or re-run your counsel tool\'s install script to restore these hooks.'
-      ].join(' '))
-    }
-    var hookRoot = path.join(gitRoot, '.git', 'hooks')
-    var source = path.resolve(__dirname, '..', 'bin', 'validate.sh')
-    if (!exports.isDir(hookRoot)) exports.mkdir(hookRoot)
-    for (var i = 0, il = hooks.length; i < il; ++i) {
-      var hook = hooks[i]
-      var dest = path.join(hookRoot, hook)
-      if (fs.existsSync(dest)) fs.unlinkSync(dest)
-      fs.writeFileSync(dest, fs.readFileSync(source), { mode: 511 })
-    }
-  },
-
-  /**
    * Recursively creates directories until `path` exists
    * @param {string} path
    */

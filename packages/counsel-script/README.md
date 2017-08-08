@@ -1,6 +1,6 @@
 # counsel-script
 
-adds a npm script to package.json.
+adds a npm/yarn script to package.json.
 
 ## example
 
@@ -10,19 +10,29 @@ adds a npm script to package.json.
 const ScriptRule = require('counsel-script')
 let publishRules = [
   new ScriptRule({
-    scriptName: 'publish-minor',
-    scriptCommand: 'npm version minor',
+    scriptName: 'publish-minor', // required
+    scriptCommand: 'npm version minor', // required
     scriptAppend: true
   })
   new ScriptRule({
     scriptName: 'publish-minor',
-    scriptCommand: 'git push origin master --tags',
+    scriptCommand: 'git push origin master --tags && npm publish',
+    // optional, let's multiple ScriptRules meddle with the same `scriptName`.
+    // see the result below to understand how these two `publish-minor` scripts
+    // are combined.
     scriptAppend: true
   })
   new ScriptRule({
-    scriptName: 'publish-minor',
-    scriptCommand: 'npm publish',
-    scriptAppend: true
+    scriptName: 'bananas',
+    scriptCommand: 'bananas --peel',
+    // permit variants of a script to exist for `scriptName`.
+    // variants can be explict strings or RegExp's
+    // @NOTE: `scriptCommandVariants: '*'` allows any user provided script to override the rule
+    scriptCommandVariants: [
+      'bananas --eat',
+      'apples --eat',
+      /fruit.io --consume/
+    ],
   })
 ]
 ...
@@ -35,7 +45,8 @@ let publishRules = [
 {
   "name": "my-package",
   "scripts": {
-    "publish-minor": "npm version minor && git push origin master --tags && npm publish"
+    "publish-minor": "npm version minor && git push origin master --tags && npm publish",
+    "bananas": "bananas --peel"
   },
   ...
 }

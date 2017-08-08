@@ -82,6 +82,26 @@
       "outDir": null
     },
     {
+      "name": "test - counsel-script",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/packages/counsel-script/test/index.js",
+      "stopOnEntry": false,
+      "args": [],
+      "cwd": "${workspaceRoot}/packages/counsel-script",
+      "preLaunchTask": null,
+      "runtimeExecutable": null,
+      "runtimeArgs": [
+        "--nolazy"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "internalConsole",
+      "sourceMaps": false,
+      "outDir": null
+    },
+    {
       "name": "test - counsel-copy",
       "type": "node",
       "request": "launch",
@@ -122,13 +142,13 @@
       "outDir": null
     },
     {
-      "name": "test - counsel-precommit",
+      "name": "test - counsel-githook",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/packages/counsel-precommit/test/index.js",
+      "program": "${workspaceRoot}/packages/counsel-githook/test/index.js",
       "stopOnEntry": false,
       "args": [],
-      "cwd": "${workspaceRoot}/packages/counsel-precommit",
+      "cwd": "${workspaceRoot}/packages/counsel-githook",
       "preLaunchTask": null,
       "runtimeExecutable": null,
       "runtimeArgs": [

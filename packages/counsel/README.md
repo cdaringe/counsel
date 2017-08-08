@@ -33,18 +33,18 @@ but, you want to keep up to date with your team's latest and greatest patterns. 
 ```js
 // package.json
 {
-  "name": "my-counsel-tool",
+  "name": "project-unifier",
   "scripts": {
-    "install": "node my-counsel-tool.js"
+    "install": "node project-unifier.js"
   }
 }
 ```
 
 ```js
-// my-counsel-tool.js
+// project-unifier.js
 const counsel = require('counsel')
 const ScriptRule = require('counsel-script')
-const PreCommitRule = require('counsel-precommit')
+const GitHookRule = require('counsel-githook')
 counsel.apply([
   // install a dev dep & add a npm script
   new ScriptRule({
@@ -53,13 +53,15 @@ counsel.apply([
     scriptCommand: 'standard'
   }),
   // install a git pre-commit hook that runs these npm scripts
-  new PreCommitRule({
-    preCommitTasks: ['validate', 'lint', 'test', 'check-coverage']
+  new GitHookRule({
+    hooks: {
+      precommit: ['lint', 'test']
+    }
   })
 ])
 ```
 
-install `my-counsel-tool` into `boring-old-package`:
+install `project-unifier` into `boring-old-package`:
 
 ```js
 // package.json
@@ -67,21 +69,18 @@ install `my-counsel-tool` into `boring-old-package`:
   "name": "boring-old-package",
   "devDependencies": {
     "standard": "^4.0.1",
-    "my-counsel-tool": "^1.0.0"
+    "husky": "2.0.0",
+    "npm-run-all": "1.0.3",
+    "project-unifier": "^1.0.0"
   },
   "scripts": {
-    "lint": "standard"
+    "lint": "standard",
+    "precommit": "run-p lint test"
   },
-  "pre-commit": [
-    "validate",
-    "lint",
-    "test",
-    "check-coverage"
-  ]
 }
 ```
 
-wow! not so boring after all now, is it?  when `my-counsel-tool` installs or updates, it can update your package!  it is _not_ limited to your `package.json`, of course.  make rules to do anything to your repo on `install`, on some git `hook` event, or any `npm` event!
+wow! not so boring after all now, is it?  when `project-unifier` installs or updates, it can update your package!  it is _not_ limited to your `package.json`, of course.  make rules to do anything to your repo on `install`, on some git `hook` event, or any `npm` event!
 
 ## what
 
@@ -111,20 +110,20 @@ you don't _need_ to configure counsel.  however, if you so desire to, read on!
 
 ### configuration key
 
-it is **recommended** that in your `my-counsel-tool` package, to squash `counsel.configKey = 'my-counsel-tool'`. now you can apply configuration directly to consuming projects' `package.json`s as so:
+it is **recommended** that in your `project-unifier` package, to squash `counsel.configKey = 'project-unifier'`. now you can apply configuration directly to consuming projects' `package.json`s as so:
 
-`"my-counsel-tool": { ...some config here }`
+`"project-unifier": { ...some config here }`
 
 ### configure rules
 
 some rules aren't so simple.  for rules that offer configuration, you can add your config in `overrides`:
 
-`"my-counsel-tool": { "overrides": { "counsel-plugin": ...configuration } }`.  see more in the [counsel-rule](https://cdaringe.github.io/counsel/counsel-rule/) docs.
+`"project-unifier": { "overrides": { "counsel-plugin": ...configuration } }`.  see more in the [counsel-rule](https://cdaringe.github.io/counsel/counsel-rule/) docs.
 
 to opt in only for an explicit subset of rules that your tool provides, provide a set of rule names to the config:
 
 ```json
-"my-counsel-tool": {
+"project-unifier": {
   "rules": ["readme-rule", "test-rule", "some-other-rule"]
 }
 ```

@@ -21,16 +21,6 @@ export namespace project {
   export function findGitRoot(start?: string): string;
   export function findProjectRoot(start?: string): string;
   /**
-   * Install the git hook as specified by `hook`.
-   * For example, `.installHooks('pre-commit')`
-   * @param {object} opts
-   * @param {string|string[]} opts.hooks
-   * @param {string} [opts.root]
-   * @param {boolean} [opts.search] search for git dir. if false, root must be provided
-   * @returns {undefined}
-   */
-  export function installHooks(opts: any): void;
-  /**
    * Recursively creates directories until `path` exists
    * @param {string} path
    */

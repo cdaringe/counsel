@@ -1,7 +1,7 @@
 {
-  "name": "counsel-precommit",
+  "name": "counsel-githook",
   "version": "0.2.0",
-  "description": "enables npm tasks to be run on git's pre-commit event. installs tasks to run on precommit.",
+  "description": "enables npm/yarn tasks to be run on git hooks.",
   "main": "src/index.js",
   "scripts": {
     "test": "node test/"
@@ -10,10 +10,12 @@
   "license": "ISC",
   "devDependencies": {
     "counsel": "^0.2.0",
+    "fs-extra": "^4.0.1",
     "tape": "^4.6.2"
   },
   "dependencies": {
-    "counsel-rule": "^0.2.0"
+    "counsel-rule": "^0.2.0",
+    "counsel-script": "^0.2.0"
   },
   "repository": {
     "type": "git",

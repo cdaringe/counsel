@@ -22,7 +22,11 @@ test('rule installs script', t => {
   Promise.resolve()
   .then(() => counsel.apply([echoScriptRule]))
   .then(() => JSON.parse(fs.readFileSync(path.resolve(__dirname, `./${testProjectId}/package.json`))))
-  .then(dummyPkgJson => t.ok(dummyPkgJson.scripts.echo, 'echo script installed'))
+  .then(dummyPkgJson => t.equal(
+    dummyPkgJson.scripts.echo,
+    echoScriptRule.declaration.scriptCommand,
+    'echo script installed and matches'
+  ))
   .catch(t.fail)
   .then(() => teardown(testProjectId))
   .then(() => t.pass('teardown'))
@@ -49,9 +53,9 @@ test('rule installs script with pre-existing script, but variant permits existin
 test('rule installs script with pre-existing script, but no variants permitted', t => {
   let testProjectId = setup()
   t.plan(3)
-  Promise.resolve()
+  return Promise.resolve()
   .then(() => counsel.apply([echoScriptRule, echoScriptNoVariants]))
-  .catch(err => t.ok(err.message.match(/relax/, 'errors on script conflict'))) // @TODO weak detection
+  .catch(err => t.equals(err.code, 'ENOSCRIPTINSTALL', 'errors on script conflict'))
   .then(() => JSON.parse(fs.readFileSync(path.resolve(__dirname, `./${testProjectId}/package.json`))))
   .then(dummyPkgJson => t.notOk(dummyPkgJson.scripts.echo, 'package.json not updatd on script conflict'))
   .catch(t.fail)

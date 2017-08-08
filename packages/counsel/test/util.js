@@ -4,6 +4,7 @@ const cp = require('child_process') // @TODO, use fs.extra for x-platform compat
 const path = require('path')
 const cloneDeep = require('lodash.clonedeep')
 const counsel = require('../')
+const mockNpmInstall = require('mock-package-install')
 
 const counselDefaultProjectRoot = counsel.targetProjectRoot
 
@@ -22,6 +23,15 @@ module.exports = {
     counsel.targetProjectPackageJson = require(counsel.targetProjectPackageJsonFilename)
     counsel._targetProjectPackageJsonPristine = cloneDeep(counsel.targetProjectPackageJson)
 
+    counsel.npmInstall = function (packages, flag) {
+      return packages.map(pkgName => {
+        return mockNpmInstall.install({
+          package: { name: pkgName, version: '100.200.300' },
+          nodeModulesDir: path.join(dummyTestPkgDir, 'node_modules'),
+          targetPackage: path.join(dummyTestPkgDir, 'package.json')
+        })
+      })
+    }
     return testProjectId
   },
 
