@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>PreCommitRule - Documentation</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>GitHookRule - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -23,12 +24,12 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="PreCommitRule.html">PreCommitRule</a><ul class='methods'><li data-type='method'><a href="PreCommitRule.html#check">check</a></li></ul></li><li><a href="PreCommitRule.PreCommitRule.html">PreCommitRule</a></li></ul>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="GitHookRule.html">GitHookRule</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="PreCommitRule.GitHookRule.html">GitHookRule</a></span></li>
 </nav>
 
 <div id="main">
     
-    <h1 class="page-title">PreCommitRule</h1>
+    <h1 class="page-title">GitHookRule</h1>
     
 
     
@@ -41,7 +42,7 @@
 <header>
     
         <h2>
-        PreCommitRule
+        GitHookRule
         </h2>
         
     
@@ -51,10 +52,11 @@
     <div class="container-overview">
     
         
+<div class="section-method">
 
     
 
-    <h4 class="name" id="PreCommitRule"><span class="type-signature"></span>new PreCommitRule<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="GitHookRule"><span class="type-signature"></span>new GitHookRule<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -65,14 +67,6 @@
 tasks that are guaranteed to run and pass on git commit, assuming <code>-n</code> not passed
 to bypass.</p>
 </div>
-
-
-
-
-
-
-
-
 
 
 
@@ -107,7 +101,7 @@ to bypass.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line9">line 9</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line6">line 6</a>
     </li></ul></dd>
     
 
@@ -133,6 +127,14 @@ to bypass.</p>
 
 
 
+
+
+
+
+
+
+
+</div>
     
     </div>
 
@@ -152,50 +154,36 @@ to bypass.</p>
     
 
     
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="PreCommitRule.PreCommitRule.html">PreCommitRule</a></dt>
-            <dd></dd>
-        </dl>
-    
 
      
 
     
 
     
-
-    
-        <h3 class="subsection-title">Methods</h3>
+        <h3 class="subsection-title">Members</h3>
 
         
             
+<div class="section-members">
+<h4 class="name" id="scriptRules"><span class="type-signature"></span>scriptRules<span class="type-signature"></span></h4>
 
-    
-
-    <h4 class="name" id="check"><span class="type-signature"></span>check<span class="signature">(counsel)</span><span class="type-signature"></span></h4>
-
-    
 
 
 
 <div class="description">
-    <p>Checks that all precommit tasks are in the target package.json</p>
+    <p>Set of <code>ScriptRule</code>s (counsel-script) used to deploy each
+githook passed into GitHookRule under the <code>hooks</code> configuration object</p>
 </div>
 
 
 
 
 
+    <h5 class="subsection-title">Properties:</h5>
 
-
-
-
-    <h5>Parameters:</h5>
     
 
-<table class="params">
+<table class="props">
     <thead>
     <tr>
         
@@ -217,15 +205,10 @@ to bypass.</p>
 
         <tr>
             
-                <td class="name"><code>counsel</code></td>
+                <td class="name"><code>scriptRules</code></td>
             
 
             <td class="type">
-            
-                
-<span class="param-type">Counsel</span>
-
-
             
             </td>
 
@@ -236,11 +219,11 @@ to bypass.</p>
             <td class="description last"></td>
         </tr>
 
+        
+
     
     </tbody>
 </table>
-
-
 
 
 
@@ -274,7 +257,7 @@ to bypass.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line72">line 72</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line35">line 35</a>
     </li></ul></dd>
     
 
@@ -291,45 +274,11 @@ to bypass.</p>
 
 
 
-
-
-
-
-<h5>Throws:</h5>
+</div>
 
         
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        <p>with missing pkg info</p>
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
     
 
-
-
-
-
-        
     
 
     
@@ -347,7 +296,7 @@ to bypass.</p>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.4</a> using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
