@@ -2,24 +2,30 @@
   "name": "counsel",
   "version": "0.3.0",
   "description": "the end of boilerplate. automatically bake structure, opinions, and biz rules into projects!",
-  "main": "src/index.js",
+  "main": "src/Counsel.js",
   "scripts": {
-    "test": "node test/",
+    "test": "nyc ava test/**/*.test.js && nyc report --reporter=lcov",
     "docs": "mkdir -p docs && jsdoc -c .jsdoc.json src/ -d docs"
   },
   "author": "cdaringe",
   "license": "MIT",
   "dependencies": {
     "counsel-rule": "^0.3.0",
+    "execa": "^0.8.0",
+    "fs-extra": "^4.0.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.uniq": "^4.5.0",
+    "pkg-up": "^2.0.0",
     "winston": "^2.2.0"
   },
   "devDependencies": {
+    "ava": "^0.21.0",
     "counsel-rule": "^0.3.0",
+    "glob": "^7.1.2",
     "mock-package-install": "^1.0.0",
+    "nyc": "^11.1.0",
     "perish": "0.0.3",
-    "sinon": "^1.17.6",
+    "sinon": "^3.2.0",
     "tape": "^4.6.0"
   },
   "repository": {
