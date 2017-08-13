@@ -75,26 +75,19 @@ class Counsel {
    * @returns {Promise<RuleResult[]>}
    */
   async apply (rules) {
+    let results
     if (!rules) throw new Error('rules not provided')
     await this.setTargetPackageMeta()
     const toExecute = this._applyConsumerConfig(rules)
-
     await this.installDeps(toExecute)
     await this.installDevs(toExecute)
-
-    // @TODO abstract loop to be common w/ check
-    const results = []
-    for (let ndx in toExecute) {
-      const rule = toExecute[ndx]
-      try {
-        if (rule.apply) results.push(await Promise.resolve(rule.apply(this, this.config)))
-        else results.push(null)
-      } catch (err) {
-        this.logger.error(err)
-        this.logger.error('please resolve the issue and re-run the last command')
-        throw err
-      }
+    try {
+      results = await this.process({ rules: toExecute, method: 'apply' })
+    } catch (err) {
+      this.logger.error(`${this._configKey} failed to apply rules.`)
+      throw err
     }
+
     if (this.isTargetPackageDirty()) await this.writeTargetPackage()
     return results
   }
@@ -106,20 +99,16 @@ class Counsel {
    * @returns {Promise}
    */
   async check (rules) {
+    let results
     if (!rules) throw new Error('rules not provided')
     await this.setTargetPackageMeta()
     const toExecute = this._applyConsumerConfig(rules)
-    const results = []
-    for (let ndx in toExecute) {
-      const rule = toExecute[ndx]
-      try {
-        if (rule.check) results.push(await Promise.resolve(rule.check(this, this.config)))
-        else results.push(null)
-      } catch (err) {
-        this.logger.error(`${this._configKey} check failed`)
-        this.logger.error(err)
-        throw err
-      }
+    try {
+      results = await this.process({ rules: toExecute, method: 'check' })
+    } catch (err) {
+      this.logger.error(`${this._configKey} check failed`)
+      this.logger.error(err)
+      throw err
     }
     return results
   }
@@ -260,6 +249,16 @@ class Counsel {
     }
     this.logger.info(`install results:\n\n\t${rslt.toString().replace(/\n/g, '\n\t')}`)
     return true
+  }
+
+  async process ({ rules, method }) {
+    const results = []
+    for (let ndx in rules) {
+      const rule = rules[ndx]
+      if (rule[method]) results.push(await Promise.resolve(rule[method](this, this.config)))
+      else results.push(null)
+    }
+    return results
   }
 
   /**
