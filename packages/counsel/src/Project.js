@@ -11,6 +11,7 @@ class Project {
    * @param {Module} mod
    * @returns {Module}
    */
+  // istanbul ignore next
   findParentPackage (mod) {
     return mod.parent ? this.findParentPackage(mod.parent) : mod
   }
@@ -56,16 +57,15 @@ class Project {
   async findProjectRoot (start) {
     start = start || path.dirname(this.findParentPackage(module).filename)
     var position = start.indexOf('node_modules')
-    var root = start.slice(0, position === -1 ? null : position - path.sep.length)
-    if (root === path.resolve(root, '..')) {
-      var err = new Error('Unable to find a package.json for this project')
-      err.code = 'ENOPKG'
-      throw err
-    }
+    var root = start.slice(0, position === -1 ? undefined : position - path.sep.length)
     root = await pkgUp(root)
-    while (root.match(/node_modules/)) {
-      root = await pkgUp(root)
+    if (!root) {
+      throw new Error('no package.json found for root project')
     }
+    // while (root.match(/node_modules/)) {
+    //   root = await pkgUp(root)
+    // }
+    return path.dirname(root)
   }
 
   async isYarn (root) {
@@ -75,6 +75,7 @@ class Project {
       return !!stat
     } catch (err) {
       if (err.code === 'ENOENT') return false
+      // istanbul ignore next
       throw err
     }
   }

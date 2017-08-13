@@ -4,14 +4,14 @@
   "description": "enables npm/yarn tasks to be run on git hooks.",
   "main": "src/index.js",
   "scripts": {
-    "test": "node test/"
+    "test": "ava test/**.test.js"
   },
   "author": "cdaringe",
   "license": "ISC",
   "devDependencies": {
+    "ava": "^0.21.0",
     "counsel": "^0.3.0",
-    "fs-extra": "^4.0.1",
-    "tape": "^4.6.2"
+    "fs-extra": "^4.0.1"
   },
   "dependencies": {
     "counsel-rule": "^0.3.0",

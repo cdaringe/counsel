@@ -1,7 +1,6 @@
 'use strict'
 
 const fs = require('fs-extra')
-const cp = require('child_process') // @TODO, use fs.extra for x-platform compat, for crying out loud.
 const path = require('path')
 const mockNpmInstall = require('mock-package-install')
 const os = require('os')
@@ -20,11 +19,12 @@ class TestProjectUtil {
    */
   async setup (opts) {
     const { counsel } = opts || {}
-    const dummyDir = await this._createTestProject()
+    const project = await this._createTestProject()
+    const { dir } = project
 
     // squash counsel target project attrs
-    counsel.targetProjectRoot = dummyDir
-    counsel.targetProjectPackageJsonFilename = path.join(dummyDir, 'package.json')
+    counsel.targetProjectRoot = dir
+    counsel.targetProjectPackageJsonFilename = path.join(dir, 'package.json')
 
     // stub install process 4 speeeeeed 🏁
     counsel.installPackages = async function (packages, opts) {
@@ -34,20 +34,30 @@ class TestProjectUtil {
         return mockNpmInstall.install({
           isDev,
           package: { name: pkgName, version: '100.200.300' },
-          nodeModulesDir: path.join(dummyDir, 'node_modules'),
-          targetPackage: path.join(dummyDir, 'package.json')
+          nodeModulesDir: path.join(dir, 'node_modules'),
+          targetPackage: path.join(dir, 'package.json')
         })
       })
       return true
     }
-    return dummyDir
+    return project
   }
 
   async _createTestProject (opts) {
-    const destDirname = path.join(os.tmpdir(), Math.random().toString().substr(2))
+    const dir = path.join(os.tmpdir(), Math.random().toString().substr(2))
+    const gitDir = path.join(dir, '.git')
+    const buildDir = path.join(dir, 'build')
     const dummyProjectDirname = path.resolve(__dirname, 'dummy-project')
-    await fs.copy(dummyProjectDirname, destDirname)
-    return destDirname
+    await fs.copy(dummyProjectDirname, dir)
+    await Promise.all([
+      fs.mkdirp(gitDir),
+      fs.mkdirp(buildDir)
+    ])
+    return {
+      dir,
+      gitDir,
+      buildDir
+    }
   }
 
   async teardown ({ dir }) {

@@ -1,7 +1,8 @@
 'use strict'
 
 const Rule = require('counsel-rule')
-const fs = require('fs')
+const path = require('path')
+const fs = require('fs-extra')
 
 /**
  * Copies files into a project.
@@ -21,9 +22,20 @@ class CopyRule extends Rule {
    */
   constructor (opts) {
     super(opts)
-    if (!this.declaration.copyContentRoot) throw new Error('must provide a copy content root')
-    if (!this.declaration.copySource) throw new Error('must provide a copy source')
-    if (!this.declaration.copyTarget) throw new Error('must provide a copy target')
+    const { src, dest } = opts
+    if (!src) throw new Error('must provide a copy `src`')
+    if (!dest) throw new Error('must provide a copy `dest`')
+    if (!path.isAbsolute(src)) {
+      throw new Error([
+        'CopyRule `src` must be absolute.  see the nodejs docs for `path.resolve`',
+        'on how to construct a full path from your CopyRule definition'
+      ].join(' '))
+    }
+  }
+
+  getAbsoluteDest (dest, counsel) {
+    if (!path.isAbsolute(dest)) dest = path.join(counsel.targetProjectRoot, dest)
+    return dest
   }
 
   /**
@@ -35,17 +47,8 @@ class CopyRule extends Rule {
    */
   apply (counsel) {
     Rule.prototype.apply.apply(this, arguments)
-    const toCopy = Array.isArray(this.declaration.copySource)
-      ? this.declaration.copySource : [this.declaration.copySource]
-    const dest = this.declaration.copyTarget
-    toCopy.forEach(src => counsel.project.copy(
-      src,
-      dest,
-      {
-        root: this.declaration.copyContentRoot,
-        targetProjectRoot: counsel.targetProjectRoot
-      }
-    ))
+    const { src, dest } = this.declaration
+    return fs.copy(src, this.getAbsoluteDest(dest, counsel))
   }
 
   /**
@@ -55,7 +58,8 @@ class CopyRule extends Rule {
    * @memberOf CopyRule
    */
   check (counsel) {
-    return !!fs.existsSync(this.declaration.copyTarget)
+    const dest = this.getAbsoluteDest(this.declaration.dest, counsel)
+    return fs.exists(dest)
   }
 }
 

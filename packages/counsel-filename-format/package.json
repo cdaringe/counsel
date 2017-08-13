@@ -7,14 +7,15 @@
     "src/"
   ],
   "scripts": {
-    "test": "node test/"
+    "test": "ava test/index.test.js"
   },
   "author": "cdaringe",
   "license": "ISC",
   "devDependencies": {
+    "ava": "^0.21.0",
     "counsel": "^0.3.0",
-    "lodash.kebabcase": "^4.1.1",
-    "tape": "^4.6.2"
+    "fs-extra": "^4.0.1",
+    "lodash.kebabcase": "^4.1.1"
   },
   "dependencies": {
     "counsel-rule": "^0.3.0",

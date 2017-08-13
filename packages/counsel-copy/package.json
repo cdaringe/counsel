@@ -4,7 +4,7 @@
   "description": "copy files/folders from a counsel project into a target project.",
   "main": "src/index.js",
   "scripts": {
-    "test": "node test/"
+    "test": "nyc ava test/**/*.test.js && nyc report --reporter=lcov"
   },
   "author": "cdaringe",
   "license": "ISC",
@@ -12,8 +12,9 @@
     "counsel-rule": "^0.3.0"
   },
   "devDependencies": {
+    "ava": "^0.21.0",
     "counsel": "^0.3.0",
-    "tape": "^4.6.2"
+    "fs-extra": "^4.0.1"
   },
   "repository": {
     "type": "git",

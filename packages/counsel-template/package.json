@@ -4,17 +4,17 @@
   "description": "runs a template engine against a template file!",
   "main": "src/index.js",
   "scripts": {
-    "test": "node test/"
+    "test": "ava test/**.test.js"
   },
   "author": "cdaringe",
   "license": "ISC",
   "devDependencies": {
-    "counsel": "^0.3.0",
-    "tape": "^4.6.2"
+    "ava": "^0.21.0",
+    "counsel": "^0.3.0"
   },
   "dependencies": {
     "counsel-rule": "^0.3.0",
-    "pify": "^2.3.0",
+    "fs-extra": "^4.0.1",
     "swig-templates": "^2.0.1"
   },
   "repository": {

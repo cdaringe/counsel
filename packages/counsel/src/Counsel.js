@@ -2,7 +2,7 @@
  * @module counsel
  */
 const { createLogger } = require('./logger')
-const { Project } = require('./project')
+const { Project } = require('./Project')
 const Rule = require('counsel-rule')
 const cloneDeep = require('lodash.clonedeep')
 const uniq = require('lodash.uniq')

@@ -1,9 +1,9 @@
 'use strict'
 
 const CopyRule = require('../')
+const path = require('path')
 
 module.exports = new CopyRule({
-  copyContentRoot: __dirname,
-  copySource: './copy-markdown-rule.md',
-  copyTarget: './some/folder/renamed.md'
+  src: path.resolve(__dirname, 'copy-markdown-rule.md'),
+  dest: './some/folder/renamed.md'
 })

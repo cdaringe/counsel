@@ -11,11 +11,11 @@ const fs = require('fs-extra')
 ava.beforeEach(async t => {
   const counsel = factory()
   t.context.counsel = counsel
-  t.context.dir = await setup({ counsel })
+  t.context.project = await setup({ counsel })
 })
 
 ava.afterEach(async t => {
-  await teardown({ dir: t.context.dir })
+  await teardown({ dir: t.context.project.dir })
 })
 
 ava('apply, check basics', async t => {
