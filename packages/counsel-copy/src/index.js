@@ -45,10 +45,13 @@ class CopyRule extends Rule {
    * @param {Module} counsel
    * @returns {undefined}
    */
-  apply (counsel) {
+  async apply (counsel) {
     Rule.prototype.apply.apply(this, arguments)
-    const { src, dest } = this.declaration
-    return fs.copy(src, this.getAbsoluteDest(dest, counsel))
+    let { src, dest } = this.declaration
+    dest = this.getAbsoluteDest(dest, counsel)
+    const exists = await fs.exists(dest)
+    if (exists && !counsel.forceApply) return null
+    return fs.copy(src, dest, { overwrite: true })
   }
 
   /**

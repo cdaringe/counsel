@@ -3,6 +3,12 @@
   "configurations": [
     {
       "type": "node",
+      "request": "attach",
+      "name": "Attach",
+      "port": 9229
+    },
+    {
+      "type": "node",
       "request": "launch",
       "name": "Run AVA test",
       "program": "${workspaceRoot}/node_modules/ava/profile.js",
@@ -187,27 +193,6 @@
         "NODE_ENV": "development"
       },
       "console": "internalConsole",
-      "sourceMaps": false,
-      "outDir": null
-    },
-    {
-      "name": "Attach",
-      "type": "node",
-      "request": "attach",
-      "port": 5858,
-      "address": "localhost",
-      "restart": false,
-      "sourceMaps": false,
-      "outDir": null,
-      "localRoot": "${workspaceRoot}",
-      "remoteRoot": null
-    },
-    {
-      "name": "Attach to Process",
-      "type": "node",
-      "request": "attach",
-      "processId": "${command.PickProcess}",
-      "port": 5858,
       "sourceMaps": false,
       "outDir": null
     }

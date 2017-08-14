@@ -1,0 +1,49 @@
+#!/usr/bin/env node
+
+'use strict'
+
+const meow = require('meow')
+const { Counsel } = require('../')
+const counsel = new Counsel()
+const os = require('os')
+const cp = require('child_process')
+
+const cli = meow(`
+    Usage
+      $ counsel <input>
+
+    Examples
+      $ counsel inject @counsel/web
+      $ counsel create /path/to/project @counsel/nodelib
+`)
+
+switch (cli.input[0]) {
+  case 'apply':
+    counsel.apply()
+    break
+  case 'check':
+    counsel.check()
+    break
+  case 'create':
+    if (!cli.input[1]) throw new Error('please provide a path to create a new project')
+    if (!cli.input[2]) throw new Error(`please provide a path to rruleset package to inject into new project "${cli.input[1]}"`)
+    try {
+      cp.execSync('hub --version')
+    } catch (err) {
+      throw new Error('hub is required to be installed: https://hub.github.com/')
+    }
+    if (!os.platform().match(/darwin/)) throw new Error('create is only supported on OSX')
+    counsel.create({
+      dir: cli.input[1],
+      ruleset: cli.input[2]
+    })
+    break
+  case 'inject':
+    if (!cli.input[1]) throw new Error('please provide a package name to inject')
+    counsel.inject({
+      package: cli.input[1]
+    })
+    break
+  default:
+    throw new Error(`unsupported command ${cli.input[0]}`)
+}
