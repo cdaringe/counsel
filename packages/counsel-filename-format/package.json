@@ -1,6 +1,6 @@
 {
   "name": "counsel-filename-format",
-  "version": "0.3.0",
+  "version": "0.3.1-0",
   "description": "enforce filename formatting",
   "main": "src/index.js",
   "files": [
@@ -13,12 +13,12 @@
   "license": "ISC",
   "devDependencies": {
     "ava": "^0.21.0",
-    "counsel": "^0.3.0",
+    "counsel": "^0.3.1-0",
     "fs-extra": "^4.0.1",
     "lodash.kebabcase": "^4.1.1"
   },
   "dependencies": {
-    "counsel-rule": "^0.3.0",
+    "counsel-rule": "^0.3.1-0",
     "glob": "^7.1.0",
     "pify": "^2.3.0"
   }
