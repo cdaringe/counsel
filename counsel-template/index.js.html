@@ -43,9 +43,8 @@
 
 const Rule = require('counsel-rule')
 const swig = require('swig-templates')
-const pify = require('pify')
 const path = require('path')
-const fs = require('fs')
+const fs = require('fs-extra')
 
 /**
  * Runs a template engine against a template file! Your template is passed all
@@ -83,23 +82,28 @@ class TemplateRule extends Rule {
    * @param {Module} counsel
    * @returns {undefined}
    */
-  apply (counsel) {
+  async apply (counsel) {
     Rule.prototype.apply.apply(this, arguments)
-    const templateRoot = counsel.project.findProjectRoot()
+    const templateRoot = await counsel.project.findProjectRoot(counsel.targetProjectPackageJsonFilename)
     let toTemplate = Array.isArray(this.declaration.templateSource)
-      ? this.declaration.templateSource : [this.declaration.templateSource]
+      ? this.declaration.templateSource
+      : [this.declaration.templateSource]
     toTemplate = toTemplate.map(tmpl => {
       if (path.isAbsolute(tmpl)) return tmpl
       return path.resolve(templateRoot, tmpl)
     })
     let dest = this.declaration.templateTarget
     dest = path.isAbsolute(dest) ? dest : path.resolve(counsel.targetProjectRoot, dest)
-    counsel.project.mkdir(path.dirname(dest))
-    return Promise.all(toTemplate.map(tmpl => {
-      dest = counsel.project.isDir(dest) ? path.join(dest, path.basename(tmpl)) : dest
-      return pify(fs.writeFile)(
+    await fs.mkdirp(path.dirname(dest))
+    return Promise.all(toTemplate.map(async tmpl => {
+      // const isDir = await counsel.project.isDir(dest)
+      // dest = isDir ? path.join(dest, path.basename(tmpl)) : dest
+      return await fs.writeFile(
         dest,
-        swig.renderFile(tmpl, { counsel: counsel, package: counsel.targetProjectPackageJson })
+        swig.renderFile(
+          tmpl,
+          { counsel: counsel, package: counsel.targetProjectPackageJson }
+        )
       )
     }))
   }

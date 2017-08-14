@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>logger - Documentation</title>
+    <title>src/logger.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,128 +29,40 @@
 
 <div id="main">
     
-    <h1 class="page-title">logger</h1>
+    <h1 class="page-title">src/logger.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        
-            
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * console only, `Winston` transport logger
+ * @module logger
+ */
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description"><p>console only, <code>Winston</code> transport logger</p></div>
-        
+const winston = require('winston')
+const Logger = winston.Logger
+const Console = winston.transports.Console
 
-        
-            
-<div class="section-method">
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_logger.js.html">src/logger.js</a>, <a href="src_logger.js.html#line1">line 1</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+module.exports = {
+  createLogger () {
+    return new Logger({
+      transports: [
+        new Console({
+          colorize: true,
+          label: 'counsel'
+        })
+      ]
+    })
+  }
+}
+</code></pre>
+        </article>
+    </section>
 
 
 
