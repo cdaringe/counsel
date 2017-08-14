@@ -9,12 +9,12 @@
   "author": "cdaringe",
   "license": "ISC",
   "dependencies": {
-    "counsel-rule": "^0.3.1-0"
+    "counsel-rule": "^0.3.1-0",
+    "fs-extra": "^4.0.1"
   },
   "devDependencies": {
     "ava": "^0.21.0",
-    "counsel": "^0.3.1-0",
-    "fs-extra": "^4.0.1"
+    "counsel": "^0.3.1-0"
   },
   "repository": {
     "type": "git",
