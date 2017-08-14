@@ -188,36 +188,7 @@
 
         <tr>
             
-                <td class="name"><code>copySource</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-|
-
-<span class="param-type"><code>Array.&lt;string></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>read carefully! this is relative to your counsel tooling package, <em>not</em> necessarily the package being copied to!</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>copyTarget</code></td>
+                <td class="name"><code>src</code></td>
             
 
             <td class="type">
@@ -234,7 +205,8 @@
             
 
             <td class="description last">
-                <p>read carefully! this is relative to the root of the target package!</p>
+                <p>absolute path to asset needing to be copied. yo can create
+an absolute path at runtime by using <code>path.resolve(__dirname, '/rel/path/to/asset')</code></p>
                 
             </td>
         </tr>
@@ -243,7 +215,7 @@
 
         <tr>
             
-                <td class="name"><code>copyOptions</code></td>
+                <td class="name"><code>dest</code></td>
             
 
             <td class="type">

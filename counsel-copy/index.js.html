@@ -56,9 +56,9 @@ class CopyRule extends Rule {
    * Creates an instance of CopyRule.
    *
    * @param {object} opts
-   * @param {string|string[]} opts.copySource read carefully! this is relative to your counsel tooling package, _not_ necessarily the package being copied to!
-   * @param {string} opts.copyTarget read carefully! this is relative to the root of the target package!
-   * @param {object} opts.copyOptions see counsel.project#copy
+   * @param {string} opts.src absolute path to asset needing to be copied. yo can create
+   * an absolute path at runtime by using `path.resolve(__dirname, '/rel/path/to/asset')`
+   * @param {object} opts.dest see counsel.project#copy
    * @memberOf CopyRule
    */
   constructor (opts) {
