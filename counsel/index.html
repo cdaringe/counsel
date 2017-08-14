@@ -24,7 +24,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Modules</li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-counsel.html">counsel</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-logger.html">logger</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-project%2520utilities%2520for%2520inspecting%2520and%2520modifying%2520a%2520npm%2520project.html">project utilities for inspecting and modifying a npm project</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Counsel.html">Counsel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#apply">apply</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#check">check</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#inject">inject</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#installDeps">installDeps</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#installDevs">installDevs</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#isTargetPackageDirty">isTargetPackageDirty</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#jsonRead">jsonRead</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#setTargetPackageMeta">setTargetPackageMeta</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#writeTargetPackage">writeTargetPackage</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module-project%2520utilities%2520for%2520inspecting%2520and%2520modifying%2520a%2520npm%2520project-Project.html">Project</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-project%252520utilities%252520for%252520inspecting%252520and%252520modifying%252520a%252520npm%252520project-Project.html#findGitRoot">findGitRoot</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-project%252520utilities%252520for%252520inspecting%252520and%252520modifying%252520a%252520npm%252520project-Project.html#findParentPackage">findParentPackage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-project%252520utilities%252520for%252520inspecting%252520and%252520modifying%252520a%252520npm%252520project-Project.html#findProjectRoot">findProjectRoot</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-project%252520utilities%252520for%252520inspecting%252520and%252520modifying%252520a%252520npm%252520project-Project.html#isDir">isDir</a></span></li><li class="nav-heading">Modules</li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-logger.html">logger</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-project%2520utilities%2520for%2520inspecting%2520and%2520modifying%2520a%2520npm%2520project.html">project utilities for inspecting and modifying a npm project</a></span></li>
 </nav>
 
 <div id="main">
@@ -51,60 +51,93 @@
         <article><p align="center"><img height="200px" src="https://github.com/cdaringe/counsel/raw/master/img/counsel.png" /></p>
 
 <h1>counsel</h1><p>the end of boilerplate. automatically bake structure, opinions, and biz rules into projects!</p>
-<p>think of it like <a href="http://yeoman.io/">yeoman/yo</a>, but as a source controlled dependency that brings shared behaviors to all of your packages.</p>
+<p>think of it like <a href="http://yeoman.io/">yeoman/yo</a>, but as a source controlled dependency that brings shared behaviors to all of your packages, beyond just project structure.</p>
+<p>counsel is for project maintainers.  counsel makes sense for people who are developing <em>many</em> projects.  counsel doesn't always make sense for teams or maintainers working on just a project or two.</p>
 <p><a href="https://app.codeship.com/projects/176370"> <img src="https://app.codeship.com/projects/38b24cc0-684a-0134-dd3d-5ade36a91ecb/status?branch=master" alt="Codeship Status for cdaringe/counsel"></a>
 <img src="https://img.shields.io/badge/standardjs-%E2%9C%93-brightgreen.svg" alt=""></p>
-<h2>install</h2><p><code>npm i --save counsel</code></p>
-<h2>usage</h2><p>docs: <a href="https://cdaringe.github.io/counsel/">cdaringe.github.io/counsel</a>. package level doc links may be found at the <em>bottom</em> of the linked page.</p>
+<h2>install</h2><p><code>npm install [-g|--save-dev] counsel</code></p>
+<h2>usage</h2><p>counsel can be used via the CLI or via the library.  below we will discuss CLI mode for brevity purposes.</p>
+<p>API docs may be found here: <a href="https://cdaringe.github.io/counsel/">cdaringe.github.io/counsel</a>. package level doc links may be found at the <em>bottom</em> of the linked page.</p>
 <p>before <code>counsel</code>, you have a boring-old-package:</p>
 <pre class="prettyprint source lang-js"><code>// package.json
 {
   &quot;name&quot;: &quot;boring-old-package&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
   ...
-}</code></pre><p>but, you want to keep up to date with your team's latest and greatest patterns.  no problem, build &amp; publish a small <code>counsel</code> tool!</p>
+}</code></pre><p>but, you want to keep up to date with your team's latest and greatest patterns.  no problem, build &amp; publish a small set of rules.</p>
 <pre class="prettyprint source lang-js"><code>// package.json
 {
-  &quot;name&quot;: &quot;project-unifier&quot;,
-  &quot;scripts&quot;: {
-    &quot;install&quot;: &quot;node project-unifier.js&quot;
-  }
-}</code></pre><pre class="prettyprint source lang-js"><code>// project-unifier.js
+  &quot;name&quot;: &quot;@team/rules&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  ...
+}</code></pre><pre class="prettyprint source lang-js"><code>// index.js
 const counsel = require('counsel')
 const ScriptRule = require('counsel-script')
 const GitHookRule = require('counsel-githook')
-counsel.apply([
-  // install a dev dep & add a npm script
-  new ScriptRule({
-    devDependencies: ['standard']
-    scriptName: 'lint',
-    scriptCommand: 'standard'
-  }),
-  // install a git pre-commit hook that runs these npm scripts
-  new GitHookRule({
-    hooks: {
-      precommit: ['lint', 'test']
-    }
-  })
-])</code></pre><p>install <code>project-unifier</code> into <code>boring-old-package</code>:</p>
+
+module.exports = {
+  rules: [
+    // install a dev dep & add a npm script
+    new ScriptRule({
+      devDependencies: ['standard']
+      scriptName: 'lint',
+      scriptCommand: 'standard'
+    }),
+    // install a git pre-commit hook that runs these npm scripts
+    new GitHookRule({
+      hooks: {
+        precommit: ['lint', 'test']
+      }
+    }),
+    // validate!
+    new ScriptRule({
+      devDependencies: ['counsel'],
+      name: 'check',
+      scriptName: 'check',
+      scriptCommand: 'counsel check',
+      scriptCommandVariants: ['*']
+    }),
+  ]
+}</code></pre><p>cool! once published, you can run:</p>
+<pre class="prettyprint source lang-sh"><code>$ cd /path/to/boring-package
+$ counsel inject @team/rules</code></pre><p>what you will now see is:</p>
 <pre class="prettyprint source lang-js"><code>// package.json
 {
   &quot;name&quot;: &quot;boring-old-package&quot;,
   &quot;devDependencies&quot;: {
+    &quot;@team/rules&quot;: &quot;1.0.0&quot;,
+    &quot;counsel&quot;: &quot;1.0.0&quot;,
     &quot;standard&quot;: &quot;^4.0.1&quot;,
     &quot;husky&quot;: &quot;2.0.0&quot;,
-    &quot;npm-run-all&quot;: &quot;1.0.3&quot;,
-    &quot;project-unifier&quot;: &quot;^1.0.0&quot;
+    &quot;npm-run-all&quot;: &quot;1.0.3&quot;
   },
   &quot;scripts&quot;: {
     &quot;lint&quot;: &quot;standard&quot;,
-    &quot;precommit&quot;: &quot;run-p lint test&quot;
+    &quot;precommit&quot;: &quot;run-p lint test&quot;,
+    &quot;check&quot;: &quot;counsel check&quot;
   },
-}</code></pre><p>wow! not so boring after all now, is it?  when <code>project-unifier</code> installs or updates, it can update your package!  it is <em>not</em> limited to your <code>package.json</code>, of course.  make rules to do anything to your repo on <code>install</code>, on some git <code>hook</code> event, or any <code>npm</code> event!</p>
+  &quot;counsel&quot;: {
+    &quot;rulesets&quot;: [
+      &quot;@team/rules&quot;
+    ]
+  }
+}</code></pre><p>wow! not so boring after all now, is it?  when <code>@team/rules</code> is injected, it can update your package with all sorts of behavior!</p>
+<p>above, we saw an update to your <code>package.json</code>, but it is not limited to that. make rules to do anything to your repo on <code>install</code>, on some git <code>hook</code> event, or any <code>npm</code> event!</p>
+<p>counsel has two primary actions:</p>
+<ul>
+<li><code>apply</code><ul>
+<li>provided a set of rules, applies them to your project</li>
+</ul>
+</li>
+<li><code>check</code><ul>
+<li>provided a set of rules, asserts that those rules are applied</li>
+</ul>
+</li>
+</ul>
 <h2>what</h2><p>so what is it?</p>
 <p>it's the end of boilerplate. automatically bake structure, opinions, and business rules into projects.</p>
 <p>are you familiar with a reference repo? a boilerplate repo? a template repo?  if you are, you know they grow stale.  counsel eliminates the need for these sorts of projects.  instead, counsel allows your team or company to roll personalized tooling that is shared across every package as a development dependency.  it automatically applies your opinions, your formats, your templates, your test scripts, your lint configurations, your &quot;whatevers&quot; per your own desire, with very little effort.</p>
 <p><strong>counsel is a tiny framework for applying rules, standards, and opinions into packages.</strong></p>
-<p>counsel should <em>rarely</em> be installed directly into general projects.  instead, use it to make a shared tool.  place all the rules you want into the tool and release it as a standalone package.</p>
 <h2>docs</h2><p>the official api docs live <a href="https://cdaringe.github.io/counsel/">here</a>.  all other topics covered in the readme are for quickstart only!</p>
 <h2>rules</h2><p><code>counsel</code> is composed of sets of <code>Rule</code>s to apply to your package.  provide it a set of rules, and it will fulfill them.</p>
 <p><strong>&quot;how do i make my <em>own</em> rules?</strong>.  making rules is very easy!  see <a href="https://cdaringe.github.io/counsel/counsel-rule/">counsel-rule</a> for more info.</p>

@@ -52,7 +52,7 @@
 <p>this package is the base class counsel rule.</p>
 <h2>how do i make my own rule?</h2><ul>
 <li>rules do <em>not</em> need to extend <code>Rule</code>, exported by <code>counsel-rule</code>.</li>
-<li>a rule is any old <a href="https://en.wikipedia.org/wiki/Plain_Old_Java_Object">POJO</a> with an <code>apply</code> method!<ul>
+<li>a rule is any old <a href="https://en.wikipedia.org/wiki/Plain_Old_Java_Object">POJO</a> with an <code>apply</code> and/or <code>check</code> method!<ul>
 <li>the apply method should do something interesting to your project.  apply receives the <code>counsel</code> instance, which provides some very useful utilities to expose the target project.  see the example below for more.</li>
 </ul>
 </li>

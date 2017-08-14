@@ -24,7 +24,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Modules</li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-counsel.html">counsel</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-logger.html">logger</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-project%2520utilities%2520for%2520inspecting%2520and%2520modifying%2520a%2520npm%2520project.html">project utilities for inspecting and modifying a npm project</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Counsel.html">Counsel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#apply">apply</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#check">check</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#inject">inject</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#installDeps">installDeps</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#installDevs">installDevs</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#isTargetPackageDirty">isTargetPackageDirty</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#jsonRead">jsonRead</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#setTargetPackageMeta">setTargetPackageMeta</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Counsel.html#writeTargetPackage">writeTargetPackage</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module-project%2520utilities%2520for%2520inspecting%2520and%2520modifying%2520a%2520npm%2520project-Project.html">Project</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-project%252520utilities%252520for%252520inspecting%252520and%252520modifying%252520a%252520npm%252520project-Project.html#findGitRoot">findGitRoot</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-project%252520utilities%252520for%252520inspecting%252520and%252520modifying%252520a%252520npm%252520project-Project.html#findParentPackage">findParentPackage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-project%252520utilities%252520for%252520inspecting%252520and%252520modifying%252520a%252520npm%252520project-Project.html#findProjectRoot">findProjectRoot</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-project%252520utilities%252520for%252520inspecting%252520and%252520modifying%252520a%252520npm%252520project-Project.html#isDir">isDir</a></span></li><li class="nav-heading">Modules</li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-logger.html">logger</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-project%2520utilities%2520for%2520inspecting%2520and%2520modifying%2520a%2520npm%2520project.html">project utilities for inspecting and modifying a npm project</a></span></li>
 </nav>
 
 <div id="main">
@@ -39,10 +39,7 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @module counsel
- */
-const { createLogger } = require('./logger')
+            <pre class="prettyprint source linenums"><code>const { createLogger } = require('./logger')
 const { Project } = require('./Project')
 const Rule = require('counsel-rule')
 const cloneDeep = require('lodash.clonedeep')
@@ -53,6 +50,9 @@ const execa = require('execa')
 const pify = require('pify')
 const resolve = pify(require('resolve'))
 
+/**
+ * @class Counsel
+ */
 class Counsel {
 
   constructor () {
@@ -335,8 +335,12 @@ class Counsel {
   async installPackages (packages, opts) {
     opts = opts || {}
     const isDev = !!opts.dev
-    const isYarn = opts.packageManager || await this.project.isYarn(this.proj)
-    const bin = isYarn ? 'yarn' : 'npm'
+    let bin = opts.packageManager
+    let isYarn
+    if (!bin) {
+      isYarn = await this.project.isYarn(this.proj)
+      bin = isYarn ? 'yarn' : 'npm'
+    }
     const installCmd = isYarn ? 'add' : 'install'
     const toInstall = uniq(packages.filter(p => p))
     let flag = ''
@@ -362,7 +366,8 @@ class Counsel {
     const results = []
     for (let ndx in rules) {
       const rule = rules[ndx]
-      if (rule[method]) results.push(await Promise.resolve(rule[method](this, this.config)))
+      let res = rule[method](this, this.config)
+      if (rule[method]) results.push(await Promise.resolve(res))
       else results.push(null)
     }
     return results
