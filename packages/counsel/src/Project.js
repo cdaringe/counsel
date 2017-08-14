@@ -1,10 +1,13 @@
-/**
- * @module project utilities for inspecting and modifying a npm project
- */
+'use strict'
+
 const fs = require('fs-extra')
 const path = require('path')
 const pkgUp = require('pkg-up')
 
+/**
+ * utilities for inspecting and modifying a npm-package
+ * @class Project
+ */
 class Project {
   /**
    * Find the topmost parent of the given module.

@@ -1,6 +1,3 @@
-/**
- * @module counsel
- */
 const { createLogger } = require('./logger')
 const { Project } = require('./Project')
 const Rule = require('counsel-rule')
@@ -12,6 +9,9 @@ const execa = require('execa')
 const pify = require('pify')
 const resolve = pify(require('resolve'))
 
+/**
+ * @class Counsel
+ */
 class Counsel {
 
   constructor () {
@@ -294,8 +294,12 @@ class Counsel {
   async installPackages (packages, opts) {
     opts = opts || {}
     const isDev = !!opts.dev
-    const isYarn = opts.packageManager || await this.project.isYarn(this.proj)
-    const bin = isYarn ? 'yarn' : 'npm'
+    let bin = opts.packageManager
+    let isYarn
+    if (!bin) {
+      isYarn = await this.project.isYarn(this.proj)
+      bin = isYarn ? 'yarn' : 'npm'
+    }
     const installCmd = isYarn ? 'add' : 'install'
     const toInstall = uniq(packages.filter(p => p))
     let flag = ''
@@ -321,8 +325,12 @@ class Counsel {
     const results = []
     for (let ndx in rules) {
       const rule = rules[ndx]
-      if (rule[method]) results.push(await Promise.resolve(rule[method](this, this.config)))
-      else results.push(null)
+      if (rule[method]) {
+        let res = rule[method](this, this.config)
+        results.push(await Promise.resolve(res))
+      } else {
+        results.push(null)
+      }
     }
     return results
   }

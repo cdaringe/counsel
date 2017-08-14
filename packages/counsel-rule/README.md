@@ -7,7 +7,7 @@ this package is the base class counsel rule.
 ## how do i make my own rule?
 
   - rules do _not_ need to extend `Rule`, exported by `counsel-rule`.
-  - a rule is any old [POJO](https://en.wikipedia.org/wiki/Plain_Old_Java_Object) with an `apply` method!
+  - a rule is any old [POJO](https://en.wikipedia.org/wiki/Plain_Old_Java_Object) with an `apply` and/or `check` method!
     - the apply method should do something interesting to your project.  apply receives the `counsel` instance, which provides some very useful utilities to expose the target project.  see the example below for more.
 
 ## create a rule
@@ -31,10 +31,10 @@ module.exports = new Rule({
     // ^modify the target package.json as you see fit! we will detect changes and write it
 
     // counsel.config
-    //^ get any declarations made towards counsel in the target package's package.json
+    // ^ get declarations made towards counsel in the target package's package.json
 
     // counsel.project.xzy
-    // ^ a handful of things to copy files, find git projects, install git hooks, and more
+    // ^ a handful of things
   },
   check: function(counsel) {
     // add assertions that your rule is applied adequately.  optional, but encouraged

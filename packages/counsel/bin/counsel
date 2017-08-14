@@ -19,10 +19,10 @@ const cli = meow(`
 
 switch (cli.input[0]) {
   case 'apply':
-    counsel.apply()
+    counsel.apply([])
     break
   case 'check':
-    counsel.check()
+    counsel.check([])
     break
   case 'create':
     if (!cli.input[1]) throw new Error('please provide a path to create a new project')

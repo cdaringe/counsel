@@ -1,6 +1,6 @@
 # counsel-copy
 
-copy files/folders from a counsel project into a target project.
+copy files/folders from a counsel rule project into a target project.
 
 ## example
 
@@ -18,6 +18,3 @@ module.exports = new CopyRule({
   // project's root directory.
 })
 ```
-
-- apply your rule per `counsel` docs
-- observe `jsdoc.json` in your project root!
