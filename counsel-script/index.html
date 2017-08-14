@@ -62,7 +62,8 @@ let publishRules = [
   new ScriptRule({
     scriptName: 'publish-minor',
     scriptCommand: 'git push origin master --tags && npm publish',
-    // optional, let's multiple ScriptRules meddle with the same `scriptName`.
+
+    // optional, let multiple ScriptRules add to the same `script`.
     // see the result below to understand how these two `publish-minor` scripts
     // are combined.
     scriptAppend: true
