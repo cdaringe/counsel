@@ -46,7 +46,6 @@ but, you want to keep up to date with your team's latest and greatest patterns. 
 
 ```js
 // index.js
-const counsel = require('counsel')
 const ScriptRule = require('counsel-script')
 const GitHookRule = require('counsel-githook')
 
@@ -61,7 +60,7 @@ module.exports = {
     // install a git pre-commit hook that runs these npm scripts
     new GitHookRule({
       hooks: {
-        precommit: ['lint', 'test']
+        precommit: ['lint', 'test', 'check']
       }
     }),
     // validate!
@@ -98,7 +97,7 @@ what you will now see is:
   },
   "scripts": {
     "lint": "standard",
-    "precommit": "run-p lint test",
+    "precommit": "run-p lint test check",
     "check": "counsel check"
   },
   "counsel": {
@@ -111,7 +110,7 @@ what you will now see is:
 
 wow! not so boring after all now, is it?  when `@team/rules` is injected, it can update your package with all sorts of behavior!
 
-above, we saw an update to your `package.json`, but it is not limited to that. make rules to do anything to your repo on `install`, on some git `hook` event, or any `npm` event!
+above, we saw an update to your `package.json`, but it is not limited to that. make rules to do anything to your project on `install`, on some git `hook` event, or any `npm` event!
 
 counsel has two primary actions:
 
