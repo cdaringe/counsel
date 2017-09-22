@@ -105,6 +105,7 @@ class Counsel {
    * @return {Rule[]} rules
    */
   async applyConsumerConfig (_rules) {
+    await this.setTargetPackageMeta()
     let rules = _rules ? [ ..._rules ] : []
     const config = this.config
 
