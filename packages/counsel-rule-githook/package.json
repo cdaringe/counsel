@@ -1,6 +1,6 @@
 {
   "name": "counsel-rule-githook",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "enables npm/yarn tasks to be run on git hooks.",
   "main": "src/index.js",
   "scripts": {
@@ -10,12 +10,12 @@
   "license": "ISC",
   "devDependencies": {
     "ava": "^0.22.0",
-    "counsel": "^0.4.1",
+    "counsel": "^0.5.0",
     "fs-extra": "^4.0.1"
   },
   "dependencies": {
-    "counsel-rule": "^0.4.1",
-    "counsel-rule-script": "^0.4.1"
+    "counsel-rule": "^0.5.0",
+    "counsel-rule-script": "^0.5.0"
   },
   "repository": {
     "type": "git",
