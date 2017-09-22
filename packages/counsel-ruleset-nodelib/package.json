@@ -1,11 +1,11 @@
 {
   "name": "counsel-ruleset-nodelib",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "main": "src/index.js",
   "license": "MIT",
   "dependencies": {
     "counsel-rule-readme": "^0.5.0",
-    "counsel-rule-script": "^0.5.0",
-    "counsel-ruleset-jsdock": "^0.5.0"
+    "counsel-rule-script": "^0.5.1",
+    "counsel-ruleset-jsdock": "^0.5.1"
   }
 }
