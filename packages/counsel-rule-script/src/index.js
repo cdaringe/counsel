@@ -17,6 +17,7 @@ class ScriptRule extends Rule {
    * @param {string} opts.scriptCommand npm script command
    * @param {string[]|RegExp[]} [opts.scriptCommandVariants] permitted variants of the script. '*' for permitting any alternative
    * @param {boolean} [opts.scriptAppend] default false. will append _exact_ script to any pre-existing
+   * @param {function[]} [opts.overrideConditions] if any conditions true, will override
    * @memberOf ScriptRule
    */
   constructor (opts) {
@@ -46,9 +47,10 @@ class ScriptRule extends Rule {
     const pkg = counsel.targetProjectPackageJson
     const name = this.declaration.scriptName
     const cmd = this.declaration.scriptCommand
+    const overrideConditions = this.declaration.overrideConditions || []
     const prexistingCmd = pkg.scripts ? pkg.scripts[name] : null
     const append = this.declaration.scriptAppend
-    if (!pkg.scripts) pkg.scripts = {}
+    pkg.scripts = pkg.scripts || {}
     if (!prexistingCmd) {
       pkg.scripts[name] = cmd
       return
@@ -58,6 +60,12 @@ class ScriptRule extends Rule {
       pkg.scripts[name] = `${prexistingCmd} && ${cmd}`
       return
     }
+
+    if (overrideConditions.some(overrideCondition => overrideCondition(prexistingCmd))) {
+      pkg.scripts[name] = cmd
+      return
+    }
+
     if (this.satisfiesVariants(counsel)) return
     const err = new Error(`failed to apply command "${cmd}" to script "${name}"`)
     err.code = 'ENOSCRIPTINSTALL'

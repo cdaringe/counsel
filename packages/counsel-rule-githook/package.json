@@ -1,20 +1,21 @@
 {
-  "name": "counsel-copy",
+  "name": "counsel-rule-githook",
   "version": "0.4.1",
-  "description": "copy files/folders from a counsel project into a target project.",
+  "description": "enables npm/yarn tasks to be run on git hooks.",
   "main": "src/index.js",
   "scripts": {
-    "test": "nyc ava test/**/*.test.js && nyc report --reporter=lcov"
+    "test": "ava test/**.test.js"
   },
   "author": "cdaringe",
   "license": "ISC",
-  "dependencies": {
-    "counsel-rule": "^0.4.1",
+  "devDependencies": {
+    "ava": "^0.22.0",
+    "counsel": "^0.4.1",
     "fs-extra": "^4.0.1"
   },
-  "devDependencies": {
-    "ava": "^0.21.0",
-    "counsel": "^0.4.1"
+  "dependencies": {
+    "counsel-rule": "^0.4.1",
+    "counsel-rule-script": "^0.4.1"
   },
   "repository": {
     "type": "git",

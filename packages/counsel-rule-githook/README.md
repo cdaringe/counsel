@@ -1,4 +1,4 @@
-# counsel-githook
+# counsel-rule-githook
 
 enables npm/yarn tasks to be run on git hooks.
 
@@ -13,7 +13,7 @@ uses the awesome [`husky`](https://www.npmjs.com/package/husky) under the hood!
 ```js
 'use strict'
 
-const GitHookRule = require('counsel-githook')
+const GitHookRule = require('counsel-rule-githook')
 
 module.exports = new GitHookRule({
   hooks: {
@@ -23,7 +23,7 @@ module.exports = new GitHookRule({
       // [default: false] run all tasks in parallel by default
       serial: false,
       // [default: '*'] allow users to modify the githook tasks.
-      // see https://github.com/cdaringe/counsel/tree/master/packages/counsel-script
+      // see https://github.com/cdaringe/counsel/tree/master/packages/counsel-rule-script
       variants: '*'
     }
   },

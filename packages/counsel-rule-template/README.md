@@ -1,4 +1,4 @@
-# counsel-template
+# counsel-rule-template
 
 runs a template engine against a template file!
 
@@ -21,7 +21,7 @@ your template is passed all of `counsel`, and the the target project's package.j
 // my-readme-template-rule.js
 'use strict'
 
-const TemplateRule = require('counsel-template')
+const TemplateRule = require('counsel-rule-template')
 
 module.exports = new TemplateRule({
   templateSource: './README.swig', // relative to your counsel project's root (package.json folder)

@@ -1,7 +1,7 @@
 'use strict'
 
 const Rule = require('counsel-rule')
-const ScriptRule = require('counsel-script')
+const ScriptRule = require('counsel-rule-script')
 
 /**
  * Adds `git` pre-commit hooks to the project.  Enables you to specify a set of
@@ -29,7 +29,7 @@ class GitHookRule extends Rule {
 
   /**
    * @property scriptRules
-   * @description Set of `ScriptRule`s (counsel-script) used to deploy each
+   * @description Set of `ScriptRule`s (counsel-rule-script) used to deploy each
    * githook passed into GitHookRule under the `hooks` configuration object
    */
   get scriptRules () {
@@ -93,7 +93,6 @@ class GitHookRule extends Rule {
    *
    * @param {Counsel} counsel
    * @throws {Error} with missing pkg info
-   * @memberOf PreCommitRule
    */
   check (counsel) {
     return this.scriptRules.reduce((chain, _rule) => {

@@ -13,7 +13,7 @@ const fs = require('fs-extra')
  *
  * @example
  * 'use strict'
- * const TemplateRule = require('counsel-template')
+ * const TemplateRule = require('counsel-rule-template')
  * module.exports = new TemplateRule({
  *   templateSource: './README.swig',
  *   templateTarget: './README.md'

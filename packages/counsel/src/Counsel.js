@@ -3,6 +3,7 @@ const { Project } = require('./Project')
 const Rule = require('counsel-rule')
 const cloneDeep = require('lodash.clonedeep')
 const uniq = require('lodash.uniq')
+const flatten = require('lodash.flatten')
 const fs = require('fs-extra')
 const path = require('path')
 const execa = require('execa')
@@ -17,6 +18,10 @@ class Counsel {
   constructor () {
     this.logger = createLogger({})
     this._configKey = 'counsel'
+    /**
+     * @property project
+     * @type {Project}
+     */
     this.project = new Project()
 
     /**
@@ -80,11 +85,10 @@ class Counsel {
     let results
     if (!rules) throw new Error('rules not provided')
     await this.setTargetPackageMeta()
-    const toExecute = await this.applyConsumerConfig(rules)
-    await this.installDeps(toExecute)
-    await this.installDevs(toExecute)
+    await this.installDeps(rules)
+    await this.installDevs(rules)
     try {
-      results = await this.process({ rules: toExecute, method: 'apply' })
+      results = await this.process({ rules, method: 'apply' })
     } catch (err) {
       this.logger.error(`${this._configKey} failed to apply rules.`)
       throw err
@@ -103,6 +107,8 @@ class Counsel {
   async applyConsumerConfig (_rules) {
     let rules = _rules ? [ ..._rules ] : []
     const config = this.config
+
+    // apply rules from rulesets
     if (config.rulesets) {
       for (let i in config.rulesets) {
         const ruleset = config.rulesets[i]
@@ -110,14 +116,24 @@ class Counsel {
           // use external resolve algorithm to be robust about a preloaded runtime
           // require-resolve context
           const resolvedFilename = await resolve(ruleset, { basedir: process.cwd() })
-          const resolvedRules = require(resolvedFilename).rules // e.g. require('cdaringe-counsel-rules-web'
-          rules = rules.concat(resolvedRules)
+          const resolvedRulesPackage = require(resolvedFilename)
+          let resolvedRules
+          if (Array.isArray(resolvedRulesPackage)) resolvedRules = resolvedRulesPackage
+          else if (resolvedRulesPackage && Array.isArray(resolvedRulesPackage.rules)) resolvedRules = resolvedRulesPackage.rules
+          if (!resolvedRules) {
+            throw new Error([
+              `ruleset package "${ruleset}" must export an array of rules or a`,
+              'rules property with an array of rules'
+            ].join(' '))
+          }
+          rules = flatten(rules.concat(resolvedRules))
         } catch (err) {
           console.error('unable to extract rules from ruleset: ' + ruleset)
           throw err
         }
       }
     }
+
     // allow user's config.rules to filter down applied rules
     rules = config.rules ? rules.filter(rule => config.rules.indexOf(rule.name) > -1) : rules
     if (!config.overrides) return rules
@@ -139,18 +155,9 @@ class Counsel {
    * @returns {Promise}
    */
   async check (rules) {
-    let results
     if (!rules) throw new Error('rules not provided')
     await this.setTargetPackageMeta()
-    const toExecute = await this.applyConsumerConfig(rules)
-    try {
-      results = await this.process({ rules: toExecute, method: 'check' })
-    } catch (err) {
-      this.logger.error(`${this._configKey} check failed`)
-      this.logger.error(err)
-      throw err
-    }
-    return results
+    return await this.process({ rules, method: 'check' })
   }
 
   async create ({ dir, ruleset }) {
@@ -179,26 +186,24 @@ class Counsel {
     return res
   }
 
-  /**
-   *
-   * @param {*} opts
-   * @param {string} opts.package ruleset pacakge to inject into project
-   * @param {string} [opts.packageManager] npm, yarn, etc
-   * @returns {Promise<RuleResult[]>}
-   */
-  async inject (opts) {
-    let { package: pkg } = opts
-    pkg = pkg.trim()
-    if (!pkg) throw new Error('inject requires package')
+  async getPackageRules () {
+    // @TODO rework API to more functional approach. stop needing to call
+    // this silly setTargetPackageMeta everywhere.  bush league.
     await this.setTargetPackageMeta()
-    await this.installPackages([pkg], {
-      dev: true,
-      packageManager: opts.packageManager
-    })
-    const conf = this.targetProjectPackageJson.counsel = this.targetProjectPackageJson.counsel || {}
-    conf.rulesets = conf.rulesets || []
-    conf.rulesets.push(pkg)
-    await this.apply([])
+    const pkg = await this.jsonReadPackage()
+    const allPackageNames = Object.keys(pkg.dependencies || {}).concat(Object.keys(pkg.devDependencies || {}))
+    // @TODO consider supporting user defined rules in:
+    // {
+    //   counsel: {
+    //     rules: [ ... ]
+    //   }
+    // }
+    const isMatch = name => name.match(/^counsel-rule/)
+    return flatten(
+      allPackageNames
+      .filter(isMatch)
+      .map(name => require(name))
+    )
   }
 
   /**

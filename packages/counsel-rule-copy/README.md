@@ -1,4 +1,4 @@
-# counsel-copy
+# counsel-rule-copy
 
 copy files/folders from a counsel rule project into a target project.
 
@@ -9,7 +9,7 @@ copy files/folders from a counsel rule project into a target project.
 ```js
 'use strict'
 
-const CopyRule = require('counsel-copy')
+const CopyRule = require('counsel-rule-copy')
 
 module.exports = new CopyRule({
   src: '/absolute/path/to/thing',

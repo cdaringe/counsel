@@ -13,37 +13,74 @@ const cli = meow(`
       $ counsel <input>
 
     Examples
-      $ counsel inject @counsel/web
-      $ counsel create /path/to/project @counsel/nodelib
+    $ counsel apply <rule|ruleset>
+
+      // apply a rule/ruleset in the the current package.
+      // installs rules|rulesets into dev deps, if missing.
+
+      counsel apply counsel-ruleset-nodelib
+
+    $ counsel create <dir> <ruleset> (e.g. counsel create /path/to/project counsel-ruleset-nodelib)
 `)
 
-switch (cli.input[0]) {
-  case 'apply':
-    counsel.apply([])
-    break
-  case 'check':
-    counsel.check([])
-    break
-  case 'create':
-    if (!cli.input[1]) throw new Error('please provide a path to create a new project')
-    if (!cli.input[2]) throw new Error(`please provide a path to rruleset package to inject into new project "${cli.input[1]}"`)
-    try {
-      cp.execSync('hub --version')
-    } catch (err) {
-      throw new Error('hub is required to be installed: https://hub.github.com/')
-    }
-    if (!os.platform().match(/darwin/)) throw new Error('create is only supported on OSX')
-    counsel.create({
-      dir: cli.input[1],
-      ruleset: cli.input[2]
-    })
-    break
-  case 'inject':
-    if (!cli.input[1]) throw new Error('please provide a package name to inject')
-    counsel.inject({
-      package: cli.input[1]
-    })
-    break
-  default:
-    throw new Error(`unsupported command ${cli.input[0]}`)
+async function go () {
+  let rules
+  switch (cli.input[0]) {
+    case 'apply':
+      let ruleOrRulesetName = cli.input[1] // rule/ruleset package to import rule from
+      if (ruleOrRulesetName) {
+        let ruleorRuleset = require(ruleOrRulesetName)
+        rules = Array.isArray(ruleorRuleset) ? ruleorRuleset : [ruleorRuleset]
+        if (!rules.length) {
+          counsel.logger.error(`${ruleOrRulesetName} did not export any rules`)
+          process.exit(1)
+        }
+        // assert that whatever rule|ruleset we are applying gets into devDeps
+        rules.unshift({
+          devDependencies: [ruleOrRulesetName],
+          apply () {},
+          check () {}
+        })
+      } else {
+        rules = await counsel.getPackageRules()
+        if (!rules.length) counsel.logger.warn('no rules exist in package')
+        process.exit(0) // exit early s.t. we don't install
+      }
+      rules = await counsel.applyConsumerConfig(rules)
+      await counsel.apply(rules)
+      break
+    case 'check':
+      rules = await counsel.getPackageRules()
+      if (!rules.length) counsel.logger.warn('no rules exist in package')
+      try {
+        rules = await counsel.applyConsumerConfig(rules)
+        await counsel.check(rules)
+      } catch (err) {
+        // if an error carries a human readable message, don't puke all over
+        if (err.code === 'ECOUNSELCHECK') {
+          counsel.logger.error(err.message)
+          process.exit(1)
+        }
+        throw err
+      }
+      break
+    case 'create':
+      if (!cli.input[1]) throw new Error('please provide a path to create a new project')
+      if (!cli.input[2]) throw new Error(`please provide a path to rruleset package to inject into new project "${cli.input[1]}"`)
+      try {
+        cp.execSync('hub --version')
+      } catch (err) {
+        throw new Error('hub is required to be installed: https://hub.github.com/')
+      }
+      if (!os.platform().match(/darwin/)) throw new Error('create is only supported on OSX')
+      await counsel.create({
+        dir: cli.input[1],
+        ruleset: cli.input[2]
+      })
+      break
+    default:
+      throw new Error(`unsupported command ${cli.input[0]}`)
+  }
 }
+
+go() // go. yes. do it.

@@ -10,7 +10,6 @@ const Console = winston.transports.Console
 module.exports = {
   /**
    * creates a simple console logger
-   * @returns {Logger} logger
    */
   createLogger () {
     return new Logger({

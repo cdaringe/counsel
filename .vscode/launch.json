@@ -97,13 +97,23 @@
       "outDir": null
     },
     {
-      "name": "test - counsel-script",
+      "name": "test - counsel-rule-script",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/packages/counsel-script/test/index.js",
+      "program": "${workspaceRoot}/node_modules/ava/profile.js",
+      "cwd": "${workspaceRoot}/packages/counsel-rule-script",
+      "args": [
+        "${workspaceRoot}/packages/counsel-rule-script/test/index.test.js"
+      ]
+    },
+    {
+      "name": "test - counsel-rule-copy",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/packages/counsel-rule-copy/test/index.js",
       "stopOnEntry": false,
       "args": [],
-      "cwd": "${workspaceRoot}/packages/counsel-script",
+      "cwd": "${workspaceRoot}/packages/counsel-rule-copy",
       "preLaunchTask": null,
       "runtimeExecutable": null,
       "runtimeArgs": [
@@ -117,13 +127,13 @@
       "outDir": null
     },
     {
-      "name": "test - counsel-copy",
+      "name": "test - counsel-rule-template",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/packages/counsel-copy/test/index.js",
+      "program": "${workspaceRoot}/packages/counsel-rule-template/test/index.js",
       "stopOnEntry": false,
       "args": [],
-      "cwd": "${workspaceRoot}/packages/counsel-copy",
+      "cwd": "${workspaceRoot}/packages/counsel-rule-template",
       "preLaunchTask": null,
       "runtimeExecutable": null,
       "runtimeArgs": [
@@ -137,13 +147,13 @@
       "outDir": null
     },
     {
-      "name": "test - counsel-template",
+      "name": "test - counsel-rule-githook",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/packages/counsel-template/test/index.js",
+      "program": "${workspaceRoot}/packages/counsel-rule-githook/test/index.js",
       "stopOnEntry": false,
       "args": [],
-      "cwd": "${workspaceRoot}/packages/counsel-template",
+      "cwd": "${workspaceRoot}/packages/counsel-rule-githook",
       "preLaunchTask": null,
       "runtimeExecutable": null,
       "runtimeArgs": [
@@ -157,33 +167,13 @@
       "outDir": null
     },
     {
-      "name": "test - counsel-githook",
+      "name": "test - counsel-rule-filename-format",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/packages/counsel-githook/test/index.js",
+      "program": "${workspaceRoot}/packages/counsel-rule-filename-format/test/index.js",
       "stopOnEntry": false,
       "args": [],
-      "cwd": "${workspaceRoot}/packages/counsel-githook",
-      "preLaunchTask": null,
-      "runtimeExecutable": null,
-      "runtimeArgs": [
-        "--nolazy"
-      ],
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "console": "internalConsole",
-      "sourceMaps": false,
-      "outDir": null
-    },
-    {
-      "name": "test - counsel-filename-format",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceRoot}/packages/counsel-filename-format/test/index.js",
-      "stopOnEntry": false,
-      "args": [],
-      "cwd": "${workspaceRoot}/packages/counsel-filename-format",
+      "cwd": "${workspaceRoot}/packages/counsel-rule-filename-format",
       "preLaunchTask": null,
       "runtimeExecutable": null,
       "runtimeArgs": [

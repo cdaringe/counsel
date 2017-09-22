@@ -1,4 +1,4 @@
-# counsel-script
+# counsel-rule-script
 
 adds a npm/yarn script to package.json.
 
@@ -7,22 +7,18 @@ adds a npm/yarn script to package.json.
 - create your rules
 
 ```js
-const ScriptRule = require('counsel-script')
+const ScriptRule = require('counsel-rule-script')
 let publishRules = [
   new ScriptRule({
     scriptName: 'publish-minor', // required
-    scriptCommand: 'npm version minor', // required
-    scriptAppend: true
-  })
+    scriptCommand: 'npm version minor' // required
+  }),
   new ScriptRule({
     scriptName: 'publish-minor',
     scriptCommand: 'git push origin master --tags && npm publish',
-
-    // optional, let multiple ScriptRules add to the same `script`.
-    // see the result below to understand how these two `publish-minor` scripts
-    // are combined.
+    // optionally, let multiple ScriptRules add to the same `script`.
     scriptAppend: true
-  })
+  }),
   new ScriptRule({
     scriptName: 'bananas',
     scriptCommand: 'bananas --peel',
@@ -33,10 +29,19 @@ let publishRules = [
       'bananas --eat',
       'apples --eat',
       /fruit.io --consume/
-    ],
+    ]
+  },
+  new ScriptRule({
+    scriptName: 'lint',
+    scriptCommand: 'standard',
+    // do you _know_ that you've changed your ways?
+    // force upgrade everyone if you know what to look for!
+    // for instance, you use standard now instead of eslint
+    overrideConditions: [
+      oldScript => oldScript.match(/eslint/)
+    ]
   })
 ]
-...
 ```
 
 - apply your rules (per `counsel` docs)
@@ -47,7 +52,8 @@ let publishRules = [
   "name": "my-package",
   "scripts": {
     "publish-minor": "npm version minor && git push origin master --tags && npm publish",
-    "bananas": "bananas --peel"
+    "bananas": "bananas --peel",
+    "lint": "standard"
   },
   ...
 }

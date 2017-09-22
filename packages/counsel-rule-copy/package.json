@@ -1,19 +1,20 @@
 {
-  "name": "counsel-script",
+  "name": "counsel-rule-copy",
   "version": "0.4.1",
-  "description": "adds a npm script to package.json",
+  "description": "copy files/folders from a counsel project into a target project.",
   "main": "src/index.js",
   "scripts": {
-    "test": "ava test/index.test.js"
+    "test": "nyc ava test/**/*.test.js && nyc report --reporter=lcov"
   },
   "author": "cdaringe",
   "license": "ISC",
-  "devDependencies": {
-    "ava": "^0.21.0",
-    "counsel": "^0.4.1"
-  },
   "dependencies": {
-    "counsel-rule": "^0.4.1"
+    "counsel-rule": "^0.4.1",
+    "fs-extra": "^4.0.1"
+  },
+  "devDependencies": {
+    "ava": "^0.22.0",
+    "counsel": "^0.4.1"
   },
   "repository": {
     "type": "git",

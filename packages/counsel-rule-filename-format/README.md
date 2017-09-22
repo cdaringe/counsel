@@ -1,6 +1,6 @@
-# counsel-filename-format
+# counsel-rule-filename-format
 
-add's a `counsel.check` task that enforces filename conventions in your project!
+add's a `counsel` `check` task that enforces filename conventions in your project!
 
 ## example
 
@@ -9,7 +9,7 @@ add's a `counsel.check` task that enforces filename conventions in your project!
 ```js
 'use strict'
 
-const FilenameFormatRule = require('counsel-filename-format')
+const FilenameFormatRule = require('counsel-rule-filename-format')
 const kebab = require('lodash.kebabcase')
 
 module.exports = new FilenameFormatRule({

@@ -72,7 +72,8 @@ ava('allows disabling rules via override', async t => {
       }
     }
   })
-  await counsel.apply([ tapeRule, dropDepsRule ])
+  const rules = await counsel.applyConsumerConfig([ tapeRule, dropDepsRule ])
+  await counsel.apply(rules)
   const dummyPkgJson = await counsel.jsonReadPackage()
   t.falsy(dummyPkgJson.dependencies, 'tape rule overriden/dropped')
 })
@@ -90,7 +91,8 @@ ava('explicit rule opt in', async t => {
   sinon.sandbox.stub(counsel, 'config').value({
     rules: [r2.name] // omit r1
   })
-  await counsel.apply([ r1, r2 ])
+  let rules = await counsel.applyConsumerConfig([ r1, r2 ])
+  await counsel.apply(rules)
   const dummyPkgJson = await counsel.jsonReadPackage()
   t.falsy(dummyPkgJson.dependencies.a, 'missing opt-in rule dropped')
   t.truthy(dummyPkgJson.dependencies.b, 'present opt-in rule present')
@@ -145,22 +147,4 @@ ava('apply & check rules', async t => {
   const err = await t.throws(counsel.check([ r1, r2, r3, r4 ]))
   t.truthy(err.message.match(/R4_CHECK_FAIL/))
   await t.throws(counsel.apply([ r5 ]))
-})
-
-ava('inject', async t => {
-  const { counsel, project: { dir } } = t.context
-  const DUMMY_RULESET_PACKAGE_DEST = path.join(dir, 'node_modules/dummy-ruleset-package')
-  counsel.installPackages = async function mockInstallPackage () {
-    await fs.mkdirp(path.join(dir, 'node_modules'))
-    await fs.copy(
-      path.resolve(__dirname, 'scaffold/dummy-ruleset-package'),
-      DUMMY_RULESET_PACKAGE_DEST
-    )
-  }
-  // usually we inject just a package name, e.g. 'dummy-ruleset-package', however,
-  // use a full filepath in testing to give `require` a hand resolving our test
-  // ruleset
-  await counsel.inject({ package: DUMMY_RULESET_PACKAGE_DEST })
-  const dummyPkgJson = await counsel.jsonReadPackage()
-  t.is(dummyPkgJson.scripts.dummyscript, 'dummycommand')
 })
