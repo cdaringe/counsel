@@ -1,6 +1,6 @@
 {
   "name": "counsel-rule-copy",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "copy files/folders from a counsel project into a target project.",
   "main": "src/index.js",
   "scripts": {
@@ -9,12 +9,12 @@
   "author": "cdaringe",
   "license": "ISC",
   "dependencies": {
-    "counsel-rule": "^0.5.1",
+    "counsel-rule": "^0.5.2",
     "fs-extra": "^4.0.1"
   },
   "devDependencies": {
     "ava": "^0.22.0",
-    "counsel": "^0.5.1"
+    "counsel": "^0.5.2"
   },
   "repository": {
     "type": "git",

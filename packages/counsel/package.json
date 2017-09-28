@@ -1,6 +1,6 @@
 {
   "name": "counsel",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "the end of boilerplate. automatically bake structure, opinions, and biz rules into projects!",
   "main": "src/Counsel.js",
   "bin": "bin/counsel",
@@ -11,7 +11,7 @@
   "author": "cdaringe",
   "license": "MIT",
   "dependencies": {
-    "counsel-rule": "^0.5.1",
+    "counsel-rule": "^0.5.2",
     "execa": "^0.8.0",
     "fs-extra": "^4.0.1",
     "lodash.clonedeep": "^4.5.0",
@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "ava": "^0.22.0",
-    "counsel-rule": "^0.5.1",
+    "counsel-rule": "^0.5.2",
     "glob": "^7.1.2",
     "mock-package-install": "^1.0.0",
     "nyc": "^11.1.0",
