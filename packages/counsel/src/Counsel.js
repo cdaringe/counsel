@@ -182,7 +182,8 @@ class Counsel {
     const cwd = process.cwd()
     process.chdir(dir)
     const targetCounsel = new Counsel()
-    const res = await targetCounsel.inject({ package: ruleset, packageManager: 'npm' })
+    const rules = await this.getRulesFromRuleOrRulesetName(ruleset)
+    const res = await targetCounsel.apply(rules)
     process.chdir(cwd)
     return res
   }
@@ -205,6 +206,23 @@ class Counsel {
       .filter(isMatch)
       .map(name => require(name))
     )
+  }
+
+  async getRulesFromRuleOrRulesetName (ruleOrRulesetName) {
+    let rules = []
+    if (ruleOrRulesetName) {
+      let ruleorRuleset = require(ruleOrRulesetName)
+      rules = Array.isArray(ruleorRuleset) ? ruleorRuleset : [ruleorRuleset]
+      // assert that whatever rule|ruleset we are applying gets into devDeps
+      rules.unshift({
+        devDependencies: [ruleOrRulesetName],
+        apply () {},
+        check () {}
+      })
+    } else {
+      rules = await this.getPackageRules()
+    }
+    return rules
   }
 
   /**

@@ -28,23 +28,10 @@ async function go () {
   switch (cli.input[0]) {
     case 'apply':
       let ruleOrRulesetName = cli.input[1] // rule/ruleset package to import rule from
-      if (ruleOrRulesetName) {
-        let ruleorRuleset = require(ruleOrRulesetName)
-        rules = Array.isArray(ruleorRuleset) ? ruleorRuleset : [ruleorRuleset]
-        if (!rules.length) {
-          counsel.logger.error(`${ruleOrRulesetName} did not export any rules`)
-          process.exit(1)
-        }
-        // assert that whatever rule|ruleset we are applying gets into devDeps
-        rules.unshift({
-          devDependencies: [ruleOrRulesetName],
-          apply () {},
-          check () {}
-        })
-      } else {
-        rules = await counsel.getPackageRules()
-        if (!rules.length) counsel.logger.warn('no rules exist in package')
-        process.exit(0) // exit early s.t. we don't install
+      rules = await counsel.getRulesFromRuleOrRulesetName(ruleOrRulesetName)
+      if (!rules.length) {
+        counsel.logger.warn(`no rules exist in package ${ruleOrRulesetName}`)
+        process.exit(1) // exit early s.t. we don't install
       }
       rules = await counsel.applyConsumerConfig(rules)
       await counsel.apply(rules)
@@ -79,7 +66,8 @@ async function go () {
       })
       break
     default:
-      throw new Error(`unsupported command ${cli.input[0]}`)
+      counsel.logger.error(`unsupported command ${cli.input[0]}. try running "counsel --help"`)
+      process.exit(1)
   }
 }
 
