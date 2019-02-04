@@ -1,1 +1,0 @@
-# copy-markdown-rule

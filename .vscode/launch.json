@@ -4,187 +4,49 @@
     {
       "type": "node",
       "request": "attach",
-      "name": "Attach",
-      "port": 9229
+      "name": "attach",
+      "port": 9229,
+      "cwd": "${workspaceFolder}",
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
-      "name": "Run AVA test",
+      "name": "test - file",
       "program": "${workspaceRoot}/node_modules/ava/profile.js",
       "args": [
         "${file}"
+      ],
+      "skipFiles": [
+        "<node_internals>/**/*.js"
       ]
     },
     {
-      "name": "Launch",
+      "name": "cli - apply",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/app.js",
+      "program": "${workspaceRoot}/src/bin.js",
       "stopOnEntry": false,
-      "args": [],
-      "cwd": "${workspaceRoot}",
-      "preLaunchTask": null,
-      "runtimeExecutable": null,
-      "runtimeArgs": [
-        "--nolazy"
-      ],
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "console": "internalConsole",
-      "sourceMaps": false,
-      "outDir": null
-    },
-    {
-      "name": "Test",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceRoot}/test/index.js",
-      "stopOnEntry": false,
-      "args": [],
-      "cwd": "${workspaceRoot}",
-      "preLaunchTask": null,
-      "runtimeExecutable": null,
-      "runtimeArgs": [
-        "--nolazy"
-      ],
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "console": "internalConsole",
-      "sourceMaps": false,
-      "outDir": null
-    },
-    {
-      "name": "test - counsel",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceRoot}/packages/counsel/test/index.js",
-      "stopOnEntry": false,
-      "args": [],
-      "cwd": "${workspaceRoot}/packages/counsel",
-      "preLaunchTask": null,
-      "runtimeExecutable": null,
-      "runtimeArgs": [
-        "--nolazy"
-      ],
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "console": "internalConsole",
-      "sourceMaps": false,
-      "outDir": null
-    },
-    {
-      "name": "test - counsel-rule",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceRoot}/packages/counsel-rule/test/index.js",
-      "stopOnEntry": false,
-      "args": [],
-      "cwd": "${workspaceRoot}/packages/counsel-rule",
-      "preLaunchTask": null,
-      "runtimeExecutable": null,
-      "runtimeArgs": [
-        "--nolazy"
-      ],
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "console": "internalConsole",
-      "sourceMaps": false,
-      "outDir": null
-    },
-    {
-      "name": "test - counsel-rule-script",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceRoot}/node_modules/ava/profile.js",
-      "cwd": "${workspaceRoot}/packages/counsel-rule-script",
       "args": [
-        "${workspaceRoot}/packages/counsel-rule-script/test/index.test.js"
+        "apply",
+        "--log-level=warning",
+        "--verbose"
+      ],
+      "cwd": "${workspaceRoot}",
+      "preLaunchTask": null,
+      "runtimeExecutable": null,
+      "runtimeArgs": [
+        "--nolazy"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "externalTerminal",
+      "skipFiles": [
+        "<node_internals>/**/*.js"
       ]
-    },
-    {
-      "name": "test - counsel-rule-copy",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceRoot}/packages/counsel-rule-copy/test/index.js",
-      "stopOnEntry": false,
-      "args": [],
-      "cwd": "${workspaceRoot}/packages/counsel-rule-copy",
-      "preLaunchTask": null,
-      "runtimeExecutable": null,
-      "runtimeArgs": [
-        "--nolazy"
-      ],
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "console": "internalConsole",
-      "sourceMaps": false,
-      "outDir": null
-    },
-    {
-      "name": "test - counsel-rule-template",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceRoot}/packages/counsel-rule-template/test/index.js",
-      "stopOnEntry": false,
-      "args": [],
-      "cwd": "${workspaceRoot}/packages/counsel-rule-template",
-      "preLaunchTask": null,
-      "runtimeExecutable": null,
-      "runtimeArgs": [
-        "--nolazy"
-      ],
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "console": "internalConsole",
-      "sourceMaps": false,
-      "outDir": null
-    },
-    {
-      "name": "test - counsel-rule-githook",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceRoot}/packages/counsel-rule-githook/test/index.js",
-      "stopOnEntry": false,
-      "args": [],
-      "cwd": "${workspaceRoot}/packages/counsel-rule-githook",
-      "preLaunchTask": null,
-      "runtimeExecutable": null,
-      "runtimeArgs": [
-        "--nolazy"
-      ],
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "console": "internalConsole",
-      "sourceMaps": false,
-      "outDir": null
-    },
-    {
-      "name": "test - counsel-rule-filename-format",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceRoot}/packages/counsel-rule-filename-format/test/index.js",
-      "stopOnEntry": false,
-      "args": [],
-      "cwd": "${workspaceRoot}/packages/counsel-rule-filename-format",
-      "preLaunchTask": null,
-      "runtimeExecutable": null,
-      "runtimeArgs": [
-        "--nolazy"
-      ],
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "console": "internalConsole",
-      "sourceMaps": false,
-      "outDir": null
     }
   ]
 }

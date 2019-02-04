@@ -1,0 +1,15 @@
+.button {
+  background: var(--text-primary-color);
+  border: 0;
+  color: white;
+  cursor: pointer;
+  padding: 30px;
+  border-radius: 3px;
+  font-size: 2em;
+  font-family: 'Ubuntu Mono', san-serif;
+  transition: 200ms all;
+}
+
+.button:hover {
+  background: var(--text-primary-color-light);
+}
