@@ -5,24 +5,35 @@
       "type": "node",
       "request": "attach",
       "name": "Attach",
-      "port": 9229
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Run AVA test",
-      "program": "${workspaceRoot}/node_modules/ava/profile.js",
-      "args": [
-        "${file}"
+      "port": 9229,
+      "cwd": "${workspaceFolder}",
+      "skipFiles": [
+        "<node_internals>/**/*.js"
       ]
     },
     {
-      "name": "Launch",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/app.js",
+      "name": "test - file",
+      "program": "${workspaceRoot}/node_modules/ava/profile.js",
+      "args": [
+        "${file}"
+      ],
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "name": "cli",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/src/packages/counsel/src/bin.js",
       "stopOnEntry": false,
-      "args": [],
+      "args": [
+        "apply",
+        "--log-level=warning",
+        "--verbose"
+      ],
       "cwd": "${workspaceRoot}",
       "preLaunchTask": null,
       "runtimeExecutable": null,
@@ -32,9 +43,10 @@
       "env": {
         "NODE_ENV": "development"
       },
-      "console": "internalConsole",
-      "sourceMaps": false,
-      "outDir": null
+      "console": "externalTerminal",
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
     },
     {
       "name": "Test",
