@@ -1,0 +1,161 @@
+<!DOCTYPE html><html><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><style data-href="/counsel/component---src-components-page-template-tsx.7ab87cd538192f15e860.css">:root{--bg-color:#fff;--text-primary-color:#003558;--text-primary-color-light:#014572;--text-anchor-color:#0a598c}body,html{background:var(--bg-color);box-sizing:border-box;color:var(--text-primary-color);margin:0;padding:0}#root{display:grid;font-family:Ubuntu Mono,sans-serif;font-size:120%;grid-template-areas:"bufl primary nav bufr";grid-template-columns:1fr auto auto 1fr;height:100vh;text-align:justify;width:100vw}p{font-family:Helvetica,sans-serif}.gatsby-highlight{font-size:80%}#header{padding:50px 0 0}#header h1{margin-bottom:0;margin-top:20px}#header__logo{width:100px;margin:0}h1{font-family:Ubuntu Mono,monospace;font-size:64px}h1,h2,h3,h4,h5{color:#003558}a{color:var(--text-anchor-color);text-decoration:none}a:hover{color:#0a598c;text-decoration:underline}#primary{grid-column-start:2;max-width:700px;padding-right:20px}#nav-menu{font-size:130%;grid-column-start:3;margin:0;width:160px;padding:40px 0 0 10px;text-align:left}#nav-sticker{position:-webkit-sticky;position:sticky;top:40px}#nav-menu h3{margin:0}#nav-menu h4,#nav-menu h5{margin:20px 0 0}#nav-menu ul{list-style:none;margin:0;padding-left:0}#nav-menu li{padding-top:10px;margin:0}.nav-depth-2{font-size:90%}.nav-depth-3{font-size:80%;font-size:70%}</style><style data-href="/counsel/app.7a7fd10b08846091aeed.css">code[class*=language-],pre[class*=language-]{color:#000;background:none;text-shadow:0 1px #fff;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}code[class*=language-]::selection,code[class*=language-] ::selection,pre[class*=language-]::selection,pre[class*=language-] ::selection{text-shadow:none;background:#b3d4fc}@media print{code[class*=language-],pre[class*=language-]{text-shadow:none}}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto}:not(pre)>code[class*=language-],pre[class*=language-]{background:#f5f2f0}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#708090}.token.punctuation{color:#999}.namespace{opacity:.7}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#905}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#690}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url{color:#9a6e3a;background:hsla(0,0%,100%,.5)}.token.atrule,.token.attr-value,.token.keyword{color:#07a}.token.class-name,.token.function{color:#dd4a68}.token.important,.token.regex,.token.variable{color:#e90}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}</style><meta name="generator" content="Gatsby 2.0.118"/><title data-react-helmet="true"></title><link data-react-helmet="true" href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet"/><link as="script" rel="preload" href="/counsel/webpack-runtime-760154004ab3beba7241.js"/><link as="script" rel="preload" href="/counsel/app-bfa3e460b3b5be4ad5f6.js"/><link as="script" rel="preload" href="/counsel/0-81e93c76daa99e1b0204.js"/><link as="script" rel="preload" href="/counsel/component---src-components-page-template-tsx-84a4737b3015de94099e.js"/><link as="fetch" rel="preload" href="/counsel/static/d/226/path---docs-7-e-8-9d0-OXYrqsrQQotZyK27kbZSbvxsNpI.json" crossOrigin="use-credentials"/></head><body><noscript id="gatsby-noscript">This app works best with JavaScript enabled.</noscript><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group"><div id="root"><div id="primary"><div id="header"><a href="/counsel/"><img id="header__logo" src="/counsel/static/counsel-16e8e4a3b48d2e8c7686a05188cb5893.png"/></a><h1>counsel</h1></div><h1 style="font-size:1.9em">getting started</h1><div><p><a name='install'></a></p>
+<h2>install</h2>
+<p><code class="language-text">yarn add --dev counsel</code></p>
+<p>alternatively, <code class="language-text">npm install --save-dev counsel</code></p>
+<p><a name='usage'></a></p>
+<h2>usage</h2>
+<p>conventional usage is to add a <code class="language-text">.counsel.ts</code> file to your project root dirname.</p>
+<p>you can have counsel insert a generic <code class="language-text">.counsel.ts</code> file for you using <code class="language-text">--init</code>:</p>
+<div class="gatsby-highlight" data-language="sh"><pre class="language-sh"><code class="language-sh">$ counsel --init
+info: ⚙️ config file .counsel.ts created successfully</code></pre></div>
+<p>alternatively, as shown next, we can bootstrap our own <code class="language-text">counsel.ts</code> file.</p>
+<p>once a project has a counsel file, run various counsel commands:</p>
+<ul>
+<li><code class="language-text">npx counsel apply</code></li>
+<li><code class="language-text">npx counsel check</code></li>
+</ul>
+<p><code class="language-text">npx counsel --help</code> is also there to help!</p>
+<p><a name='concepts'></a></p>
+<h2>concepts</h2>
+<p>counsel has only one major concept to understand--the <code class="language-text">Rule</code>.  counsel can apply rules
+and check that rules are enforced.  counsel rules are specified using a <code class="language-text">.counsel.ts</code> file, hereby "counsel file."  let's look at counsel files and rules next.</p>
+<p><a name='counselfile'></a></p>
+<h3>counsel file</h3>
+<p>the counsel file declares and exports <code class="language-text">Rule</code>s.  the only expectation is that
+it exports a function named <code class="language-text">create</code> with following signature:</p>
+<p><code class="language-text">ContextWithRules =&gt; ContextWithRules</code></p>
+<p>let's create a basic rule that enforces that the project has a readme file:</p>
+<div class="gatsby-highlight" data-language="typescript"><pre class="language-typescript"><code class="language-typescript"><span class="token comment">// .counsel.ts</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> assertReadmeExists<span class="token punctuation">:</span> Rule <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'assert-readme-exists'</span><span class="token punctuation">,</span>
+  check<span class="token punctuation">:</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> fs<span class="token punctuation">,</span> path<span class="token punctuation">,</span> ctx<span class="token punctuation">:</span> <span class="token punctuation">{</span> projectDirname <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> filename <span class="token operator">=</span> path<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>projectDirname<span class="token punctuation">,</span> <span class="token string">'readme.md'</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> isReadable <span class="token operator">=</span> <span class="token keyword">await</span> fs<span class="token punctuation">.</span><span class="token function">lstat</span><span class="token punctuation">(</span>filename<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>isReadable<span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'readme.md file missing'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// export your rules via a `create` function</span>
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">create</span> <span class="token punctuation">(</span>opts<span class="token punctuation">:</span> ContextWithRules<span class="token punctuation">)</span> <span class="token operator">=></span>
+  <span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token operator">...</span>opts<span class="token punctuation">,</span> rules<span class="token punctuation">:</span> <span class="token punctuation">[</span>assertReadmeExists<span class="token punctuation">]</span> <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre></div>
+<p>create, import, and use as many rules as desired.  rules can be used for all sorts
+of reasons.  sky is the limit.</p>
+<p><a name='rule'></a></p>
+<h3>rule</h3>
+<p><code class="language-text">Rule</code>s are basic interfaces with:</p>
+<ol>
+<li>a <a href="#rulename"><code class="language-text">name</code></a></li>
+<li>an optional <a href="#ruleplan"><code class="language-text">plan</code></a> function</li>
+<li>an optional <a href="#rulecheck"><code class="language-text">check</code></a> function</li>
+<li>an optional list of <a href="#ruledependencies"><code class="language-text">dependencies</code></a></li>
+<li>an optional list of <a href="#ruledevdependencies"><code class="language-text">devDependencies</code></a></li>
+</ol>
+<p>in a nut-shell, <em>that's it</em>.  counsel is a small set of functions that run these
+<code class="language-text">Rule</code>s against your project.</p>
+<p>here's a simple rule that exercises some of the rule api:</p>
+<div class="gatsby-highlight" data-language="typescript"><pre class="language-typescript"><code class="language-typescript"><span class="token keyword">export</span> <span class="token keyword">const</span> exampleRule<span class="token punctuation">:</span> Rule <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'example-rule'</span><span class="token punctuation">,</span>
+  plan<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> ctx <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>
+      <span class="token template-string"><span class="token string">`planning to add keyword 'example' to pkg: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>ctx<span class="token punctuation">.</span>packageJson<span class="token punctuation">.</span>name<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span>
+    <span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+      ctx<span class="token punctuation">.</span>packageJson<span class="token punctuation">.</span>keywords <span class="token operator">=</span> ctx<span class="token punctuation">.</span>packageJson<span class="token punctuation">.</span>keywords <span class="token operator">||</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+      ctx<span class="token punctuation">.</span>packageJson<span class="token punctuation">.</span>keywords<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">'example'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  check<span class="token punctuation">:</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> ctx<span class="token punctuation">:</span> <span class="token punctuation">{</span> packageJson <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> keywords <span class="token operator">=</span> packageJson<span class="token punctuation">.</span>keywords <span class="token operator">||</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`existing keywords: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>keywords<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> keywordExists <span class="token operator">=</span> keywords<span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span>val <span class="token operator">=></span> val <span class="token operator">===</span> <span class="token string">'example'</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>keywordExists<span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">"'example' keyword missing"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  devDependencies<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token string">'debug'</span><span class="token punctuation">,</span> range<span class="token punctuation">:</span> <span class="token string">'*'</span> <span class="token punctuation">}</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p><a name='rulename'></a></p>
+<h3>rule.name</h3>
+<p>every rule requires a <code class="language-text">name</code>.  it must always be a <code class="language-text">string</code>.</p>
+<p><a name='ruleplan'></a></p>
+<h3>rule.plan</h3>
+<p>a <code class="language-text">plan</code> returns a function or <code class="language-text">null</code>, which we call a <code class="language-text">Migration</code>.  a <code class="language-text">Migration</code> is responsible for changing the project in some way.  rather than mutating the project upfront, all changes to a project are encouraged to happen in the <code class="language-text">Migration</code>.  this gives the user an opporitunity to <em>opt-out</em> of rules in counsel's interactive mode.</p>
+<p>for example, here's a simplified version of counsel's baked in <code class="language-text">copy</code> rule:</p>
+<div class="gatsby-highlight" data-language="typescript"><pre class="language-typescript"><code class="language-typescript"><span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">CopyRule</span> <span class="token punctuation">{</span>
+  src<span class="token punctuation">:</span> <span class="token builtin">string</span>
+  dest<span class="token punctuation">:</span> <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">const</span> <span class="token function-variable function">plan</span> <span class="token operator">=</span> <span class="token punctuation">(</span>opts<span class="token punctuation">:</span> TaskPayload<span class="token operator">&lt;</span>CopyRule<span class="token operator">></span><span class="token punctuation">)</span> <span class="token operator">=></span>
+  <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> fs<span class="token punctuation">.</span><span class="token function">copy</span><span class="token punctuation">(</span>opts<span class="token punctuation">.</span>rule<span class="token punctuation">.</span>src<span class="token punctuation">,</span> opts<span class="token punctuation">.</span>rule<span class="token punctuation">.</span>dest<span class="token punctuation">)</span></code></pre></div>
+<p>the <code class="language-text">() =&gt; fs.copy(...)</code> matches the <code class="language-text">Migration</code> type, so it should be set!
+plan receives a <a href="#taskpayload">TaskPayload</a> as input, covered later.</p>
+<div class="gatsby-highlight" data-language="typescript"><pre class="language-typescript"><code class="language-typescript"><span class="token keyword">export</span> <span class="token keyword">type</span> Migration <span class="token operator">=</span>
+  <span class="token keyword">null</span> <span class="token comment">// return null when there is nothing to migrate</span>
+  <span class="token operator">|</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token keyword">void</span> <span class="token operator">|</span> Promise<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token comment">// otherwise, migrate in a returned function</span></code></pre></div>
+<p><a name='rulecheck'></a></p>
+<h3>rule.check</h3>
+<p>check recieves a <a href="#taskpayload">TaskPayload</a> as is responsible for ensuring
+that a rule is enforced.  we've already seen a few examples of check functions:</p>
+<ul>
+<li><a href="#rule">asserting that a keyword was added</a></li>
+<li><a href="##counselfile">asserting that a readme file exists</a></li>
+</ul>
+<p>check functions should:</p>
+<ul>
+<li>be synchronous, or return a promise</li>
+<li><code class="language-text">throw</code> (or reject) <code class="language-text">Error</code>s when a violation is detected</li>
+<li>tend to be lenient</li>
+</ul>
+<p>on the topic of leniency, consider counsel's baked in <code class="language-text">ScriptRule</code>.
+if you wanted a rule to provide a default npm script named <code class="language-text">test</code>,
+where the test command was <code class="language-text">node test/index.js</code>, consider if the project added a
+timeout flag, such as <code class="language-text">&quot;test&quot;: &quot;node test/index.js --timeout 10s&quot;</code>.</p>
+<p>it would be a bad user experience to <code class="language-text">throw</code> if the script did not strictly equal <code class="language-text">node test/index.js</code>.
+adding a simple flag is likely something that rule implementer would be OK with.
+more imporantly, the core intent of the rule is likely to assert that the user
+has written tests.  a better <code class="language-text">check</code> implementation would be to ensure that a <code class="language-text">test</code>
+script is present, and is truthy (i.e. runs <em>some test script</em>).  enforcing rules
+at any given granularity is something that needs to be worked through with rule makers and
+their teams.  <strong>be weary of agitating consumers by implementing
+overly strict checks</strong>.</p>
+<p><a name='ruledependencies'></a>
+<a name='ruledevdependencies'></a></p>
+<h3>rule.dependencies</h3>
+<p>rules can request dependencies &#x26; devDependencies to be installed.  dependencies
+are always requested in a range format:</p>
+<div class="gatsby-highlight" data-language="typescript"><pre class="language-typescript"><code class="language-typescript"><span class="token keyword">const</span> installRule<span class="token punctuation">:</span> Rule <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> <span class="token string">'install-koa'</span><span class="token punctuation">,</span>
+  dependencies<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token string">'koa'</span><span class="token punctuation">,</span> range<span class="token punctuation">:</span> <span class="token string">'^2'</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  devDependencies<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token string">'node-fetch'</span><span class="token punctuation">:</span> range<span class="token punctuation">:</span> <span class="token string">'*'</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p>by using <a href="https://www.npmjs.com/package/semver">semver</a> ranges, you can pin dependencies
+with moderate precision or flexibility.</p>
+<p><a name='taskpayload'></a></p>
+<h3>TaskPayload</h3>
+<p><code class="language-text">plan</code> and <code class="language-text">check</code> received a task payload as input. the payload is rich with
+data and async functions to help plan and check. check out the typings in the
+<a href="https://counsel.github.io/api#taskpayload">api documentation</a>.</p>
+<p><a name='batteries'></a></p>
+<h2>batteries</h2>
+<p>counsel exports a handful of common and helpful rules. <strong>batteries included!</strong></p>
+<p>see <code class="language-text">counsel.rules</code>, or <a href="./src/rules">src/rules</a> to see a handful.  at the time of
+writing, these default rules include:</p>
+<ul>
+<li><code class="language-text">copy</code> - copies files or folders into a project</li>
+<li><code class="language-text">filename-format</code> - enforces a filename-format convention</li>
+<li><code class="language-text">githook</code> - installs githook support via <a href="https://www.npmjs.com/package/husky">husky</a> into a project</li>
+<li><code class="language-text">readme</code> - enforces that a project has a readme file</li>
+<li><code class="language-text">script</code> - installs a npm script to a project</li>
+</ul>
+<p><a name='examples'></a></p>
+<h2>examples</h2>
+<ul>
+<li>
+<p><a href='https://github.com/cdaringe/counsel/blob/master/src/rulesets/nodelib.ts' target='_blank'>node library example ruleset</a></p>
+<ul>
+<li>see it used <a href="https://github.com/cdaringe/counsel/blob/master/.counsel.ts">in this project, here</a></li>
+</ul>
+</li>
+</ul></div></div><nav id="nav-menu"><div id="nav-sticker"><h3>nav</h3><ul><li><a href="/counsel/">home</a></li><li><a aria-current="page" class="" href="/counsel/docs/">docs</a></li><li><a href="/counsel/api/">reference</a></li></ul><hr/><ul><li><a class="nav-depth-2" href="/counsel/docs/#install">install</a></li><li><a class="nav-depth-2" href="/counsel/docs/#usage">usage</a></li><li><a class="nav-depth-2" href="/counsel/docs/#concepts">concepts</a></li><li><a class="nav-depth-3" href="/counsel/docs/#counselfile">counsel file</a></li><li><a class="nav-depth-3" href="/counsel/docs/#rule">rule</a></li><li><a class="nav-depth-3" href="/counsel/docs/#rulename">rule.name</a></li><li><a class="nav-depth-3" href="/counsel/docs/#ruleplan">rule.plan</a></li><li><a class="nav-depth-3" href="/counsel/docs/#rulecheck">rule.check</a></li><li><a class="nav-depth-3" href="/counsel/docs/#ruledependencies">rule.dependencies</a></li><li><a class="nav-depth-3" href="/counsel/docs/#taskpayload">TaskPayload</a></li><li><a class="nav-depth-2" href="/counsel/docs/#batteries">batteries</a></li><li><a class="nav-depth-2" href="/counsel/docs/#examples">examples</a></li></ul></div></nav></div></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.page={"componentChunkName":"component---src-components-page-template-tsx","jsonName":"docs-7e8","path":"/docs/"};window.dataPath="226/path---docs-7-e-8-9d0-OXYrqsrQQotZyK27kbZSbvxsNpI";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app.7a7fd10b08846091aeed.css","/app-bfa3e460b3b5be4ad5f6.js"],"component---src-components-page-template-tsx":["/component---src-components-page-template-tsx.7ab87cd538192f15e860.css","/component---src-components-page-template-tsx-84a4737b3015de94099e.js"],"component---src-pages-index-tsx":["/component---src-pages-index-tsx.30dd34e3842061153116.css","/component---src-pages-index-tsx-ce12ef7db017bfa0336f.js"],"pages-manifest":["/pages-manifest-3cf55607b403951bf29c.js"]};/*]]>*/</script><script src="/counsel/component---src-components-page-template-tsx-84a4737b3015de94099e.js" async=""></script><script src="/counsel/0-81e93c76daa99e1b0204.js" async=""></script><script src="/counsel/app-bfa3e460b3b5be4ad5f6.js" async=""></script><script src="/counsel/webpack-runtime-760154004ab3beba7241.js" async=""></script></body></html>
