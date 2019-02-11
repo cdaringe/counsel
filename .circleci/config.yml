@@ -21,10 +21,6 @@ jobs:
       - run: yarn test
       - run:
           command: |
-            if [ "$CIRCLE_BRANCH" == "master" ]; then
-              git config --global user.email "cdaringe@gmail.com"
-              git config --global user.name "cdaringe"
-              cd website
-              yarn build
-              npx gh-pages -d public
-            fi;
+            cd website
+            yarn build
+            yarn publish:docs
