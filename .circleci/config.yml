@@ -1,0 +1,30 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:11
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: NODE_ENV=development yarn
+      - run: cd website && NODE_ENV=development yarn
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn lint
+      - run: yarn build
+      - run: yarn test
+      - run:
+          command: |
+            if [ "$CIRCLE_BRANCH" == "master" ]; then
+              git config --global user.email "cdaringe@gmail.com"
+              git config --global user.name "cdaringe"
+              cd website
+              yarn build
+              npx gh-pages -d public
+            fi;

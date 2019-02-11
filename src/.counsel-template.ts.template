@@ -1,0 +1,7 @@
+import { ContextWithRules, rules } from 'counsel'
+
+export const create = (opts: ContextWithRules) =>
+  ({
+    ...opts,
+    rules: [...opts.rules, rules.readme]
+  })
