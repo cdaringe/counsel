@@ -70,6 +70,10 @@ a:hover {
   max-width: 700px;
   padding-right: 20px;
 }
+#primary img {
+  max-width: 100%;
+}
+
 #nav-menu {
   font-size: 130%;
   grid-column-start: 3;
@@ -108,4 +112,8 @@ a:hover {
 }
 .nav-depth-3 {
   font-size: 70%;
+}
+
+.nav-depth-4 {
+  font-size: 60%;
 }

@@ -28,7 +28,14 @@ alternatively, as shown next, we can bootstrap our own `counsel.ts` file.
 once a project has a counsel file, run various counsel commands:
 
 - `npx counsel apply`
+
+![](../images/demo-apply.svg)
+
+
 - `npx counsel check`
+
+![](../images/demo-check-fail.svg)
+
 
 `npx counsel --help` is also there to help!
 
@@ -211,11 +218,91 @@ counsel exports a handful of common and helpful rules. **batteries included!**
 see `counsel.rules`, or [src/rules](./src/rules) to see a handful.  at the time of
 writing, these default rules include:
 
-- `copy` - copies files or folders into a project
-- `filename-format` - enforces a filename-format convention
-- `githook` - installs githook support via [husky](https://www.npmjs.com/package/husky) into a project
-- `readme` - enforces that a project has a readme file
-- `script` - installs a npm script to a project
+<a name='copy'></a>
+
+#### copy
+
+- [copy](https://github.com/cdaringe/counsel/blob/master/src/rules/copy.ts) - copies files or folders into a project
+
+```ts
+import { rules } from 'counsel'
+const { plan } = rules.copy
+const rule: CopyRule = {
+  name: 'copy-markdown-file-test',
+  src: path.resolve(__dirname, 'readme-template.md'),
+  dest: path.resolve(ctx.projectDirname, 'readme.md'),
+  plan
+}
+```
+
+<a name='filenameformat'></a>
+
+#### filename-format
+
+- [filename-format](https://github.com/cdaringe/counsel/blob/master/src/rules/filename-format.ts) - enforces a filename-format convention
+
+```ts
+import { kebabCase } from 'lodash'
+import { rules } from 'counsel'
+const { check } = rules.filenameFormat
+
+const rule: FilenameFormatRule = {
+  name: 'test-filename-rule',
+  filenameFormatExtensions: ['js'],
+  filenameFormatExclude: ['coffee'],
+  filenameFormatFunction: kebabCase,
+  check
+}
+// test-file.js // ok
+// functional-module.js // ok
+// SomeFile // not ok
+```
+
+<a name='githook'></a>
+
+#### githook
+
+- [githook](https://github.com/cdaringe/counsel/blob/master/src/rules/githook.ts) - installs githook support via [husky](https://www.npmjs.com/package/husky) into a project
+
+```ts
+import { rules } from 'counsel'
+const { create } = rules.githook
+
+const rule: GitHooksRule = create({
+  name: 'lint-on-commit',
+  hooks: {
+    'pre-commit': 'yarn lint'
+  }
+})
+```
+
+<a name='readme'></a>
+
+
+#### readme
+
+- [readme](https://github.com/cdaringe/counsel/blob/master/src/rules/readme.ts) - enforces that a project has a readme file
+
+```ts
+import { rules } from 'counsel'
+const { rule } = rules.readme
+```
+
+<a name='script'></a>
+
+#### script
+
+- [script](https://github.com/cdaringe/counsel/blob/master/src/rules/script.ts) - installs a npm script to a project
+
+```ts
+import { rules } from 'counsel'
+const { create } = rules.script
+const rule: criptRule = create({
+  name: 'add-test-script-rule',
+  scriptName: 'test',
+  scriptCommand: 'tape test/blah.js'
+})
+```
 
 <a name='examples'></a>
 
@@ -224,8 +311,12 @@ writing, these default rules include:
 - <a href='https://github.com/cdaringe/counsel/blob/master/src/rulesets/nodelib.ts' target='_blank'>node library example ruleset</a>
     - see it used [in this project, here](https://github.com/cdaringe/counsel/blob/master/.counsel.ts)
 
+<a name='similarworks'></a>
+
 ## similar works
 
 - [FormidableLabs/builder](https://github.com/FormidableLabs/builder)
     - counsel is very similar to builder, but counsel doesn't _need_ to be yet-another-task-runner.  you can `npx counsel apply`, never fully install it, and reap many of it's benefits.
     - builder also claims flexibility and an anti-"buy the farm" attitude.  in practice, we've observed the opposite.  feel free to try both! :)
+
+<div style='margin-bottom: 100px;'></div>

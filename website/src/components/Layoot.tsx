@@ -67,9 +67,8 @@ export default ({ children, headings = [], slug = '' }: LayootProps) => (
               .replace(/[^a-zA-Z]/g, '')
               .toLowerCase()
             return (
-              <li>
+              <li className={`nav-depth-${depth}`}>
                 <Link
-                  className={`nav-depth-${depth}`}
                   onClick={smoothNav}
                   to={`${slug}#${hash}`}
                 >
