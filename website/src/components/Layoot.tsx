@@ -39,7 +39,7 @@ export interface LayootProps {
 }
 
 export default ({ children, headings = [], slug = '' }: LayootProps) => {
-  const pathname = win.location.pathname
+  const pathname = (win.location.pathname || '').replace('/counsel', '')
   return (
     <div id='root'>
       <Helmet>
