@@ -44,12 +44,12 @@ once a project has a counsel file, run various counsel commands:
 
 - `npx counsel apply`
 
-![](../images/demo-apply.svg)
+![](./img/demo-apply.svg)
 
 
 - `npx counsel check`
 
-![](../images/demo-check-fail.svg)
+![](./img/demo-check-fail.svg)
 
 
 `npx counsel --help` is also there to help!
