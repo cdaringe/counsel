@@ -223,3 +223,9 @@ writing, these default rules include:
 
 - <a href='https://github.com/cdaringe/counsel/blob/master/src/rulesets/nodelib.ts' target='_blank'>node library example ruleset</a>
     - see it used [in this project, here](https://github.com/cdaringe/counsel/blob/master/.counsel.ts)
+
+## similar works
+
+- [FormidableLabs/builder](https://github.com/FormidableLabs/builder)
+    - counsel is very similar to builder, but counsel doesn't _need_ to be yet-another-task-runner.  you can `npx counsel apply`, never fully install it, and reap many of it's benefits.
+    - builder also claims flexibility and an anti-"buy the farm" attitude.  in practice, we've observed the opposite.  feel free to try both! :)
