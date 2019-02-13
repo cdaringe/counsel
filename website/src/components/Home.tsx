@@ -12,12 +12,13 @@ export default (props: any) => (
       popular{' '}
       <a href='https://yeoman.io/' target='_blank'>
         yeoman
-      </a> package
-      , but manages projects programmatically versus using boilerplate. counsel is for project maintainers. counsel makes sense for
-      people who are developing many projects. counsel doesn't always make sense
-      for teams or maintainers working on just a single project or two.
+      </a>
+      package, but manages projects programmatically versus using boilerplate.
+      counsel is for project maintainers. counsel makes sense for people who are
+      developing many projects. counsel doesn't always make sense for teams or
+      maintainers working on just a single project or two.
     </p>
-    <div style={{ width: '100%', textAlign: 'center'}}>
+    <div style={{ width: '100%', textAlign: 'center' }}>
       <img style={{ padding: '1em' }} alt='demo' src={applyImg} />
       <Link to='/docs/'>
         <Button>Get Started</Button>

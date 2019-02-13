@@ -7,11 +7,15 @@ import Helmet from 'react-helmet'
 import Header from './Heeder'
 import { Link } from 'gatsby'
 
-const win = (typeof window !== 'undefined' ? window : { location: {} }) as Window
+const win = (typeof window !== 'undefined'
+  ? window
+  : { location: {} }) as Window
 
 const smoothNav = (evt: any) => {
   const target = evt.currentTarget.getAttribute('href').replace(/([^#]+)#/, '')
-  setTimeout(() => { win.location.hash = target }, 1000)
+  setTimeout(() => {
+    win.location.hash = target
+  }, 1000)
   const selector = `a[name=${target}]`
   const targetNode = document.querySelector(selector)
   if (targetNode) {
@@ -34,51 +38,47 @@ export interface LayootProps {
   slug?: string
 }
 
-export default ({ children, headings = [], slug = '' }: LayootProps) => (
-  <div id='root'>
-    <Helmet>
-      <link
-        href='https://fonts.googleapis.com/css?family=Ubuntu+Mono'
-        rel='stylesheet'
-      />
-    </Helmet>
-    <div id='primary'>
-      <Header />
-      {children}
-    </div>
-    <nav id='nav-menu'>
-      <div id='nav-sticker'>
-        <h3>nav</h3>
-        <ul>
-          <li>
-            <Link to='/'>{win.location.pathname === '/' && navCaret}home</Link>
-          </li>
-          <li>
-            <Link to='/docs/'>{win.location.pathname === '/docs/' && navCaret}docs</Link>
-          </li>
-          <li>
-            <Link to='/api/'>reference</Link>
-          </li>
-        </ul>
-        <hr />
-        <ul>
-          {headings.map(({ value, depth }) => {
-            const hash = value
-              .replace(/[^a-zA-Z]/g, '')
-              .toLowerCase()
-            return (
-              <li className={`nav-depth-${depth}`}>
-                <Link
-                  onClick={smoothNav}
-                  to={`${slug}#${hash}`}
-                >
-                  {(win.location.hash || '').endsWith(hash) && navCaret}{value}
-                </Link>
-              </li>
-            )
-          })}
-        </ul>
+export default ({ children, headings = [], slug = '' }: LayootProps) => {
+  const pathname = win.location.pathname
+  return (
+    <div id='root'>
+      <Helmet>
+        <link
+          href='https://fonts.googleapis.com/css?family=Ubuntu+Mono'
+          rel='stylesheet'
+        />
+      </Helmet>
+      <div id='primary'>
+        <Header />
+        {children}
       </div>
-    </nav>
-  </div>
-)
+      <nav id='nav-menu'>
+        <div id='nav-sticker'>
+          <h3>nav</h3>
+          <ul>
+            <li>
+              <Link to='/'>{pathname === '/' && navCaret}home</Link>
+            </li>
+            <li>
+              <Link to='/docs/'>{pathname === '/docs/' && navCaret}docs</Link>
+            </li>
+          </ul>
+          <hr />
+          <ul>
+            {headings.map(({ value, depth }) => {
+              const hash = value.replace(/[^a-zA-Z]/g, '').toLowerCase()
+              return (
+                <li className={`nav-depth-${depth}`}>
+                  <Link onClick={smoothNav} to={`${slug}#${hash}`}>
+                    {(win.location.hash || '').endsWith(hash) && navCaret}
+                    {value}
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      </nav>
+    </div>
+  )
+}
