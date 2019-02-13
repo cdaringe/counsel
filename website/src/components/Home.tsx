@@ -13,7 +13,7 @@ export default (props: any) => (
       <a href='https://yeoman.io/' target='_blank'>
         yeoman
       </a>
-      package, but manages projects programmatically versus using boilerplate.
+      {' '}package, but manages projects programmatically versus using boilerplate.
       counsel is for project maintainers. counsel makes sense for people who are
       developing many projects. counsel doesn't always make sense for teams or
       maintainers working on just a single project or two.
