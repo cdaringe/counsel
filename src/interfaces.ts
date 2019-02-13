@@ -1,4 +1,3 @@
-import { Context } from './counsel' // eslint-disable-line no-unused-vars
 import { createLogger } from './logger'
 import * as fs from 'fs-extra'
 import * as path from 'path'

@@ -201,13 +201,21 @@ const installRule: Rule = {
 by using [semver](https://www.npmjs.com/package/semver) ranges, you can pin dependencies
 with moderate precision or flexibility.
 
+<a name='typings'></a>
+
+## typings
+
+it is worth brief mention that the majority of counsel's interfaces/typings are packed nicely
+into a < 100 LOC file [here, for your viewing](https://github.com/cdaringe/counsel/blob/master/src/interfaces.ts).
+
+
 <a name='taskpayload'></a>
 
 ### TaskPayload
 
-`plan` and `check` received a task payload as input. the payload is rich with
+`plan` and `check` receive a task payload as input. the payload is rich with
 data and async functions to help plan and check. check out the typings in the
-[api documentation](https://counsel.github.io/api#taskpayload).
+[source code](https://github.com/cdaringe/counsel/blob/7537c31c3cce4bdaaaae18718b53cf9719bb29fb/src/interfaces.ts#L67) ([1](https://github.com/cdaringe/counsel/blob/7537c31c3cce4bdaaaae18718b53cf9719bb29fb/src/interfaces.ts#L28), [2](https://github.com/cdaringe/counsel/blob/7537c31c3cce4bdaaaae18718b53cf9719bb29fb/src/interfaces.ts#L46)).
 
 <a name='batteries'></a>
 
