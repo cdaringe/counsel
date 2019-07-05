@@ -13,7 +13,9 @@
     "lint": "standard '{src,test,website,scripts}/**/*.{ts,tsx}' --fix",
     "lint-staged": "lint-staged",
     "precommit": "run-p docs:readme lint-staged",
-    "test": "NODE_ENV=test nyc ava --timeout 10s --tap test/**/*.test.js && nyc report --reporter=lcov"
+    "test": "NODE_ENV=test nyc ava --timeout 10s --tap test/**/*.test.js && nyc report --reporter=lcov",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "keywords": [
     "project",
@@ -32,7 +34,8 @@
     "prompt-checkbox": "^2.2.0",
     "resolve": "^1.9.0",
     "semver": "^5.6.0",
-    "winston": "^3.1.0"
+    "winston": "^3.1.0",
+    "snyk": "^1.192.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.5.2",
@@ -91,5 +94,6 @@
         "git add"
       ]
     }
-  }
+  },
+  "snyk": true
 }
